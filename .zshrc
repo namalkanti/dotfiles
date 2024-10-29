@@ -96,7 +96,7 @@ source $ZSH/oh-my-zsh.sh
 export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -113,17 +113,18 @@ fi
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 
-# Example aliases
+# Aliases
 alias zshconfig="gvim ~/.zshrc"
 alias ohmyzsh="gvim ~/.oh-my-zsh"
+alias ydl="yt-dlp -x --audio-format m4a --audio-quality 0"
 
-#Vim terminal bindings
+#Vim settings
 bindkey -v 
 bindkey "^R" history-incremental-search-backward
 bindkey "^P" history-beginning-search-backward
 bindkey "^N" history-beginning-search-forward
 
-#Git settings
+#Git aliases
 git config --global alias.gr 'log --graph --full-history --all --color --pretty=tformat:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s%x20%x1b[33m(%an)%x1b[0m"'
 git config --global color.diff auto
 git config --global color.status auto

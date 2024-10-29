@@ -8,6 +8,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'godlygeek/tabular'
+Plug 'rust-lang/rust.vim'
 call plug#end()
 
 set nocompatible
