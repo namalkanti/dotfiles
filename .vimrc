@@ -9,6 +9,9 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'godlygeek/tabular'
 Plug 'rust-lang/rust.vim'
+Plug 'udalov/kotlin-vim'
+Plug 'guns/vim-clojure-static'
+Plug 'luochen1990/rainbow'
 call plug#end()
 
 set nocompatible
