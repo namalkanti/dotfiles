@@ -1,8 +1,9 @@
 call plug#begin('~/.vim/bundle/')
-Plug 'rose-pine/vim' 
+Plug 'rose-pine/vim', {'as': 'rosepine'} 
 Plug 'itchyny/lightline.vim'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'mileszs/ack.vim'
+Plug '/bin/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'jremmen/vim-ripgrep'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
@@ -56,9 +57,13 @@ nnoremap <c-l> <c-w>l
 nnoremap <c-c> <c-w>c
 nnoremap <c-o> <c-w>o
 
+"Ctags location
 set tags^=.git/tags;/
 
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep --nogroup --nocolor --column'
-endif
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+"Fzf and Rg
+nmap <C-p> :Files<CR>
+nmap <C-b> :Buffers<CR>
+command! FzfRg call fzf#vim#grep('rg --line-number --no-heading --color=always .', 1)
+nmap <C-i> :FzfRg<CR>
+
+set guifont=Monaco:h16

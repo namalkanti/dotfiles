@@ -100,9 +100,9 @@ export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='gvim'
+  export EDITOR='nvim'
 else
-  export EDITOR='vim'
+  export EDITOR='nvim'
 fi
 
 # Compilation flags
@@ -120,15 +120,33 @@ alias ydl="yt-dlp -x --audio-format m4a --audio-quality 0"
 
 #Vim settings
 bindkey -v 
-bindkey "^R" history-incremental-search-backward
-bindkey "^P" history-beginning-search-backward
-bindkey "^N" history-beginning-search-forward
 
 #Git aliases
 git config --global alias.gr 'log --graph --full-history --all --color --pretty=tformat:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s%x20%x1b[33m(%an)%x1b[0m"'
 git config --global color.diff auto
 git config --global color.status auto
-export GIT_EDITOR='vim'
+export GIT_EDITOR='nvim'
+
+#Fzf/xplr variables
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
+export FZF_DEFAULT_OPTS="--tmux"
+source <(fzf --zsh)
+
+# Function for Alt+C (change directory via fzf)
+goto() {
+  local dir=$(find . -type d | fzf)
+  if [[ -n "$dir" ]]; then
+    cd "$dir" || return
+  fi
+}
+
+# Function for Ctrl+T (find file via fzf)
+locate() {
+  local file=$(find . -type f | fzf)
+  if [[ -n "$file" ]]; then
+    echo "$file"
+  fi
+}
 
 #Wezterm
 setopt COMBINING_CHARS

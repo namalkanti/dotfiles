@@ -1,3 +1,7 @@
+#Config Aliases
+alias aliases='gvim ~/.bash_aliases'
+alias ssh-config='gvim ~/.ssh/config'
+
 # enable color support of ls and also add handy aliases
 alias ls='ls -h --color=auto'
 
