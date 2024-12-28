@@ -1,0 +1,8 @@
+# Put the content of this file in: .git_template/hooks/ctags and give execution permission
+
+#!/bin/sh
+set -e
+PATH="/usr/local/bin:$PATH"
+trap "rm -f .git/tags.$$" EXIT
+ctags --tag-relative -Rf.git/tags.$$ --exclude=.git --languages=-javascript,sql
+mv .git/tags.$$ .git/tags
