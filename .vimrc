@@ -64,9 +64,6 @@ nnoremap <c-l> <c-w>l
 nnoremap <c-c> <c-w>c
 nnoremap <c-o> <c-w>o
 
-"Ctags location
-set tags^=.git/tags;/
-
 "Fzf and Rg
 nmap <C-p> :Files<CR>
 nmap <C-b> :Buffers<CR>
