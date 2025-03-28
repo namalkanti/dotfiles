@@ -112,6 +112,19 @@ lua << EOF
   lspconfig.marksman.setup({
     on_attach = make_on_attach()
   })
+
+  -- Kotlin Language Server
+  lspconfig.kotlin_language_server.setup({
+  cmd = { "kotlin-language-server" },
+  filetypes = { "kotlin" },
+  on_attach = make_on_attach(),
+  root_dir = require("lspconfig.util").root_pattern(
+    "settings.gradle", "settings.gradle.kts",
+    "build.gradle", "build.gradle.kts",
+    ".git"
+   ),
+  })  
+   
 EOF
 
 " 4) (Optional) Enable built-in LSP-based completion
