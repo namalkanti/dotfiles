@@ -107,6 +107,11 @@ lua << EOF
   lspconfig.rust_analyzer.setup({
     on_attach = make_on_attach()
   })
+
+  -- marksman (Markdown)
+  lspconfig.marksman.setup({
+    on_attach = make_on_attach()
+  })
 EOF
 
 " 4) (Optional) Enable built-in LSP-based completion
