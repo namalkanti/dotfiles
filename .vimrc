@@ -11,8 +11,7 @@ Plug 'tpope/vim-commentary'
 Plug 'godlygeek/tabular'
 Plug 'rust-lang/rust.vim'
 Plug 'udalov/kotlin-vim'
-Plug 'guns/vim-clojure-static'
-Plug 'luochen1990/rainbow'
+Plug 'neovim/nvim-lspconfig'
 call plug#end()
 
 set nocompatible
@@ -50,6 +49,14 @@ set number
 set ttimeout
 set ttimeoutlen=1
 
+"Leader remap
+let mapleader = " "
+
+"Remap jumplist
+nnoremap <leader>n <C-i>
+nnoremap <leader>N <C-o>
+
+"Window Navigation
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
@@ -67,3 +74,41 @@ command! FzfRg call fzf#vim#grep('rg --line-number --no-heading --color=always .
 nmap <C-i> :FzfRg<CR>
 
 set guifont=Monaco:h16
+
+"LSP Setup
+" 2) Define a Vimscript function to set up LSP keymaps when server attaches
+function! LspOnAttach(client, bufnr) abort
+  nnoremap <silent> <buffer> gd :lua vim.lsp.buf.definition()<CR>
+  nnoremap <silent> <buffer> gr :lua vim.lsp.buf.references()<CR>
+  nnoremap <silent> <buffer> K  :lua vim.lsp.buf.hover()<CR>
+  nnoremap <silent> <buffer> <leader>e :lua vim.diagnostic.open_float()<CR>
+  nnoremap <silent> <buffer> <leader>rn :lua vim.lsp.buf.rename()<CR>
+  nnoremap <silent> <buffer> <leader>ca :lua vim.lsp.buf.code_action()<CR>
+  nnoremap <silent> <buffer> <leader>f :lua vim.lsp.buf.format({ async=true })<CR>
+endfunction
+
+" 3) Configure your language servers in a Lua block
+lua << EOF
+  local lspconfig = require("lspconfig")
+
+  -- Helper callback: call our Vimscript LspOnAttach
+  local function make_on_attach()
+    return function(client, bufnr)
+      vim.cmd("call LspOnAttach(" .. client.id .. "," .. bufnr .. ")")
+    end
+  end
+
+  -- Pyright (Python)
+  lspconfig.pyright.setup({
+    on_attach = make_on_attach()
+  })
+
+  -- rust-analyzer (Rust)
+  lspconfig.rust_analyzer.setup({
+    on_attach = make_on_attach()
+  })
+EOF
+
+" 4) (Optional) Enable built-in LSP-based completion
+set completeopt=menuone,noinsert,noselect
+set omnifunc=v:lua.vim.lsp.omnifunc
