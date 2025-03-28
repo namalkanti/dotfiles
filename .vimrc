@@ -53,8 +53,8 @@ set ttimeoutlen=1
 let mapleader = " "
 
 "Remap jumplist
-nnoremap <leader>n <C-i>
-nnoremap <leader>N <C-o>
+nnoremap gf <C-i>
+nnoremap gb <C-o>
 
 "Window Navigation
 nnoremap <c-j> <c-w>j
