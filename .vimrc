@@ -110,6 +110,13 @@ lua << EOF
     on_attach = make_on_attach()
   })
 
+  -- clangd (C/C++/Objective-C)
+  lspconfig.clangd.setup({
+    on_attach = make_on_attach(),
+    -- Additional clangd settings can go here
+    -- e.g. cmd = {"clangd", "--background-index", ...},
+  })
+
   -- Kotlin Language Server
   lspconfig.kotlin_language_server.setup({
   cmd = { "kotlin-language-server" },
