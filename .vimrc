@@ -12,6 +12,10 @@ Plug 'godlygeek/tabular'
 Plug 'rust-lang/rust.vim'
 Plug 'udalov/kotlin-vim'
 Plug 'neovim/nvim-lspconfig'
+Plug 'github/copilot.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'olimorris/codecompanion.nvim'
 call plug#end()
 
 set nocompatible
@@ -84,7 +88,7 @@ function! LspOnAttach(client, bufnr) abort
   nnoremap <silent> <buffer> <leader>f :lua vim.lsp.buf.format({ async=true })<CR>
 endfunction
 
-" 3) Configure your language servers in a Lua block
+" 3) Configure your language servers and code companion in a Lua block
 lua << EOF
   local lspconfig = require("lspconfig")
 
@@ -117,6 +121,26 @@ lua << EOF
     -- e.g. cmd = {"clangd", "--background-index", ...},
   })
 
+  -- Code Companion Setup
+  require("codecompanion").setup({
+      strategies = {
+        chat = {
+          adapter = "copilot",
+        },
+        inline = {
+          adapter = "copilot",
+        },
+        cmd = {
+          adapter = "copilot",
+        }
+      },
+  })
+  vim.keymap.set({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
+  vim.keymap.set({ "n", "v" }, "<Leader>a", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
+  vim.keymap.set("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })
+
+  -- Expand 'cc' into 'CodeCompanion' in the command line
+  vim.cmd([[cab cc CodeCompanion]])
 EOF
 
 " 4) (Optional) Enable built-in LSP-based completion
