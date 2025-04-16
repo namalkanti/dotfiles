@@ -154,5 +154,6 @@ lua << EOF
 EOF
 
 " 4) (Optional) Enable built-in LSP-based completion
+let g:copilot_enabled = 0
 set completeopt=menuone,noinsert,noselect
 set omnifunc=v:lua.vim.lsp.omnifunc
