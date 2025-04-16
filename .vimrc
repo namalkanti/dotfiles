@@ -41,6 +41,8 @@ let g:lightline = {
       \ }
 
 set nowrap
+autocmd FileType markdown setlocal wrap linebreak showbreak=↪\
+
 set tabstop=4 shiftwidth=4
 set expandtab
 set backspace=indent,eol,start
@@ -69,6 +71,10 @@ nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 nnoremap <c-c> <c-w>c
 nnoremap <c-o> <c-w>o
+
+" Horizontal scrolling
+nnoremap <silent> <Left> zh
+nnoremap <silent> <Right> zl
 
 "Fzf and Rg
 nmap <C-p> :Files<CR>
