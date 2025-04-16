@@ -42,6 +42,8 @@ let g:lightline = {
 
 set nowrap
 autocmd FileType markdown setlocal wrap linebreak showbreak=↪\
+autocmd FileType markdown nnoremap <buffer> j gj
+autocmd FileType markdown nnoremap <buffer> k gk
 
 set tabstop=4 shiftwidth=4
 set expandtab
