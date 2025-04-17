@@ -36,5 +36,8 @@ alias tn='tmux new -s'
 alias tl='tmux ls'
 alias ta='tmux a -t'
 
-#Tmux sock update
-alias tsu='eval $(tmux showenv -s SSH_AUTH_SOCK)'
+#lf commands
+nav () {
+    # `command` is needed in case `lfcd` is aliased to `lf`
+    cd "$(command lf -print-last-dir "$@")"
+}
