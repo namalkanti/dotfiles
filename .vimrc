@@ -14,7 +14,9 @@ Plug 'udalov/kotlin-vim'
 Plug 'neovim/nvim-lspconfig'
 
 "AI Coding
+" Code companion dependencies
 Plug 'github/copilot.vim'
+Plug 'saghen/blink.cmp'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'olimorris/codecompanion.nvim'
@@ -145,8 +147,8 @@ lua << EOF
         }
       },
   })
-  vim.keymap.set({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
-  vim.keymap.set({ "n", "v" }, "<Leader>tc", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
+  vim.keymap.set({ "n", "v" }, "<Leader>ca", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
+  vim.keymap.set({ "n", "v" }, "<Leader>cc", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
   vim.keymap.set("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })
 
   -- Expand 'cc' into 'CodeCompanion' in the command line
@@ -157,3 +159,5 @@ EOF
 let g:copilot_enabled = 0
 set completeopt=menuone,noinsert,noselect
 set omnifunc=v:lua.vim.lsp.omnifunc
+let g:copilot_enabled = 0
+let g:copilot_settings = #{selectedCompletionModel: 'gpt-4o-copilot'}

@@ -125,6 +125,18 @@ config.keys = {
         mods = 'WIN',
         action = act.PasteFrom 'Clipboard',
     },
+    -- Ctrl‑/
+    {
+      key    = "/",
+      mods   = "CTRL",
+      action = wezterm.action.SendKey { key = "/", mods = "CTRL" },
+    },
+    -- (optional) some layouts emit Ctrl‑Shift‑_ instead of Ctrl‑/
+    {
+      key    = "_",
+      mods   = "CTRL|SHIFT",
+      action = wezterm.action.SendKey { key = "_", mods = "CTRL|SHIFT" },
+    },
 }
 
 for i = 1, 8 do
