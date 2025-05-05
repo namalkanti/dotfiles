@@ -101,59 +101,10 @@ function! LspOnAttach(client, bufnr) abort
 endfunction
 
 " 3) Configure your language servers and code companion in a Lua block
-lua << EOF
-  local lspconfig = require("lspconfig")
+lua require('config.codecompanion').setup()
+" lua require('config.blink').setup()
+lua require('config.lsp').setup()
 
-  -- Helper callback: call our Vimscript LspOnAttach
-  local function make_on_attach()
-    return function(client, bufnr)
-      vim.cmd("call LspOnAttach(" .. client.id .. "," .. bufnr .. ")")
-    end
-  end
-
-  -- Pyright (Python)
-  lspconfig.pyright.setup({
-    on_attach = make_on_attach()
-  })
-
-  -- rust-analyzer (Rust)
-  lspconfig.rust_analyzer.setup({
-    on_attach = make_on_attach()
-  })
-
-  -- marksman (Markdown)
-  lspconfig.marksman.setup({
-    on_attach = make_on_attach()
-  })
-
-  -- clangd (C/C++/Objective-C)
-  lspconfig.clangd.setup({
-    on_attach = make_on_attach(),
-    -- Additional clangd settings can go here
-    -- e.g. cmd = {"clangd", "--background-index", ...},
-  })
-
-  -- Code Companion Setup
-  require("codecompanion").setup({
-      strategies = {
-        chat = {
-          adapter = "copilot",
-        },
-        inline = {
-          adapter = "copilot",
-        },
-        cmd = {
-          adapter = "copilot",
-        }
-      },
-  })
-  vim.keymap.set({ "n", "v" }, "<Leader>ca", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
-  vim.keymap.set({ "n", "v" }, "<Leader>cc", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
-  vim.keymap.set("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })
-
-  -- Expand 'cc' into 'CodeCompanion' in the command line
-  vim.cmd([[cab cc CodeCompanion]])
-EOF
 
 " 4) (Optional) Enable built-in LSP-based completion
 let g:copilot_enabled = 0
@@ -161,3 +112,4 @@ set completeopt=menuone,noinsert,noselect
 set omnifunc=v:lua.vim.lsp.omnifunc
 let g:copilot_enabled = 0
 let g:copilot_settings = #{selectedCompletionModel: 'gpt-4o-copilot'}
+
