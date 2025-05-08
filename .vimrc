@@ -16,7 +16,7 @@ Plug 'neovim/nvim-lspconfig'
 "AI Coding
 " Code companion dependencies
 Plug 'github/copilot.vim'
-Plug 'saghen/blink.cmp'
+Plug 'saghen/blink.cmp', { 'tag': 'v0.*' }
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'olimorris/codecompanion.nvim'
@@ -102,7 +102,7 @@ endfunction
 
 " 3) Configure your language servers and code companion in a Lua block
 lua require('config.codecompanion').setup()
-" lua require('config.blink').setup()
+lua require('config.blink').setup()
 lua require('config.lsp').setup()
 
 
