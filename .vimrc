@@ -111,5 +111,3 @@ let g:copilot_enabled = 0
 set completeopt=menuone,noinsert,noselect
 set omnifunc=v:lua.vim.lsp.omnifunc
 let g:copilot_enabled = 0
-let g:copilot_settings = #{selectedCompletionModel: 'gpt-4o-copilot'}
-
