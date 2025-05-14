@@ -110,4 +110,3 @@ lua require('config.lsp').setup()
 let g:copilot_enabled = 0
 set completeopt=menuone,noinsert,noselect
 set omnifunc=v:lua.vim.lsp.omnifunc
-let g:copilot_enabled = 0
