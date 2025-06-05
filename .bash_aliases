@@ -45,3 +45,6 @@ nav () {
 #Aider aliases
 alias aider='aider --model openai/gpt-4.1 --chat-mode ask --no-auto-commits --subtree-only'
 alias aider-continue='aider --restore-chat-history'
+
+#Chatgpt Cli aliases
+alias chatgpt='chatgpt --model=gpt-4.1'
