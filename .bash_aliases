@@ -41,3 +41,7 @@ nav () {
     # `command` is needed in case `lfcd` is aliased to `lf`
     cd "$(command lf -print-last-dir "$@")"
 }
+
+#Aider aliases
+alias aider='aider --model openai/gpt-4.1 --chat-mode ask --no-auto-commits --subtree-only'
+alias aider-continue='aider --restore-chat-history'
