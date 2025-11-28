@@ -15,6 +15,14 @@ function code_companion_module.setup()
       inline = { adapter = "copilot" },
       cmd    = { adapter = "copilot" },
     },
+      -- Setting default diff to vertical split
+    display = {
+        diff = {
+            enabled = true,
+            provider = "split",
+            layout = "vertical",
+        },
+    },
   })
 
   -- Key‑maps (identical behaviour to your previous config)
