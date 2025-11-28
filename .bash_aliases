@@ -48,3 +48,4 @@ alias aider-continue='aider --restore-chat-history'
 
 #Chatgpt Cli aliases
 alias chatgpt='chatgpt --model=gpt-4.1'
+alias chatblade='chatblade --openai-api-key=${OPENAI_API_KEY} --openai-base-url="https://api.openai.com/v1/" --chat-gpt=gpt-4.1 -l'
