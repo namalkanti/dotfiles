@@ -116,7 +116,7 @@ fi
 # Aliases
 alias zshconfig="gvim ~/.zshrc"
 alias ohmyzsh="gvim ~/.oh-my-zsh"
-alias ydl="yt-dlp -x --audio-format m4a --audio-quality 0"
+alias ydl="yt-dlp -x --audio-format m4a --audio-quality 0 --js-runtimes node --remote-components ejs:github"
 
 #Vim settings
 bindkey -v 
