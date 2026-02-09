@@ -1,0 +1,8 @@
+[projects."/home/namalkanti"]
+trust_level = "untrusted"
+
+[projects."/home/namalkanti/Drive/Stuffz/Programming/Rust/ExtremeMenuNavigation"]
+trust_level = "untrusted"
+
+[projects."/home/namalkanti/.codex"]
+trust_level = "untrusted"

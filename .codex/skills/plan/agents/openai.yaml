@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plan"
+  short_description: "Discuss goals and plan steps"
+  default_prompt: "Use plan to discuss a goal, write a PLAN.md, and generate step-level Aider prompts on demand."

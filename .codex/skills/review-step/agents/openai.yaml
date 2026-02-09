@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review Step"
+  short_description: "Review plan step changes"
+  default_prompt: "Use review-step to review changes against the current plan step."
