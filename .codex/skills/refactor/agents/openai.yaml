@@ -1,0 +1,4 @@
+interface:
+  display_name: "Refactor"
+  short_description: "Organize and execute cleanup refactors"
+  default_prompt: "Use refactor to organize on-deck cleanup tasks, generate step-level refactor prompts, and drive refactor progress in the plan file."
