@@ -1,6 +1,6 @@
 ---
 name: refactor
-description: Analyze working code for quality improvements and plan incremental cleanup passes. Focuses on style, maintainability, and code smells without changing functionality. Use after features work, typically before commit.
+description: Analyze working code for quality improvements and plan incremental cleanup passes. Focuses on style, maintainability, and code smells without changing functionality. Supports both generative and interactive refactor prompts. Use after features work, typically before commit.
 ---
 
 # Refactor Skill - Code Quality & Style Refinement
@@ -216,7 +216,13 @@ Refactor steps are reorganized frequently (more fluid than architect steps).
 
 ### 3. Generating Refactor Prompts
 
-Same format as `/plan`:
+**Two prompt types:**
+- **Generative (default)**: Prescriptive prompts for autonomous refactoring
+- **Interactive (on explicit request)**: Context-heavy prompts for collaborative refactoring
+
+Choose generative unless the user explicitly asks for an interactive prompt or clearly wants to drive the edits themselves.
+
+**Generative prompts (default)**:
 
 - Create a detailed prompt with this structure:
   ```
@@ -265,6 +271,42 @@ Same format as `/plan`:
 
   After running aider, use `/review-step` to review changes.
   ```
+
+**Interactive prompts (on explicit request only)**:
+
+When user asks for an interactive prompt, keep the guidance specific but avoid prescribing exact replacement blocks:
+
+- Create a prompt with this structure:
+  ```
+  [Clear description of what to refactor]
+
+  **Goal**: Improve testability / DRY principle / Code clarity / etc.
+
+  **File**: /full/path/to/file.cpp
+
+  **Current State**:
+  [Brief description of current structure and the relevant smells]
+
+  **Design Guidance**:
+  - Preferred extraction or reorganization approach
+  - Naming or style constraints to follow
+  - Edge cases or invariants that must remain intact
+
+  **Rationale**: Why this improves code quality
+
+  **Success Criteria**:
+  - Code still compiles
+  - Tests still pass (if any)
+  - Behavior unchanged
+  - [Specific improvement achieved]
+  ```
+- Key difference: interactive prompts emphasize context and direction instead of exact OLD/NEW replacement blocks
+- Save and copy them the same way as generative prompts
+
+**Multiple prompts per refactor step**:
+- One refactor step may require several prompts
+- Mixed generative and interactive prompts are allowed within the same step
+- Use `/review-step` only after the full refactor step is complete
 
 ### 4. Working Through Refactors
 

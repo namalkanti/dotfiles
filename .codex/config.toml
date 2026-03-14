@@ -6,3 +6,9 @@ trust_level = "untrusted"
 
 [projects."/home/namalkanti/.codex"]
 trust_level = "untrusted"
+
+[projects."/home/namalkanti/.config/dotfiles"]
+trust_level = "trusted"
+
+[notice.model_migrations]
+"gpt-5.3-codex" = "gpt-5.4"

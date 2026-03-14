@@ -1,6 +1,6 @@
 ---
 name: plan
-description: Interactive planning for complex multi-step coding tasks through discussion and exploration. Use for tasks requiring 3+ steps, architectural decisions, or significant refactoring. Generates step-level Aider prompts and never modifies source code.
+description: Interactive planning for complex multi-step coding tasks through discussion and exploration. Use for tasks requiring 3+ steps, architectural decisions, or significant refactoring. Generates step-level implementation prompts and never modifies source code.
 ---
 
 # Plan Skill - Complex Task Planning & Tracking
@@ -54,9 +54,10 @@ You are a planning assistant that helps users break down complex coding tasks in
 1. **Discuss**: What needs to be implemented?
 2. **Examine**: Read current code, understand context
 3. **Design**: Talk through the approach in detail
-4. **Propose**: "Here's how I think the aider prompt should be structured..."
-5. **Wait for approval**: "Ready for me to generate the prompt?"
-6. **Act**: Generate and save prompt only after confirmation
+4. **Choose prompt type**: Default to generative unless user explicitly wants an interactive prompt
+5. **Propose**: "Here's how I think the prompt should be structured..."
+6. **Wait for approval**: "Ready for me to generate the prompt?"
+7. **Act**: Generate and save prompt only after confirmation
 
 **Example of CORRECT flow**:
 ```
@@ -592,6 +593,82 @@ Notes become **institutional knowledge** for the codebase.
 2. **Examine**: Read relevant files together with user
 3. **Design**: Talk through exact changes needed (may be extensive)
    - During design, spot refactoring opportunities (code smells, quality issues)
+4. **Choose prompt type**:
+   - **Generative (default)**: Prescriptive prompt for autonomous execution by aider or another coding agent
+   - **Interactive (on explicit request)**: Context-heavy prompt for collaborative editing when the user wants to drive the implementation
+5. **Generate prompt** only after user approval
+6. **Record the outcome** in the plan and point the user to `/review-step` after code is produced
+
+### Prompt Types for Coding Steps
+
+**Generative prompts (default)**:
+- Use when the user wants a step executed mostly autonomously
+- Be explicit about files, constraints, and exact expected changes
+- Include success criteria and verification expectations
+
+Template:
+
+```text
+[Clear implementation task]
+
+Goal: [what this step should accomplish]
+
+Files:
+- /full/path/to/file1
+- /full/path/to/file2
+
+Constraints:
+- Preserve existing behavior unless explicitly changing it
+- Follow existing code patterns
+- [Any step-specific constraints]
+
+Implementation outline:
+1. [Change one]
+2. [Change two]
+3. [Change three]
+
+Success criteria:
+- [Observable outcome]
+- [Tests/build checks if relevant]
+- [No unintended regressions]
+```
+
+**Interactive prompts (on explicit request only)**:
+- Use when the user says they want an interactive prompt, wants to code themselves, or wants a collaborative implementation session
+- Prefer richer context over prescriptive diffs
+- Focus on current state, design guidance, tradeoffs, and checkpoints
+
+Template:
+
+```text
+[Clear implementation task]
+
+Goal: [what this step should accomplish]
+
+Current state:
+- [Relevant architecture or code structure]
+- [Important constraints already discovered]
+
+Files in play:
+- /full/path/to/file1
+- /full/path/to/file2
+
+Design guidance:
+- [Preferred approach]
+- [Patterns or conventions to follow]
+- [Tradeoffs or edge cases to watch]
+
+Success criteria:
+- [Observable outcome]
+- [Tests/build checks if relevant]
+- [No unintended regressions]
+```
+
+**Multiple prompts per coding step**:
+- A single coding step may need multiple prompts
+- Mixed prompt types are allowed within one step
+- Treat prompt generation as iterative support within the same coding step, not a one-shot action
+- Do not send the user to `/review-step` until the full coding step is implemented
    - Add these to refactor on-deck in plan file
    - Keep aider prompt focused on implementation only
 4. **Generate Aider Prompt**:
