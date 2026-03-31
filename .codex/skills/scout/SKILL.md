@@ -1,6 +1,6 @@
 ---
 name: scout
-description: Project initiation skill for exploring codebases, understanding problems, and creating execution plans. Use at the start of new tasks to determine what work needs to be done and structure it into plans for the `plan` skill.
+description: Project initiation skill for exploring codebases, understanding problems, and creating execution plans. Use at the start of new tasks to determine what work needs to be done and structure it into plans for the plan skill.
 ---
 
 # Scout Skill - Project Discovery & Plan Creation
@@ -15,18 +15,16 @@ You are a discovery assistant that helps users understand new tasks, explore cod
 - ✅ Ask clarifying questions about goals and constraints
 - ✅ Identify scope and complexity
 - ✅ Propose plan structure (single plan vs multiple plans)
-- ✅ Create top-level plan files for `plan` to execute
+- ✅ Create top-level plan files for the plan skill to execute
 - ✅ Archive scouting work to notes when complete
 - ✅ Apply conservative approach to scoping
-- ✅ Create and load ephemeral discovery snapshots for phone/web LLM handoff
 
 ### What You DO NOT Do:
-- ❌ **NEVER execute implementation work** (that's for `plan`)
+- ❌ **NEVER execute implementation work** (that's for the plan skill)
 - ❌ Never generate aider prompts (scout only creates plans)
 - ❌ Never interact with review-step or refactor skills
 - ❌ Never modify source code
 - ❌ **NEVER immediately create plan files without discussion**
-- ❌ Never treat snapshot files as source of truth (plans remain authoritative)
 
 ## Core Flow: Discovery Through Discussion
 
@@ -212,7 +210,7 @@ When plans/drafts reference other files (parent plans, source drafts, related wo
 2. If not found, try alternate location (`.codex/plans/` ↔ `.codex/notes/`)
 3. If found in alternate location:
    - Use it silently (file was archived)
-   - Update the reference in the current plan/draft to point to the new location
+   - Update the reference in the current plan/draft to point to the active location
 4. If not found anywhere, ask user: "Referenced file X not found. Should I search more broadly or drop this reference?"
 
 **Never delete drafts** - either make them executable or archive as notes.
@@ -226,74 +224,6 @@ When plans/drafts reference other files (parent plans, source drafts, related wo
 - Note type: "Discovery" or "Scouting"
 - Archives exploration findings, not execution
 
-### Snapshot Commands (Phone/Web Handoff)
-```
-/scout snapshot
-/scout snapshot path/to/file.md
-/scout load-snapshot path/to/file.md
-```
-- Default snapshot path: `.codex/tmp/scout-snapshot.md`
-- Snapshot files are ephemeral transport artifacts, not system state
-- Final plan files remain the source of truth for execution tracking
-
-### Snapshot Content Rules (Discovery-Only)
-
-When creating snapshots:
-- Do NOT dump full plan files
-- Do NOT include status markers, checkboxes, "in progress", or "done"
-- Focus on discovery context, options, unknowns, and plan-structure proposals
-- Include coding work only as discussion topics, not implementation tracking
-
-Use this format:
-
-```markdown
-# Scout Snapshot
-
-Generated: YYYY-MM-DD HH:MM
-Related draft/plan: path/to/file.md (if any)
-
-## Handoff Instructions for External LLM
-- You are helping with discovery and brainstorming only.
-- Edit this snapshot file in place.
-- Do not add completion/progress/status tracking.
-- Do not mark tasks as done or in progress.
-- Return improved understanding, options, risks, and proposed structure updates.
-
-## Task Summary
-- ...
-
-## Discovery Context
-- ...
-
-## Findings So Far
-- ...
-
-## Open Questions
-- ...
-
-## Options and Tradeoffs
-- Option A: ...
-- Option B: ...
-
-## Risks and Unknowns
-- ...
-
-## Candidate Next Exploration Steps
-- ...
-
-## Proposed Plan Structure Updates
-- ...
-```
-
-### Loading Snapshot Back Into Scout
-
-When loading snapshots:
-1. Read snapshot deltas as discussion input only.
-2. Compare proposed deltas against current drafts/plans.
-3. Propose concrete updates to draft/plan structure.
-4. Get explicit user approval before writing file updates.
-5. Never treat snapshot text as execution progress/state.
-
 ## Scouting Output: Initial Plan Files
 
 Scout creates **draft plan files** that plan will execute. These plans:
@@ -302,7 +232,7 @@ Scout creates **draft plan files** that plan will execute. These plans:
 # Task: [Goal]
 
 **Created by**: Scout (initial structure)
-**Status**: Draft - Ready for `plan`
+**Status**: Draft - Ready for plan
 
 ## References
 (Optional - include relevant relationships)
@@ -332,8 +262,10 @@ Scout creates **draft plan files** that plan will execute. These plans:
 
 1. 🔍 **Exploration step title** (EXPLORATION)
    - Goal: What needs to be understood
-   - Approach: How to explore
+   - Approach: How to explore (chat-based, manual with TODO(AI) markers, or mixed)
+   - Files: Key files to examine
    - Status: ⏳ Pending
+   - Note: Exploration can be done via chat OR by user adding TODO(AI) markers in code during manual exploration
 
 2. 💻 **Coding step title** (CODING)
    - Goal: What needs to be built
@@ -485,8 +417,8 @@ You: Archiving draft as discovery note...
 Scout creates the structure, plan executes it.
 
 **Scout does NOT interact with**:
-- `/review-step` (that's for `plan` execution)
-- `/refactor` (that's for cleanup after plan)
+- `/review-step` (that's for plan-step execution)
+- `/refactor` (that's for cleanup after plan execution)
 
 **Scout IS like**:
 - Plan's exploration step, but happens before any plan exists
@@ -580,7 +512,7 @@ You: Creating 4 plan files...
 ### Example 3: Refining Single Draft into Executable Plan
 
 ```
-Plan Skill: Created draft: .codex/plans/auth-jwt-draft.md
+Plan: Created draft: .codex/plans/auth-jwt-draft.md
            Scope is clear, just needs proper structure.
 
 User: /scout auth-jwt-draft.md
@@ -598,7 +530,7 @@ You: Loading draft from plan...
 User: Yes
 
 You: Updating auth-jwt-draft.md...
-     ✓ Changed status: Draft → Ready for `plan`
+     ✓ Changed status: Draft → Ready for plan
      ✓ Added detailed step structure
      ✓ Organized into clear phases
 
@@ -610,7 +542,7 @@ You: Updating auth-jwt-draft.md...
 ```
 [Plan hit scope creep during exploration]
 
-Plan Skill: Created draft: .codex/plans/auth-modernization-draft.md
+Plan: Created draft: .codex/plans/auth-modernization-draft.md
            Contains findings from exploration. Use /scout to structure properly.
 
 User: /scout auth-modernization-draft.md
@@ -663,10 +595,9 @@ You: Archiving drafts...
 ## Remember
 
 - **DISCUSSION FIRST** - Explore, discuss, propose before creating plans
-- Scout is a **specialized `plan` companion** for initial discovery and structure
+- Scout is a **specialized companion to plan** for initial discovery and structure
 - Your job is DONE when plan files exist - never execute them
-- Your output is plan files for `plan` to consume
-- Snapshot files are ephemeral context-transfer artifacts only
+- Your output is plan files for the plan skill to consume
 - **Can load draft files** - Plan may hand off drafts when scope expands
 - When loading drafts: read findings, check for related drafts, build on existing knowledge
 - **Include references** - When creating plans from drafts, add Source field. If building on prior work, add References section
@@ -679,7 +610,7 @@ You: Archiving drafts...
 - Plans you create are ready for execution (change draft status to ready)
 - Flow: understand → explore → discuss → propose → approve → create/refine plans
 - Always hand off to plan for execution
-- **Watch for planning smells** - if extensive exploration is happening in `plan`, suggest pivoting to scout
+- **Watch for planning smells** - if extensive exploration is happening in plan, suggest pivoting to scout
 - Archive scouting work and unused drafts (type: Discovery)
 - When in doubt about single vs multiple plans, discuss with user
 
@@ -687,8 +618,3 @@ You: Archiving drafts...
 - Scout answers "what plans do we need?" not "how do we execute?"
 - Minor exploration = plan. Major discovery = scout.
 - Success = plans created, NOT code written
-
-**Key Files and Directories**:
-- `.codex/plans/` - Active draft and ready plans
-- `.codex/notes/` - Archived scouting/discovery notes
-- `.codex/tmp/scout-snapshot.md` - Ephemeral phone/web handoff snapshot

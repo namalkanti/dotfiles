@@ -1,6 +1,7 @@
 ---
 name: refactor
-description: Analyze working code for quality improvements and plan incremental cleanup passes. Focuses on style, maintainability, and code smells without changing functionality. Supports both generative and interactive refactor prompts. Use after features work, typically before commit.
+description: Analyze working code for quality improvements and plan incremental cleanup passes. Focuses on style, maintainability, and code smells without changing functionality. Use after features work, typically before commit.
+allowed-tools: Read, Glob, Grep, Edit, AskUserQuestion, Bash
 ---
 
 # Refactor Skill - Code Quality & Style Refinement
@@ -118,7 +119,7 @@ You work with the same `PLAN.md` file as `/plan`, adding this section:
 # Task: Add Feature X
 
 ## Context / Design Decisions / Steps
-[... regular architect sections ...]
+[... regular plan sections ...]
 
 ## Refactoring (Code Quality)
 
@@ -199,7 +200,7 @@ When invoked, read the on-deck section and:
 
 ### 2. Reorganizing Existing Steps
 
-Refactor steps are reorganized frequently (more fluid than architect steps).
+Refactor steps are reorganized frequently (more fluid than plan steps).
 
 **When to reorganize**:
 - New on-deck items arrive
@@ -216,13 +217,11 @@ Refactor steps are reorganized frequently (more fluid than architect steps).
 
 ### 3. Generating Refactor Prompts
 
-**Two prompt types:**
-- **Generative (default)**: Prescriptive prompts for autonomous refactoring
-- **Interactive (on explicit request)**: Context-heavy prompts for collaborative refactoring
+**Two Prompt Types:**
+- **Generative (default)**: Prescriptive prompts with OLD/NEW code blocks for autonomous execution
+- **Interactive (on request)**: Context-heavy prompts for collaborative writing, when user wants to code themselves
 
-Choose generative unless the user explicitly asks for an interactive prompt or clearly wants to drive the edits themselves.
-
-**Generative prompts (default)**:
+**Generative Prompts (default)**:
 
 - Create a detailed prompt with this structure:
   ```
@@ -231,6 +230,11 @@ Choose generative unless the user explicitly asks for an interactive prompt or c
   **Goal**: Improve testability / DRY principle / Code clarity / etc.
 
   **File**: /full/path/to/file.cpp
+
+  **Design Guidance**:
+  - Follow pattern from [related code example]
+  - Naming should match [convention]
+  - [Any constraints or style preferences]
 
   **Lines X-Y**: Replace with:
   ```cpp
@@ -254,13 +258,7 @@ Choose generative unless the user explicitly asks for an interactive prompt or c
   cat > .codex/tmp/aider-prompt.txt << 'EOF'
   [the generated prompt content]
   EOF
-  if command -v pbcopy >/dev/null 2>&1; then
-    tr '\n' ' ' < .codex/tmp/aider-prompt.txt | pbcopy
-  elif command -v wl-copy >/dev/null 2>&1; then
-    tr '\n' ' ' < .codex/tmp/aider-prompt.txt | wl-copy
-  elif command -v xclip >/dev/null 2>&1; then
-    tr '\n' ' ' < .codex/tmp/aider-prompt.txt | xclip -selection clipboard
-  fi
+  cat .codex/tmp/aider-prompt.txt | tr '\n' ' ' | pbcopy
   ```
 - Output clean confirmation (do NOT display full prompt in chat):
   ```
@@ -272,25 +270,39 @@ Choose generative unless the user explicitly asks for an interactive prompt or c
   After running aider, use `/review-step` to review changes.
   ```
 
-**Interactive prompts (on explicit request only)**:
+**Interactive Prompts (on explicit request only)**:
 
-When user asks for an interactive prompt, keep the guidance specific but avoid prescribing exact replacement blocks:
-
-- Create a prompt with this structure:
+When user says "generate an interactive prompt for [subtask]":
+- **Align on scope first**: Discuss which file(s), what specific refactoring subtask
+- Create context-heavy prompt for collaborative refactoring:
   ```
-  [Clear description of what to refactor]
+  [Clear description of what you're refactoring]
 
   **Goal**: Improve testability / DRY principle / Code clarity / etc.
 
   **File**: /full/path/to/file.cpp
 
   **Current State**:
-  [Brief description of current structure and the relevant smells]
+  [Brief description of current code structure]
 
   **Design Guidance**:
-  - Preferred extraction or reorganization approach
-  - Naming or style constraints to follow
-  - Edge cases or invariants that must remain intact
+  - Extract methods following [pattern]
+  - Naming should match [convention]
+  - [Any constraints or style preferences]
+
+  **Working Mode**: Interactive - Collaborative Coding
+  - This prompt is for working alongside you as you refactor code
+  - Look for inline comments prefixed with `AI:` or `TODO(AI):` as specific instructions
+  - When you encounter these markers, help implement that specific refactoring
+  - Ask questions if the instruction is unclear
+  - Example markers:
+    ```cpp
+    // AI: Extract this method into separate pure function
+
+    // TODO(AI): Rename this variable to follow camelCase convention
+
+    /* AI: Break this 60-line method into smaller focused methods */
+    ```
 
   **Rationale**: Why this improves code quality
 
@@ -300,13 +312,11 @@ When user asks for an interactive prompt, keep the guidance specific but avoid p
   - Behavior unchanged
   - [Specific improvement achieved]
   ```
-- Key difference: interactive prompts emphasize context and direction instead of exact OLD/NEW replacement blocks
-- Save and copy them the same way as generative prompts
+- Key differences: No OLD/NEW code blocks, added Current State, Design Guidance, and Working Mode sections
+- Save and copy same way as generative prompts
+- User writes refactoring collaboratively with tool (aider or CodeCompanion)
 
-**Multiple prompts per refactor step**:
-- One refactor step may require several prompts
-- Mixed generative and interactive prompts are allowed within the same step
-- Use `/review-step` only after the full refactor step is complete
+**Multiple prompts per refactor step**: User may request multiple prompts (generative or interactive, mixed) to complete one refactor step. Check progress with `git diff` discussions. Use `/review-step` only when entire refactor step is complete.
 
 ### 4. Working Through Refactors
 
@@ -389,7 +399,7 @@ Track and enforce dependencies:
 
 ## Coding Style Guidelines (C++)
 
-**Note**: These are enforced MORE strictly in refactor than in architect. Medium pedantry level - flag significant violations, not every minor detail.
+**Note**: These are enforced MORE strictly in refactor than in plan. Medium pedantry level - flag significant violations, not every minor detail.
 
 ### Naming Conventions
 - **Functions/Fields/Variables/Parameters**: `camelCase`
@@ -477,9 +487,9 @@ X. ⭐⭐⭐ **P1** Personal style pass
 ## Integration with Other Skills
 
 ### With `/plan`:
-- Architect may add items to on-deck in real-time during planning
+- Plan may add items to on-deck in real-time during planning
 - Example: "This method is getting long, adding to refactor on-deck"
-- At end of planning, architect suggests: "Run `/refactor` to organize cleanup tasks"
+- At end of planning, plan suggests: "Run `/refactor` to organize cleanup tasks"
 - User invokes `/refactor` when ready
 
 ### With `/review-step`:
@@ -562,10 +572,12 @@ You: Generated refactor prompt for Refactor 1.
 - Never change functionality, only structure/style
 - Work with same plan file as `/plan`
 - On-deck is a collection point, refactor steps are organized tasks
+- Two prompt types: **Generative (default)** with OLD/NEW code, **Interactive (on request)** for collaborative refactoring
+- Refactor steps may need multiple prompts (mix of generative/interactive) - use `/review-step` only when step is complete
 - Flow: analyze → propose → discuss → get approval → act
 - Always discuss reorganization before doing it
 - Medium pedantry - flag significant issues, not minor details
 - Conservative approach - if it works, be cautious
 - Personal style pass is always the final refactor
 - Frequent reorganization is expected and normal
-- Use `/review-step` to track progress (same as architect)
+- Use `/review-step` to track progress (same as plan)

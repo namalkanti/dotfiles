@@ -1,6 +1,7 @@
 ---
 name: review-step
 description: Review completed code changes after running aider, update plan file with findings, and track progress. Works across sessions by loading plan files.
+allowed-tools: Read, Bash, Edit, Grep, AskUserQuestion
 ---
 
 # Review-Step Skill - Post-Execution Review & Tracking
@@ -12,8 +13,10 @@ You are a review assistant that examines completed code changes, compares them t
 ### What You DO:
 - ✅ Use `git diff` to see what actually changed (user hasn't committed yet)
 - ✅ Compare changes to step's stated goal in plan file
+- ✅ Scan for and process `TODO(AI):` markers (all step types) - prevents markers from being committed
 - ✅ Interactive discussion about findings and learnings
 - ✅ Generate additional aider prompts if major changes needed
+- ✅ Generate optional interactive review prompt (when user asks) for exploring changes in CodeCompanion
 - ✅ Update plan file (mark complete, add history, update future steps)
 - ✅ Add refactoring items to on-deck when spotted during review
 - ✅ Handle both plan steps and refactor steps (with priority)
@@ -133,7 +136,9 @@ You: [runs git diff]
 - Read step's Goal, Approach, Files
 - Know what was supposed to happen
 
-### 2. Review Changes with Git
+### 2. Review Changes
+
+**For CODING steps** (generates code changes):
 
 **Run git diff**:
 ```bash
@@ -147,6 +152,35 @@ User hasn't committed yet, so all changes are visible as unstaged.
 - What was added/removed/changed?
 - Does it match the step's goal?
 - Any surprises or deviations?
+
+**For EXPLORATION steps** (research/discovery):
+
+Check git diff if any files were modified during exploration (mixed mode).
+
+### 3. Scan for TODO(AI) Markers (All Step Types)
+
+**ALWAYS scan for TODO(AI) markers** regardless of step type:
+- Read modified files (from git diff) or files mentioned in the step
+- Scan for `// TODO(AI):` comments
+- These are markers user added during work to defer issues
+- **Important**: Clean up markers before commit so they don't stay in codebase
+
+**Process each TODO(AI) marker**:
+```
+User added: // TODO(AI): Extract pure functions from this class
+
+You: Found TODO(AI) marker in analyzer.cpp:45
+     "Extract pure functions from this class"
+
+     This is a complex refactor - adding to on-deck.
+```
+
+**Triage markers**:
+- **Trivial fix** (rename, magic number): Generate prompt, handle immediately
+- **Complex issue** (refactoring, architectural): Add to refactor on-deck
+- **Clean up markers** once processed (remove the TODO(AI) comment)
+
+**Why scan all steps**: Prevents TODO(AI) markers from being committed to repo. User can add markers anytime during work and review-step will process them.
 
 **Add to refactor on-deck**:
 As you review code, **add items to "Refactoring > On-Deck" in real-time** when you notice:
@@ -163,7 +197,7 @@ As you review code, **add items to "Refactoring > On-Deck" in real-time** when y
 - Brief description + file:line references
 - Don't interrupt review flow - note it and continue
 
-### 3. Interactive Discussion
+### 4. Interactive Discussion
 
 **Compare to plan**:
 - "The step planned to X, and I see you did Y"
@@ -176,7 +210,86 @@ As you review code, **add items to "Refactoring > On-Deck" in real-time** when y
 - If major additional changes needed, generate aider prompts
 - If approach changed significantly, discuss implications for future steps
 
-### 4. Update Plan File
+**Optional: Interactive Review Prompt** (only when user asks):
+
+User may request: "generate an interactive review prompt" or "create a review prompt for CodeCompanion"
+
+**Purpose**: NOT to make changes, but to provide context for interactive exploration of what changed.
+
+**Generate prompt with this structure**:
+```
+# Code Review: [Step Title]
+
+**Goal**: Interactive exploration of changes made in this step
+
+**Step Context**:
+[What this step was supposed to accomplish]
+
+**Changes Overview**:
+- [file1.cpp]: [summary of changes]
+- [file2.h]: [summary of changes]
+
+**Detailed Changes**:
+
+## File: /path/to/file1.cpp
+
+**Location**: Lines X-Y
+
+**Before** (what we had):
+```cpp
+[old code snippet]
+```
+
+**After** (what we have now):
+```cpp
+[new code snippet]
+```
+
+**What Changed**: [Brief description of the change]
+
+---
+
+## File: /path/to/file2.h
+
+**Location**: Lines A-B
+
+**Before**:
+```cpp
+[old code snippet]
+```
+
+**After**:
+```cpp
+[new code snippet]
+```
+
+**What Changed**: [Brief description]
+
+---
+
+**Working Mode**: Interactive - Code Review Exploration
+- This prompt is for exploring and understanding the changes that were made
+- Ask questions like "show me where X changed" or "explain this change"
+- Navigate through changes to understand their impact
+- This is NOT for making new changes - review only
+
+**Questions to Consider**:
+- Does this achieve the step's goal?
+- Are there any potential issues?
+- Is anything unclear or needs documentation?
+```
+
+**Save and copy same way as other prompts**:
+- Save to `.codex/tmp/review-prompt.txt`
+- Copy to clipboard (newlines stripped)
+- User loads into CodeCompanion/aider for interactive exploration
+
+**When to offer**:
+- User explicitly asks for it
+- Don't offer by default - most reviews don't need this
+- Useful for complex changes where user wants hands-on exploration
+
+### 5. Update Plan File
 
 **Determine magnitude of changes**:
 
@@ -213,7 +326,7 @@ As you review code, **add items to "Refactoring > On-Deck" in real-time** when y
 - Update future step details if approach changed
 - Note any blockers discovered
 
-### 5. Commit Changes (Conditional)
+### 6. Commit Changes (Conditional)
 
 **Only commit if user explicitly asks**:
 - "commit this"
@@ -238,7 +351,7 @@ Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>"
 - Optional body: More details if needed
 - Always include Co-Authored-By line
 
-### 6. Summary & Handoff
+### 7. Summary & Handoff
 
 **Output a summary**:
 ```
@@ -427,6 +540,163 @@ You: Loading .codex/plans/PLAN.md from context...
      (Or return to plan steps with `/plan resume`)
 ```
 
+### Example 5: Reviewing an Exploration Step with TODO(AI) Markers
+
+```
+User: /review-step 2
+
+You: Loading .codex/plans/PLAN.md from context...
+     Reviewing Step 2 (EXPLORATION): "Understand current auth system"
+
+     This is an exploration step. Let me check for TODO(AI) markers...
+
+     [reads files mentioned in step]
+
+     Found 3 TODO(AI) markers:
+
+     1. auth.cpp:123 - "Add null check for user object"
+        → Trivial fix - generating prompt...
+
+     2. auth.cpp:234 - "Extract validation logic into pure functions"
+        → Complex refactor - adding to on-deck
+
+     3. auth.h:45 - "Deprecated interface - needs redesign"
+        → Architectural - adding to on-deck with note for future step
+
+     Generated prompt for marker #1 (null check).
+     ✓ Saved to: .codex/tmp/aider-prompt.txt
+
+     Should I mark step 2 complete and clean up the processed markers?
+
+User: Yes, and run the prompt for the null check
+
+You: [user runs aider with the null check prompt]
+     [user returns]
+
+     Great! Marking exploration complete...
+
+     ✅ Step 2 Complete: Understand current auth system
+
+     Findings:
+     - Auth system uses session-based tokens
+     - Validation logic needs extraction (added to on-deck)
+     - Interface needs redesign (deferred to future step)
+
+     Plan updated:
+     - Step 2 marked complete
+     - 2 items added to refactor on-deck
+     - History updated with findings
+
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     Ready for next step? Run `/plan resume`
+```
+
+### Example 6: Reviewing a Coding Step with TODO(AI) Markers
+
+```
+User: /review-step 3
+
+You: Loading .codex/plans/PLAN.md from context...
+     Reviewing Step 3 (CODING): "Implement JWT token generation"
+
+     [runs git diff]
+
+     I see changes to:
+     - auth/jwt.cpp: Added generateToken and verifyToken functions
+     - auth/jwt.h: Added new function declarations
+
+     The implementation looks good and matches the step goal.
+
+     Scanning for TODO(AI) markers...
+
+     Found 2 TODO(AI) markers:
+
+     1. jwt.cpp:78 - "Add token expiration configuration"
+        → Complex refactor - adding to on-deck
+
+     2. jwt.cpp:102 - "Extract secret key management to config module"
+        → Architectural - adding to on-deck
+
+     These are good catches for refactoring later. Cleaning up markers...
+
+     Should I mark step 3 complete?
+
+User: Yes
+
+You: ✅ Step 3 Complete: Implement JWT token generation
+
+     Changes reviewed:
+     - auth/jwt.cpp: Token generation and verification implemented
+     - auth/jwt.h: Function declarations added
+
+     Deferred to refactoring:
+     - Token expiration configuration (added to on-deck)
+     - Secret key management (added to on-deck)
+
+     Plan updated:
+     - Step 3 marked complete
+     - 2 items added to refactor on-deck
+     - TODO(AI) markers cleaned up
+
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     Ready for next step? Run `/plan resume`
+```
+
+### Example 7: Requesting an Interactive Review Prompt
+
+```
+User: /review-step 4
+
+You: Loading .codex/plans/PLAN.md from context...
+     Reviewing Step 4 (CODING): "Refactor authentication middleware"
+
+     [runs git diff]
+
+     I see significant changes across multiple files:
+     - middleware/auth.cpp: Refactored into 3 separate functions
+     - middleware/auth.h: Updated interfaces
+     - middleware/validation.cpp: New file with extracted validation logic
+
+     This is a substantial refactor. The changes look good but there's a lot here.
+
+User: Can you generate an interactive review prompt? I want to explore these changes more carefully.
+
+You: Sure! Generating interactive review prompt for exploring these changes...
+
+     Generated interactive review prompt.
+
+     ✓ Prompt copied to clipboard (newlines stripped)
+       Saved to: .codex/tmp/review-prompt.txt
+
+     This prompt contains:
+     - Overview of all changes
+     - Before/after code for each change
+     - File locations and line numbers
+
+     Load this into CodeCompanion or aider to interactively explore what changed.
+     You can ask questions like "show me the validation changes" or "explain
+     why this was split into 3 functions."
+
+     Once you're satisfied with your review, let me know and I'll mark the
+     step complete.
+
+User: [loads prompt into CodeCompanion, explores changes, returns]
+     Looks good, mark it complete
+
+You: ✅ Step 4 Complete: Refactor authentication middleware
+
+     Changes reviewed (interactively):
+     - middleware/auth.cpp: Refactored into focused functions
+     - middleware/auth.h: Updated interfaces
+     - middleware/validation.cpp: Extracted validation logic
+
+     Plan updated:
+     - Step 4 marked complete
+
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     Ready for next step? Run `/plan resume`
+```
+
 ## Cross-Session Workflow
 
 **Session 1** (planning and prompting):
@@ -482,11 +752,13 @@ The plan file persists all context needed to resume in any session.
 - **DISCUSSION FIRST** - Share findings, discuss implications, get approval before updating plan
 - This skill bridges the gap between execution (aider) and planning (`/plan`, `/refactor`)
 - Handle both plan steps and refactor steps with priority (plan first, unless "rX" specified)
+- **ALWAYS scan for TODO(AI) markers** regardless of step type (exploration or coding) - prevents markers from being committed
 - Add refactoring items to on-deck in real-time as you spot them during review
+- **Optional interactive review prompt** - when user asks, generate before/after prompt for exploring changes in CodeCompanion (NOT a default)
 - User maintains control - you review and track, they decide next steps
 - Plan file is the persistent state - keep it accurate and detailed
 - Interactive and conversational - discuss findings, don't just report
-- Flow: examine changes → discuss → propose updates → get approval → act
+- Flow: examine changes → scan TODO(AI) markers → discuss → propose updates → get approval → act
 - Only commit source code if asked, never commit plan file
 - End by pointing to `/plan resume` or `/refactor resume` depending on context
 
