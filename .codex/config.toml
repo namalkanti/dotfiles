@@ -1,3 +1,5 @@
+model = "gpt-5.5"
+model_reasoning_effort = "medium"
 [projects."/home/namalkanti"]
 trust_level = "untrusted"
 
@@ -10,5 +12,14 @@ trust_level = "untrusted"
 [projects."/home/namalkanti/.config/dotfiles"]
 trust_level = "trusted"
 
+[projects."/home/namalkanti/Drive/Stuffz/Notes"]
+trust_level = "trusted"
+
+[projects."/home/namalkanti/Drive/Stuffz/Notes/Notecards"]
+trust_level = "trusted"
+
 [notice.model_migrations]
 "gpt-5.3-codex" = "gpt-5.4"
+
+[tui.model_availability_nux]
+"gpt-5.5" = 4
