@@ -1,5 +1,6 @@
 local wezterm = require 'wezterm'
-local config = {}
+-- local theme = wezterm.plugin.require('https://github.com/neapsix/wezterm').main
+local config = wezterm.config_builder()
 local act = wezterm.action
 
 local neofusion_theme = {
@@ -32,8 +33,9 @@ local neofusion_theme = {
   },
 }
 
-
 config.font = wezterm.font 'MesloLGS NF'
+-- config.colors = theme.colors()
+-- config.window_frame = theme.window_frame()
 -- config.color_scheme = 'GruvboxDark'
 -- config.colors = neofusion_theme
 -- config.color_scheme = 'Solarized Dark Higher Contrast'
@@ -43,64 +45,22 @@ config.font = wezterm.font 'MesloLGS NF'
 -- config.color_scheme = 'rose-pine'
 config.color_scheme = 'Rosé Pine (Gogh)'
 -- config.color_scheme = 'rose-pine-moon'
+-- config.color_scheme = 'nord'
+
 config.font_size = 14
 config.enable_scroll_bar = true
 config.keys = {
-    {
-        key = 'h',
-        mods = 'WIN',
-        action = act.ActivatePaneDirection 'Left', 
-    },
-    {
-        key = 'j',
-        mods = 'WIN',
-        action = act.ActivatePaneDirection 'Down', 
-    },
-    {
-        key = 'k',
-        mods = 'WIN',
-        action = act.ActivatePaneDirection 'Up', 
-    },
-    {
-        key = 'l',
-        mods = 'WIN',
-        action = act.ActivatePaneDirection 'Right', 
-    },
-    {
-        key = 'L',
-        mods = 'WIN',
-        action = act.SplitHorizontal { domain = 'CurrentPaneDomain'}, 
-    },
-    {
-        key = 'J',
-        mods = 'WIN',
-        action = act.SplitVertical { domain = 'CurrentPaneDomain'}, 
-    },
-    {
-        key = 'n',
-        mods = 'WIN',
-        action = act.ActivateTabRelative(1), 
-    },
-    {
-        key = 'N',
-        mods = 'WIN',
-        action = act.ActivateTabRelative(-1), 
-    },
-    {
-        key = 't',
-        mods = 'WIN',
-        action = act.SpawnTab 'CurrentPaneDomain', 
-    },
-    {
-        key = 'w',
-        mods = 'WIN',
-        action = act.CloseCurrentTab{ confirm = false }, 
-    },
-    {
-        key = 'x',
-        mods = 'WIN',
-        action = act.CloseCurrentTab{ confirm = false }, 
-    },
+    { key = 'h', mods = 'WIN', action = act.ActivatePaneDirection 'Left' },
+    { key = 'j', mods = 'WIN', action = act.ActivatePaneDirection 'Down' },
+    { key = 'k', mods = 'WIN', action = act.ActivatePaneDirection 'Up' },
+    { key = 'l', mods = 'WIN', action = act.ActivatePaneDirection 'Right' },
+    { key = 'L', mods = 'WIN', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
+    { key = 'J', mods = 'WIN', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
+    { key = 'n', mods = 'WIN', action = act.ActivateTabRelative(1) },
+    { key = 'N', mods = 'WIN', action = act.ActivateTabRelative(-1) },
+    { key = 't', mods = 'WIN', action = act.SpawnTab 'CurrentPaneDomain' },
+    { key = 'w', mods = 'WIN', action = act.CloseCurrentTab { confirm = false } },
+    { key = 'x', mods = 'WIN', action = act.CloseCurrentTab { confirm = false } },
     {
         key = 'T',
         mods = 'WIN',
@@ -108,39 +68,19 @@ config.keys = {
           local tab, window = pane:move_to_new_tab()
         end),
     },
-    {
-        key = 'T',
-        mods = 'WIN',
-        action = wezterm.action_callback(function(win, pane)
-          local tab, window = pane:move_to_new_tab()
-        end),
-    },
-    {
-        key = 'v',
-        mods = 'WIN',
-        action = act.ActivateCopyMode,
-    },
-    {
-        key = 'p',
-        mods = 'WIN',
-        action = act.PasteFrom 'Clipboard',
-    },
-    -- Ctrl‑/
-    {
-      key    = "/",
-      mods   = "CTRL",
-      action = wezterm.action.SendKey { key = "/", mods = "CTRL" },
-    },
-    -- (optional) some layouts emit Ctrl‑Shift‑_ instead of Ctrl‑/
-    {
-      key    = "_",
-      mods   = "CTRL|SHIFT",
-      action = wezterm.action.SendKey { key = "_", mods = "CTRL|SHIFT" },
-    },
+    { key = 'v', mods = 'WIN', action = act.ActivateCopyMode },
+    { key = 'p', mods = 'WIN', action = act.PasteFrom 'Clipboard' },
+    { key = '+', mods = 'WIN', action = act.IncreaseFontSize },
+    { key = '-', mods = 'WIN', action = act.DecreaseFontSize },
+    { key = 'q', mods = 'WIN', action = act.ActivateCommandPalette },
+    { key = 'P', mods = 'CTRL|SHIFT', action = act.DisableDefaultAssignment },
+    -- Forward Ctrl-/ untouched
+    { key = '/', mods = 'CTRL', action = act.SendKey { key = '/', mods = 'CTRL' } },
+    -- Some layouts send Ctrl-Shift-_ instead
+    { key = '_', mods = 'CTRL|SHIFT', action = act.SendKey { key = '_', mods = 'CTRL|SHIFT' } },
 }
 
 for i = 1, 8 do
-  -- CTRL+WIN + number to activate that tab
   table.insert(config.keys, {
     key = tostring(i),
     mods = 'WIN',
@@ -148,7 +88,7 @@ for i = 1, 8 do
   })
   table.insert(config.keys, {
     key = tostring(i),
-    mods = 'WIN | SHIFT',
+    mods = 'WIN|SHIFT',
     action = wezterm.action_callback(function(win, pane)
       local tab, window = pane:move_to_new_tab()
     end),

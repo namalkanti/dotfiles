@@ -4,6 +4,7 @@ alias ssh-config='gvim ~/.ssh/config'
 
 # enable color support of ls and also add handy aliases
 alias ls='ls -h --color=auto'
+alias kat='cat'
 
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
@@ -32,19 +33,32 @@ alias offline='sudo shutdown now'
 alias reboot='sudo shutdown --reboot now'
 
 #Tmux aliases
-alias tn='tmux new -s'
+alias tn='tmux -2 new -s'
 alias tl='tmux ls'
 alias ta='tmux a -t'
 
+#Pi
+pi() {
+    command pi --models claude-sonnet-4-6,claude-opus-4-8,gpt-5.4,gpt-5.5,gemini-3.5-flash "$@"
+}
+
 #lf commands
 nav () {
-    # `command` is needed in case `lfcd` is aliased to `lf`
     cd "$(command lf -print-last-dir "$@")"
 }
 
 #Aider aliases
-alias aider='aider --model openai/gpt-5.2 --chat-mode ask --no-auto-commits --subtree-only'
+alias aider='aider --chat-mode ask --cache-prompts --no-gitignore --no-auto-commits --subtree-only'
 alias aider-continue='aider --restore-chat-history'
+alias aider-opus='aider -m claude-opus-4-8'
+alias aider-gpt='aider -m gpt-5.4-2026-03-05 --weak-model gpt-5.4-nano-2026-03-17'
+alias aider-gpt-big='aider -m gpt-5.5-2026-04-23 --weak-model gpt-5.4-nano-2026-03-17'
+alias aider-flash='aider -m gemini/gemini-3.5-flash'
+#alias aider-gem='aider -m gemini/gemini-3.5-pro'  # not yet available
+export AIDER_READ=~/.aider.instructions.md
 
-#Aichat 
+#Aichat
 alias bash-gen='aichat -e'
+alias ai='aichat'
+alias ai-nano='aichat -m openai:gpt-5.4-nano-2026-03-17'
+alias ai-flash='aichat -m gemini:gemini-3.5-flash'

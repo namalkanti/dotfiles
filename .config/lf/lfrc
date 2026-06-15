@@ -1,6 +1,1 @@
-cmd dirsize %{{ 
-  size=$(du -sh -- "$f" 2>/dev/null | cut -f1)
-  lf -remote "send $id echo $size  $f"
-}}
-
-map D :dirsize
+/home/namalkanti/.config/dotfiles/.config/lf/lfrc

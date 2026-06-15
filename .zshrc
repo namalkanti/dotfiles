@@ -1,12 +1,17 @@
-# Enable Powerlevel9k instant prompt. Should stay close to the top of ~/.zshrc.
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+#Determine Linux OS
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    os_id=$(grep '^ID=' /etc/os-release | cut -d '=' -f 2)
+fi
+
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/Bin:/usr/local/bin:$HOME/.local/bin:$PATH
+export PATH=$HOME/.local/bin:$HOME/Bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -80,13 +85,13 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(archlinux
 docker
-colored-man-pages 
-colorize 
-command-not-found 
-git 
-history-substring-search 
-python 
-sudo 
+colored-man-pages
+colorize
+command-not-found
+git
+history-substring-search
+python
+sudo
 z)
 
 source $ZSH/oh-my-zsh.sh
@@ -95,7 +100,6 @@ source $ZSH/oh-my-zsh.sh
 
 export MANPATH="/usr/local/man:$MANPATH"
 
-# You may need to manually set your language environment
 export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
@@ -105,21 +109,13 @@ else
   export EDITOR='nvim'
 fi
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-
 # Aliases
 alias zshconfig="gvim ~/.zshrc"
 alias ohmyzsh="gvim ~/.oh-my-zsh"
 alias ydl="yt-dlp -x --audio-format m4a --audio-quality 0 --js-runtimes node --remote-components ejs:github"
 
 #Vim settings
-bindkey -v 
+bindkey -v
 
 #Git aliases
 git config --global alias.gr 'log --graph --full-history --all --color --pretty=tformat:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s%x20%x1b[33m(%an)%x1b[0m"'
@@ -127,12 +123,12 @@ git config --global color.diff auto
 git config --global color.status auto
 export GIT_EDITOR='nvim'
 
-#Fzf/xplr variables
+#Fzf variables
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 export FZF_DEFAULT_OPTS="--tmux"
 source <(fzf --zsh)
 
-# Function for Alt+C (change directory via fzf)
+# Change directory via fzf
 goto() {
   local dir=$(find . -type d | fzf)
   if [[ -n "$dir" ]]; then
@@ -140,7 +136,7 @@ goto() {
   fi
 }
 
-# Function for Ctrl+T (find file via fzf)
+# Find file via fzf
 locate() {
   local file=$(find . -type f | fzf)
   if [[ -n "$file" ]]; then
@@ -152,19 +148,25 @@ locate() {
 setopt COMBINING_CHARS
 
 # Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-# Env
-# Loads variales in env file
+# Loads variables in env file
 if [ -f ~/.env ]; then
     source ~/.env
 fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# OS-specific paths
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    export PATH=$HOME/Bin/linux:$PATH
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    export PATH=$HOME/Bin/mac:$PATH
+    bindkey "^R" history-incremental-search-backward
+fi
+
+# Local overrides
+[ -f "$HOME/.zshenv.local" ] && source "$HOME/.zshenv.local"

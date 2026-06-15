@@ -13,13 +13,12 @@ Plug 'rust-lang/rust.vim'
 Plug 'udalov/kotlin-vim'
 Plug 'neovim/nvim-lspconfig'
 
-"AI Coding
-" Code companion dependencies
-Plug 'github/copilot.vim'
-Plug 'saghen/blink.cmp', { 'tag': 'v0.*' }
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'olimorris/codecompanion.nvim'
+"AI Coding (disabled - using pi/aider instead)
+"Plug 'github/copilot.vim'
+"Plug 'saghen/blink.cmp', { 'tag': 'v0.*' }
+"Plug 'nvim-lua/plenary.nvim'
+"Plug 'nvim-treesitter/nvim-treesitter'
+"Plug 'olimorris/codecompanion.nvim'
 call plug#end()
 
 set nocompatible
@@ -101,12 +100,11 @@ function! LspOnAttach(client, bufnr) abort
 endfunction
 
 " 3) Configure your language servers and code companion in a Lua block
-lua require('config.codecompanion').setup()
-lua require('config.blink').setup()
+"lua require('config.codecompanion').setup()
+"lua require('config.blink').setup()
 lua require('config.lsp').setup()
 
-
 " 4) (Optional) Enable built-in LSP-based completion
-let g:copilot_enabled = 0
-set completeopt=menuone,noinsert,noselect
-set omnifunc=v:lua.vim.lsp.omnifunc
+"let g:copilot_enabled = 0
+"set completeopt=menuone,noinsert,noselect
+"set omnifunc=v:lua.vim.lsp.omnifunc
