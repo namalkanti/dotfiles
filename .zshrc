@@ -168,5 +168,8 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     bindkey "^R" history-incremental-search-backward
 fi
 
+# Ollama
+export OLLAMA_HOST=http://100.125.87.85:11434
+
 # Local overrides
 [ -f "$HOME/.zshenv.local" ] && source "$HOME/.zshenv.local"
