@@ -12,5 +12,8 @@
     "ollama/qwen3.6:35b-mlx",
     "ollama/qwen3.5:9b-mlx"
   ],
-  "theme": "dark"
+  "theme": "dark",
+  "packages": [
+    "npm:pi-web-access"
+  ]
 }
