@@ -1,5 +1,28 @@
 {
   "providers": {
+    "ollama": {
+      "baseUrl": "http://100.125.87.85:11434/v1",
+      "api": "openai-completions",
+      "apiKey": "ollama",
+      "compat": {
+        "supportsDeveloperRole": false,
+        "supportsReasoningEffort": false
+      },
+      "models": [
+        {
+          "id": "qwen3.6:35b-mlx",
+          "name": "Qwen3.6 35B (Tailscale)",
+          "contextWindow": 262144,
+          "maxTokens": 81920
+        },
+        {
+          "id": "qwen3.5:9b-mlx",
+          "name": "Qwen3.5 9B (Tailscale)",
+          "contextWindow": 262144,
+          "maxTokens": 81920
+        }
+      ]
+    },
     "anthropic": {
       "modelOverrides": {
         "claude-sonnet-4-6": {

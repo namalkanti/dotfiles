@@ -171,7 +171,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 # Ollama
-export OLLAMA_HOST=http://100.125.87.85:11434
+export OLLAMA_API_BASE=http://100.125.87.85:11434
 
 # Local overrides
 [ -f "$HOME/.zshenv.local" ] && source "$HOME/.zshenv.local"

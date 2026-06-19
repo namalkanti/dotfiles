@@ -1,6 +1,16 @@
 {
-  "lastChangelogVersion": "0.79.3",
+  "lastChangelogVersion": "0.79.7",
   "defaultProvider": "anthropic",
   "defaultModel": "claude-sonnet-4-6",
-  "defaultThinkingLevel": "medium"
+  "defaultThinkingLevel": "minimal",
+  "enabledModels": [
+    "anthropic/claude-sonnet-4-6",
+    "anthropic/claude-opus-4-8",
+    "openai/gpt-5.4",
+    "openai/gpt-5.5",
+    "google/gemini-3.5-flash",
+    "ollama/qwen3.6:35b-mlx",
+    "ollama/qwen3.5:9b-mlx"
+  ],
+  "theme": "dark"
 }
