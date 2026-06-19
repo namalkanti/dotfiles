@@ -50,11 +50,14 @@ nav () {
 #Aider aliases
 alias aider='aider --chat-mode ask --cache-prompts --no-gitignore --no-auto-commits --subtree-only'
 alias aider-continue='aider --restore-chat-history'
-alias aider-opus='aider -m claude-opus-4-8'
-alias aider-gpt='aider -m gpt-5.4-2026-03-05 --weak-model gpt-5.4-nano-2026-03-17'
-alias aider-gpt-big='aider -m gpt-5.5-2026-04-23 --weak-model gpt-5.4-nano-2026-03-17'
-alias aider-flash='aider -m gemini/gemini-3.5-flash'
+alias aider-opus='aider --model claude-opus-4-8'
+alias aider-gpt='aider --model gpt-5.4-2026-03-05 --weak-model gpt-5.4-nano-2026-03-17'
+alias aider-gpt-big='aider --model gpt-5.5-2026-04-23 --weak-model gpt-5.4-nano-2026-03-17'
+alias aider-flash='aider --model gemini/gemini-3.5-flash'
 #alias aider-gem='aider -m gemini/gemini-3.5-pro'  # not yet available
+aider-qwen-coder() {
+    OLLAMA_API_BASE=http://localhost:11434 command aider --chat-mode ask --cache-prompts --no-gitignore --no-auto-commits --subtree-only --model ollama_chat/qwen2.5-coder:14b --weak-model ollama_chat/qwen2.5-coder:14b "$@"
+}
 export AIDER_READ=~/.aider.instructions.md
 
 #Aichat
