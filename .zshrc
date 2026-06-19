@@ -154,7 +154,9 @@ fi
 
 # Loads variables in env file
 if [ -f ~/.env ]; then
+    set -a
     source ~/.env
+    set +a
 fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
