@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "0.79.7",
-  "defaultProvider": "ollama",
-  "defaultModel": "qwen3.6:35b-mlx",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-opus-4-8",
   "defaultThinkingLevel": "low",
   "enabledModels": [
     "anthropic/claude-sonnet-4-6",
@@ -15,5 +15,6 @@
   "theme": "dark",
   "packages": [
     "npm:pi-web-access"
-  ]
+  ],
+  "hideThinkingBlock": false
 }
