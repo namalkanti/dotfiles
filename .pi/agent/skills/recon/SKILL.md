@@ -99,8 +99,10 @@ notes. Only the human deletes.
 
 ## Archiving
 
-When discovery is complete or a session wraps up worth preserving, archive the
-recon work — the investigation itself, separate from execution — to
+**On explicit request only.** Never archive automatically. The user decides
+when the investigation is worth preserving as a note.
+
+When asked, write the investigation itself (findings, decisions, unknowns) to
 `.pi/notes.local/`. See [archive.md](references/archive.md) for the note
 template, markers, and value ratings.
 
