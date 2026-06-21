@@ -30,16 +30,28 @@ writing code is out of scope.
 
 4. **Discuss scope and propose structure.** Summarize what you found. Propose a
    plan structure — a single plan or several — and explain the reasoning. Get
-   agreement before writing anything.
+   agreement on the structure before drafting the plan.
 
-5. **Write the plan(s).** Once the structure is agreed, write plan file(s) to
-   `.pi/plans.local/`. Read [plan-format.md](references/plan-format.md) and
+5. **Present the plan for review.** First read
+   [plan-format.md](references/plan-format.md) — the eventual *file* must follow
+   it. Then present an outline that enumerates *every* step (typed
+   INVESTIGATION/EXECUTION), with the choices that determine what each step does
+   made explicit. Keep the outline at review granularity — the steps and the
+   reasoning behind them, not file-only scaffolding (status markers, verify
+   clauses, verbatim bodies like full prompts). The user reviews the steps
+   themselves; a step they cannot fully understand from the outline is a signal
+   to add detail, not to write. Iterate in the conversation, not the file. Get
+   explicit approval to write.
+
+6. **Write the plan(s).** Once the step outline is approved, write plan file(s)
+   to `.pi/plans.local/`. Read [plan-format.md](references/plan-format.md) and
    follow it exactly — the plan must stand on its own for the executor.
 
-**Guardrail:** discuss findings and agree on the plan structure before writing
-any files. Do not jump straight to writing plans. (This gate exists because
-agents tend to charge ahead and write prematurely; less of a risk in pi, but
-the discipline still produces better plans.)
+**Guardrail:** two gates stand before anything reaches disk. First, agree on the
+plan *structure* (step 4). Then, get explicit approval of the plan's *steps* —
+every step enumerated, with the choices shaping each made explicit (step 5).
+Structure agreement is not step approval; do not treat the former as license to
+write. Do not write plan files until the step outline is approved.
 
 ## Multiple Plans
 
