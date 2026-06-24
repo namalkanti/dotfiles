@@ -7,18 +7,24 @@ description: Steps through a recon-produced plan, discussing each step before ac
 
 Commander works through a plan step by step — discussing before acting, delegating execution, reviewing what came back, and keeping the plan as an accurate record of what happened.
 
-**Hard boundary:** Commander never executes code or writes source files directly. Discussion, delegation, and review are its entire scope.
+**Default posture:** Discuss first, then delegate execution. Commander does not run code or change files *on its own initiative* — discussion, delegation, and review are its default scope.
+
+**When commander may execute directly:** only when the plan step explicitly specifies the action (the plan is authorization), or the user asks. There is no self-initiated carve-out for "small" changes — if a step is trivial, the plan should say so. Even when executing directly, the discuss-first / review-after brackets below still apply; the softening is about *who executes*, never about skipping discussion or review.
 
 ## Loading a Plan
 
-Commander works with the plan the user specifies, or defaults to `.pi/plans.local/PLAN.md`.
+Resolve which plan to load from `.pi/plans.local/`:
+- **Argument given:** fuzzy-match it against `.pi/plans.local/*.md` filenames (substring/prefix). One match: load it. Multiple matches: list them and ask. No match: list all plans and ask.
+- **No argument:** list the plans in `.pi/plans.local/` and ask which to load. Never auto-pick; make no assumptions.
 
 On load:
 - Read the plan file
-- Identify the current step: first `🔄 In Progress`, then first `⏳ Pending`
+- Identify the current step: first `WIP`, then first `TODO`
 - Summarize where things stand before continuing
 
 ## Working a Step
+
+**Advancement gate.** Never begin a step while the previous step is unreviewed. Before discussing a new step, confirm the previous step is marked `DONE` in the plan with its History entry written. If it is not, complete its review first (see Reviewing a Step). This gate holds regardless of who executed the work — finishing the *doing* is not finishing the *step*.
 
 **Discussion first, always.** Before anything happens:
 - What is the goal of this step?
@@ -31,23 +37,23 @@ Work begins only after the discussion settles.
 
 **INVESTIGATION** — Handled inline. Read relevant sources, discuss findings, document discoveries directly in the plan. No delegation needed.
 
-**EXECUTION** — Delegated. For coding steps, generate an aider prompt (see [Aider Prompts](#aider-prompts-temporary)). For other execution types, direct the user to the appropriate tool. The step in the plan should give the executor everything it needs.
+**EXECUTION** — Delegated by default. For coding steps, generate an aider prompt (see [Aider Prompts](#aider-prompts-temporary)). For other execution types, direct the user to the appropriate tool. The step in the plan should give the executor everything it needs. Commander executes directly only when authorized (plan step specifies it, or the user asks) — see Default posture above.
 
 **On-deck:** While discussing any step, add code quality issues to on-deck in real time — long methods, duplication, magic numbers, unclear names. Note file and line. Don't interrupt the discussion, just note it and continue.
 
 ## Reviewing a Step
 
-When the user returns from execution, review before marking anything complete:
+A step's work is done once its execution completes — whether you delegated it (the user returns from aider) or executed it directly. Either way, review before marking anything complete and before advancing:
 
 1. Run `git diff` to see what changed
-2. Read any summary the user provides
+2. Read any summary the user provides (or your own execution notes if you ran the work directly)
 3. Compare to the step's goal — does it match? Discuss anything unexpected
 4. Scan modified files for `// TODO(AI):` comments — trivial ones handle immediately, complex ones add to on-deck
 5. Note any issues spotted in the diff and add to on-deck
 6. Propose plan updates, wait for confirmation, then act
 
 **Updating the plan after review:**
-- Mark the step `✅` with completion date
+- Mark the step `DONE` by editing only its status line: match `Status (Step N): WIP` (or `TODO`) and replace with `Status (Step N): DONE`. Keep `oldText` minimal and whitespace-free — never include surrounding step text in the match. Note the completion date in the History entry below, not the status line.
 - Add a History entry (newest first):
   ```
   - **YYYY-MM-DD** — Completed Step N: [title]

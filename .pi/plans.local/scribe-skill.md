@@ -56,7 +56,7 @@ if more work remains.
      whether it can coexist with a `/load` commands file. Determine what a
      minimal launch command looks like for a markdown file in watch mode.
    - Sources: `aider --help`, `~/.bash_aliases`, aider docs if needed.
-   - Status: ⏳ Pending
+   - Status (Step 1): TODO
 
 2. **Settle the aider handoff workflow** (INVESTIGATION)
    - Goal: Decide the concrete handoff pattern given what watch mode looks like.
@@ -65,7 +65,7 @@ if more work remains.
      document is sufficient. Settle what the user does to trigger the handoff
      (what pi outputs), and what returning to pi looks like.
    - Depends on: Step 1.
-   - Status: ⏳ Pending
+   - Status (Step 2): TODO
 
 3. **Write `scribe/SKILL.md`** (EXECUTION)
    - Goal: The skill body, self-documenting and standalone.
@@ -81,7 +81,7 @@ if more work remains.
        continues if needed.
      - Explicit non-goals: no Google Docs export, no sortie-style summarizer.
    - Depends on: Steps 1–2.
-   - Status: ⏳ Pending
+   - Status (Step 3): TODO
 
 4. **Write `scribe/references/` if warranted** (EXECUTION)
    - Goal: House any reference material that would bloat SKILL.md.
@@ -89,7 +89,7 @@ if more work remains.
      substantial, extract to `references/watch-mode.md`. If small, fold into
      SKILL.md directly.
    - Depends on: Step 3.
-   - Status: ⏳ Pending
+   - Status (Step 4): TODO
 
 5. **Validate in real use** (INVESTIGATION)
    - Goal: Confirm the skill works for a real document creation session before
@@ -97,7 +97,7 @@ if more work remains.
    - Approach: Run through a session — pi drafting phase plus at least one
      aider watch mode handoff. Capture what works and what needs adjustment;
      fold fixes back into Steps 3–4 if needed.
-   - Status: ⏳ Pending
+   - Status (Step 5): TODO
 
 ## Notes
 

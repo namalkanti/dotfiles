@@ -107,7 +107,7 @@ the MVP has **no** completion auto-detection and **no** separate summarizer LLM.
      - Confirm `/load`, `/add`, `/read` semantics match what the commands-file
        template will assume.
    - Sources: `~/.bash_aliases`, `aider --help`, a scratch tmux/aider run.
-   - Status: ⏳ Pending
+   - Status (Step 1): TODO
 
 2. **Write `sortie/SKILL.md`** (EXECUTION)
    - Goal: The skill body, self-documenting and standalone.
@@ -127,7 +127,7 @@ the MVP has **no** completion auto-detection and **no** separate summarizer LLM.
      - Explicitly note out-of-scope: no completion auto-detection, no separate
        summarizer (future phases).
      - Reference `references/prompt-templates.md` for the templates.
-   - Status: ⏳ Pending
+   - Status (Step 2): TODO
 
 3. **Write `sortie/references/prompt-templates.md`** (EXECUTION)
    - Goal: House the aider-specific prompt templates migrated out of the skills.
@@ -137,7 +137,7 @@ the MVP has **no** completion auto-detection and **no** separate summarizer LLM.
      SKILL.md references this file or inlines the templates. *(Answer this
      references-vs-inline choice here, at execution; lean references to keep the
      skill body lean and match the recon/commander pattern.)*
-   - Status: ⏳ Pending
+   - Status (Step 3): TODO
 
 4. **Validate sortie in real use** (INVESTIGATION)
    - Goal: Confirm sortie works ad-hoc and against a plan step before stripping
@@ -145,7 +145,7 @@ the MVP has **no** completion auto-detection and **no** separate summarizer LLM.
    - Approach: User runs sortie in both modes; capture what works and what needs
      adjustment. Fold fixes back into Steps 2–3 if needed. Only proceed to
      Phase 2 once the user is satisfied.
-   - Status: ⏳ Pending
+   - Status (Step 4): TODO
 
 ### Phase 2 — Strip aider from recon/commander (gated on Step 4)
 
@@ -158,14 +158,14 @@ the MVP has **no** completion auto-detection and **no** separate summarizer LLM.
        (no naming aider); the plan step carries what the executor needs.
      - Verify "Reviewing a Step" (keys off `git diff` + a user-provided summary)
        has no aider-specific wording; adjust if so.
-   - Status: ⏳ Pending
+   - Status (Step 5): TODO
 
 6. **Strip aider from `recon/SKILL.md`** (EXECUTION)
    - Goal: recon becomes execution-agnostic with zero aider references.
    - Approach: Remove the "Interactive Exploration Prompts" section (its aider
      file generation now lives in sortie's exploration template); genericize any
      remaining aider mentions.
-   - Status: ⏳ Pending
+   - Status (Step 6): TODO
 
 7. **Verify end-to-end coherence** (INVESTIGATION)
    - Goal: Confirm the three skills read cleanly together.
@@ -173,7 +173,7 @@ the MVP has **no** completion auto-detection and **no** separate summarizer LLM.
      have zero aider references and read as tool-agnostic; sortie stands alone
      and is invocable both ad-hoc and against a plan step; no dangling
      cross-references.
-   - Status: ⏳ Pending
+   - Status (Step 7): TODO
 
 ## Notes
 

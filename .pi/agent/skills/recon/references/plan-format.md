@@ -46,12 +46,12 @@ Ordered steps for the executor. Each step is self-contained.
    - Goal: What needs to be understood
    - Approach: How to investigate
    - Sources: What to examine
-   - Status: ⏳ Pending
+   - Status (Step 1): TODO
 
 2. **[Step title]** (EXECUTION)
    - Goal: What needs to be produced or changed
    - Approach: High-level approach
-   - Status: ⏳ Pending
+   - Status (Step 2): TODO
 
 ## Notes
 - Insights worth carrying forward
@@ -73,5 +73,14 @@ refine further.
 Use the type that fits each step. A plan may be all investigation, all
 execution, or a mix.
 
-**Status markers** — `⏳ Pending` / `🔄 In Progress` / `✅ Done` so progress
-is trackable across sessions.
+**Status markers** — `TODO` / `WIP` / `DONE` so progress is trackable across
+sessions. Use plain ASCII markers, not emoji: a downstream executor must edit
+these lines every step, and emoji are multi-byte characters that weaker models
+reproduce unreliably in exact-match edits.
+
+**Status line format** — Each step's status lives on its own line, tagged with
+the step number: `Status (Step N): TODO`. The `(Step N)` tag makes the line
+globally unique, so an executor can update it with a minimal, whitespace-free
+`oldText` (`Status (Step 1): TODO` -> `Status (Step 1): DONE`) instead of
+matching the surrounding indented block. This structurally avoids the
+leading-whitespace mismatches that break multi-line edits.

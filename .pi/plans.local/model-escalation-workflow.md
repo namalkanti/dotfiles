@@ -113,7 +113,7 @@ Model map (shorthand → agent name → frontmatter model):
    - Verify: each agent appears in the subagent tool's available list; a
      throwaway `subagent` call to `consult-opus` runs on `claude-opus-4-8`;
      agents have no file tools.
-   - Status: ⏳ Pending
+   - Status (Step 1): DONE
 
 2. **Write the `/consult` skill** (EXECUTION)
    - Goal: `/consult --model <shorthand> <question>` → package context, call the
@@ -134,7 +134,7 @@ Model map (shorthand → agent name → frontmatter model):
         agent reports insufficient context, suggest the `/tree` path (Step 3).
    - Verify: `/consult --model sonnet <q>` runs `consult-sonnet`; `/consult <q>`
      defaults to opus; analysis lands back in the parent context.
-   - Status: ⏳ Pending
+   - Status (Step 2): TODO
 
 3. **Document and smoke-test interactive `/tree` escalation** (EXECUTION)
    - Goal: a documented procedure for the back-and-forth case, plus a one-time
@@ -151,7 +151,7 @@ Model map (shorthand → agent name → frontmatter model):
    - Smoke test (before relying on it): run one real `/tree` round-trip and
      confirm (a) per-branch `/model` switch works and (b) the branch summary
      attaches at the return point. If behavior differs, revisit.
-   - Status: ⏳ Pending
+   - Status (Step 3): TODO
 
 ## Notes
 - Ordering: Step 1 → Step 2 are sequential (the skill references the agents).

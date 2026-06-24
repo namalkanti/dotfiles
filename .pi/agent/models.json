@@ -10,14 +10,38 @@
       },
       "models": [
         {
+          "id": "gemma4:12b-mlx",
+          "name": "gemma4:12b",
+          "contextWindow": 131072,
+          "maxTokens": 8192
+        },
+        {
+          "id": "gemma4:26b-mlx",
+          "name": "gemma4:26b-moe",
+          "contextWindow": 131072,
+          "maxTokens": 8192
+        },
+        {
+          "id": "gemma4:31-mlx",
+          "name": "gemma4:31b",
+          "contextWindow": 131072,
+          "maxTokens": 8192
+        },
+        {
+          "id": "qwen3.6:27-mlx",
+          "name": "qwen3.6:27b",
+          "contextWindow": 262144,
+          "maxTokens": 81920
+        },
+        {
           "id": "qwen3.6:35b-mlx",
-          "name": "Qwen3.6 35B (Tailscale)",
+          "name": "qwen3.6:35b-moe",
           "contextWindow": 262144,
           "maxTokens": 81920
         },
         {
           "id": "qwen3.5:9b-mlx",
-          "name": "Qwen3.5 9B (Tailscale)",
+          "name": "qwen3.5:9b",
           "contextWindow": 262144,
           "maxTokens": 81920
         }

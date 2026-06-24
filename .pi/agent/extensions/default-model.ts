@@ -3,7 +3,7 @@ import { readFileSync, writeFileSync } from "fs";
 import { join, dirname } from "path";
 
 const DEFAULT_PROVIDER = "ollama";
-const DEFAULT_MODEL = "qwen3.6:35b-mlx";
+const DEFAULT_MODEL = "gemma4:12b-mlx";
 
 export default function (pi: ExtensionAPI) {
    // Resolve settings.json relative to this extension file
