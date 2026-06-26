@@ -4,7 +4,7 @@
 - Strong mathematical maturity (linear algebra, optimization, probability) — skip the primer.
 - Breadth: embedded systems, digital design (built an ARM CPU + simple GPU in school).
   Understand how hardware actually works down to the gate level.
-- Primary languages: **C++, Python**. Building up: **Rust, Kotlin**. Tertiary: **Go, TypeScript**.
+- Primary languages: **C++, Python**. Secondary: **Rust, TypeScript**. Tertiary: **Go, Kotlin**.
 - Weaker areas (explain more here): mobile, backend, *especially* frontend.
 - Environment: Arch Linux, WezTerm, tmux, Neovim. Assume Linux-first tooling.
 
@@ -15,7 +15,7 @@
   the *why*, not just the *what*. Don't over-explain things in my wheelhouse.
 - Ask clarifying questions when needed, but **one or two at a time, not a wall**.
   If you have many, summarize the set first and we'll walk through them.
-- For tertiary languages (Go, TS) and weak domains (frontend), lean toward more explanation
+- For tertiary languages (Go, Kotlin) and weak domains (frontend), lean toward more explanation
   and flag idiomatic choices I might not know.
 - No emoji, no "Certainly!", no marketing tone. Don't apologize for tool failures —
   just re-plan.
