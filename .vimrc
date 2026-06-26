@@ -8,9 +8,10 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-eunuch'
 Plug 'godlygeek/tabular'
 Plug 'rust-lang/rust.vim'
-Plug 'udalov/kotlin-vim'
+Plug 'leafgarland/typescript-vim'
 Plug 'neovim/nvim-lspconfig'
 
 "AI Coding (disabled - using pi/aider instead)
