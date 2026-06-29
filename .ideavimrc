@@ -1,0 +1,55 @@
+" IdeaVim config — sourced from ~/.vimrc
+
+" === Plugins (IdeaVim native emulation) ===
+set surround
+set commentary
+set unimpaired
+
+" === Basic settings ===
+set nocompatible
+set encoding=utf-8
+set showcmd
+set nowrap
+set tabstop=4 shiftwidth=4
+set expandtab
+set backspace=indent,eol,start
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+set number
+set ttimeout
+set ttimeoutlen=1
+
+" === Leader ===
+let mapleader = " "
+
+" === Jumplist ===
+nnoremap gf <C-i>
+nnoremap gb <C-o>
+
+" === Window navigation ===
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+nnoremap <c-c> <c-w>c
+nnoremap <c-o> <c-w>o
+
+" === Horizontal scrolling ===
+nnoremap <silent> <Left> zh
+nnoremap <silent> <Right> zl
+
+" === File/search navigation (replaces FZF) ===
+nmap <C-p> <Action>(GotoFile)
+nmap <C-b> <Action>(Switcher)
+nmap <C-i> <Action>(FindInPath)
+
+" === LSP-equivalent IDE actions ===
+nnoremap <silent> gd <Action>(GotoDeclaration)
+nnoremap <silent> gr <Action>(FindUsages)
+nnoremap <silent> K <Action>(ShowHoverInfo)
+nnoremap <silent> <leader>e <Action>(ShowErrorDescription)
+nnoremap <silent> <leader>rn <Action>(RenameElement)
+nnoremap <silent> <leader>ca <Action>(ShowIntentionActions)
+nnoremap <silent> <leader>f <Action>(ReformatCode)
