@@ -44,14 +44,14 @@ Ordered steps for the executor. Each step is self-contained.
 
 1. **[Step title]** (INVESTIGATION)
    - Goal: What needs to be understood
+   - Status (Step 1): TODO
    - Approach: How to investigate
    - Sources: What to examine
-   - Status (Step 1): TODO
 
 2. **[Step title]** (EXECUTION)
    - Goal: What needs to be produced or changed
-   - Approach: High-level approach
    - Status (Step 2): TODO
+   - Approach: High-level approach
 
 ## Notes
 - Insights worth carrying forward
