@@ -41,6 +41,14 @@ function lsp_module.setup()
     -- Extra clangd flags can go here
     -- cmd = { "clangd", "--background-index" },
   })
+
+  -- TypeScript/JavaScript
+  vim.lsp.config('ts_ls', {
+    on_attach    = make_on_attach(),
+    capabilities = capabilities,
+  })
+
+  vim.lsp.enable({ 'pyright', 'rust_analyzer', 'marksman', 'clangd', 'ts_ls' })
 end
 
 return lsp_module
