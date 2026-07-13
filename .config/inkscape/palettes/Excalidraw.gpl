@@ -1,0 +1,22 @@
+GIMP Palette
+Name: Excalidraw
+Columns: 5
+#
+# Stroke colors
+ 30  30  30	Black (Stroke)
+224  49  49	Red (Stroke)
+ 47 158  68	Green (Stroke)
+ 25 113 194	Blue (Stroke)
+240 140   0	Orange (Stroke)
+#
+# Fill colors (pastel backgrounds)
+255 201 201	Red (Fill)
+178 242 187	Green (Fill)
+165 216 255	Blue (Fill)
+255 236 153	Yellow (Fill)
+#
+# Neutrals
+255 255 255	White
+241 243 245	Light Gray
+206 212 218	Gray
+134 142 150	Dark Gray

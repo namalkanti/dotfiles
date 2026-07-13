@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="120"
+   height="80"
+   viewBox="0 0 120 80"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="diagram-shapes.svg"
+   inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview8"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="13.658333"
+     inkscape:cx="60"
+     inkscape:cy="40.012203"
+     inkscape:window-width="2560"
+     inkscape:window-height="1337"
+     inkscape:window-x="0"
+     inkscape:window-y="60"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg8" />
+  <title
+     id="title1">Diagram Shapes</title>
+  <metadata
+     id="metadata1">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:title>Diagram Shapes</dc:title>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8">
+    <symbol
+       id="diagram-rect"
+       viewBox="0 0 120 80"
+       inkscape:label="Rectangle">
+      <title
+         id="title2">Rectangle</title>
+      <rect
+         x="2"
+         y="2"
+         width="116"
+         height="76"
+         fill="#a5d8ff"
+         stroke="#1e1e1e"
+         stroke-width="2"
+         id="rect2" />
+    </symbol>
+    <symbol
+       id="diagram-rect-rounded"
+       viewBox="0 0 120 80"
+       inkscape:label="Rounded Rectangle">
+      <title
+         id="title3">Rounded Rectangle</title>
+      <rect
+         x="2"
+         y="2"
+         width="116"
+         height="76"
+         rx="10"
+         ry="10"
+         fill="#b2f2bb"
+         stroke="#1e1e1e"
+         stroke-width="2"
+         id="rect3" />
+    </symbol>
+    <symbol
+       id="diagram-ellipse"
+       viewBox="0 0 120 80"
+       inkscape:label="Ellipse">
+      <title
+         id="title4">Ellipse</title>
+      <ellipse
+         cx="60"
+         cy="40"
+         rx="58"
+         ry="38"
+         fill="#ffc9c9"
+         stroke="#1e1e1e"
+         stroke-width="2"
+         id="ellipse4" />
+    </symbol>
+    <symbol
+       id="diagram-diamond"
+       viewBox="0 0 120 80"
+       inkscape:label="Diamond (Decision)">
+      <title
+         id="title5">Diamond (Decision)</title>
+      <polygon
+         points="60,2 118,40 60,78 2,40"
+         fill="#ffec99"
+         stroke="#1e1e1e"
+         stroke-width="2"
+         id="polygon5" />
+    </symbol>
+    <symbol
+       id="diagram-cloud"
+       viewBox="0 0 120 80"
+       inkscape:label="Cloud">
+      <title
+         id="title6">Cloud</title>
+      <path
+         d="M 32,68                Q 10,68 10,48                Q 10,30 28,27                Q 28,8 50,8                Q 68,8 75,22                Q 95,22 98,40                Q 100,58 80,68                Z"
+         fill="#eaeaea"
+         stroke="#1e1e1e"
+         stroke-width="2"
+         stroke-linejoin="round"
+         id="path6" />
+    </symbol>
+    <symbol
+       id="diagram-sticky-note"
+       viewBox="0 0 100 100"
+       inkscape:label="Sticky Note">
+      <title
+         id="title7">Sticky Note</title>
+      <rect
+         x="2"
+         y="2"
+         width="96"
+         height="96"
+         fill="#ffec99"
+         stroke="#1e1e1e"
+         stroke-width="2"
+         id="rect7" />
+      <polygon
+         points="78,2 98,2 98,22"
+         fill="#e9d371"
+         stroke="#1e1e1e"
+         stroke-width="1.5"
+         stroke-linejoin="round"
+         id="polygon7" />
+    </symbol>
+  </defs>
+</svg>
