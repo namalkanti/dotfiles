@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="2783"
+   height="1024"
+   viewBox="0 0 2783 1024"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="webmockup.svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="1"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     units="px"
+     inkscape:zoom="0.35"
+     inkscape:cx="1391"
+     inkscape:cy="512"
+     inkscape:current-layer="layer-content"
+     showgrid="true"
+     showguides="true"
+     inkscape:snap-global="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-nodes="true"
+     inkscape:bbox-paths="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-nodes="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-grids="true"
+     inkscape:snap-to-guides="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid1"
+       spacingx="8"
+       spacingy="8"
+       units="px"
+       dotted="true"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
+    <inkscape:page
+       x="0"
+       y="0"
+       width="1440"
+       height="900"
+       id="page-desktop"
+       inkscape:label="Desktop" />
+    <inkscape:page
+       x="1540"
+       y="0"
+       width="768"
+       height="1024"
+       id="page-tablet"
+       inkscape:label="Tablet" />
+    <inkscape:page
+       x="2408"
+       y="0"
+       width="375"
+       height="812"
+       id="page-mobile"
+       inkscape:label="Mobile" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="80,512"
+       id="guide-margin-left" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="1360,512"
+       id="guide-margin-right" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata1">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Web Mockup</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <inkscape:templateinfo>
+    <inkscape:name>Web Mockup</inkscape:name>
+    <inkscape:author>namalkanti</inkscape:author>
+    <inkscape:shortdesc>1440x1024 wireframe canvas, 8px grid, margin guides at 80px, opaque white background</inkscape:shortdesc>
+    <inkscape:date>2026-07-13</inkscape:date>
+    <inkscape:keywords>web mockup wireframe ui</inkscape:keywords>
+  </inkscape:templateinfo>
+  <g
+     inkscape:label="Background"
+     inkscape:groupmode="layer"
+     id="layer-background" />
+  <g
+     inkscape:label="Content"
+     inkscape:groupmode="layer"
+     id="layer-content" />
+  <g
+     inkscape:label="UI Components"
+     inkscape:groupmode="layer"
+     id="layer-ui-components" />
+  <g
+     inkscape:label="Annotations"
+     inkscape:groupmode="layer"
+     id="layer-annotations" />
+</svg>

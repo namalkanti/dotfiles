@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+     xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.0.dtd"
+     xmlns:cc="http://creativecommons.org/ns#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     width="200" height="150" viewBox="0 0 200 150">
+  <title>UI Elements</title>
+  <metadata>
+    <rdf:RDF>
+      <cc:Work>
+        <dc:title>UI Elements</dc:title>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+
+  <defs>
+
+    <symbol id="ui-button" viewBox="0 0 140 44" inkscape:label="Button">
+      <title>Button</title>
+      <rect x="2" y="2" width="136" height="40" rx="6" ry="6"
+            fill="#0d6efd" stroke="#0a58ca" stroke-width="1"/>
+      <text x="70" y="27" font-family="sans-serif" font-size="16"
+            fill="#ffffff" text-anchor="middle">Button</text>
+    </symbol>
+
+    <symbol id="ui-input" viewBox="0 0 200 44" inkscape:label="Input Field">
+      <title>Input Field</title>
+      <rect x="2" y="2" width="196" height="40" rx="4" ry="4"
+            fill="#ffffff" stroke="#ced4da" stroke-width="1.5"/>
+      <text x="14" y="27" font-family="sans-serif" font-size="14"
+            fill="#adb5bd" text-anchor="start">Input text</text>
+    </symbol>
+
+    <symbol id="ui-navbar" viewBox="0 0 400 60" inkscape:label="Navbar">
+      <title>Navbar</title>
+      <rect x="0" y="0" width="400" height="60" fill="#f8f9fa"/>
+      <line x1="0" y1="59" x2="400" y2="59" stroke="#dee2e6" stroke-width="2"/>
+      <text x="20" y="35" font-family="sans-serif" font-size="18" font-weight="bold"
+            fill="#212529">Brand</text>
+      <text x="220" y="35" font-family="sans-serif" font-size="14" fill="#495057">Home</text>
+      <text x="280" y="35" font-family="sans-serif" font-size="14" fill="#495057">About</text>
+      <text x="340" y="35" font-family="sans-serif" font-size="14" fill="#495057">Contact</text>
+    </symbol>
+
+    <symbol id="ui-card" viewBox="0 0 240 200" inkscape:label="Card">
+      <title>Card</title>
+      <rect x="2" y="2" width="236" height="196" rx="8" ry="8"
+            fill="#ffffff" stroke="#dee2e6" stroke-width="1.5"/>
+      <rect x="12" y="12" width="216" height="110" fill="#e9ecef"/>
+      <line x1="12" y1="12" x2="228" y2="122" stroke="#ced4da" stroke-width="1.5"/>
+      <line x1="228" y1="12" x2="12" y2="122" stroke="#ced4da" stroke-width="1.5"/>
+      <text x="12" y="150" font-family="sans-serif" font-size="16" font-weight="bold"
+            fill="#212529">Card title</text>
+      <text x="12" y="172" font-family="sans-serif" font-size="12"
+            fill="#6c757d">Supporting card text goes here.</text>
+    </symbol>
+
+    <symbol id="ui-checkbox" viewBox="0 0 24 24" inkscape:label="Checkbox">
+      <title>Checkbox</title>
+      <rect x="2" y="2" width="20" height="20" rx="3" ry="3"
+            fill="#ffffff" stroke="#adb5bd" stroke-width="2"/>
+    </symbol>
+
+    <symbol id="ui-checkbox-checked" viewBox="0 0 24 24" inkscape:label="Checkbox (Checked)">
+      <title>Checkbox (Checked)</title>
+      <rect x="2" y="2" width="20" height="20" rx="3" ry="3"
+            fill="#0d6efd" stroke="#0a58ca" stroke-width="2"/>
+      <path d="M 6,12 L 10,16 L 18,7" fill="none"
+            stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+
+    <symbol id="ui-radio" viewBox="0 0 24 24" inkscape:label="Radio Button">
+      <title>Radio Button</title>
+      <circle cx="12" cy="12" r="10" fill="#ffffff" stroke="#adb5bd" stroke-width="2"/>
+    </symbol>
+
+    <symbol id="ui-radio-selected" viewBox="0 0 24 24" inkscape:label="Radio Button (Selected)">
+      <title>Radio Button (Selected)</title>
+      <circle cx="12" cy="12" r="10" fill="#ffffff" stroke="#0d6efd" stroke-width="2"/>
+      <circle cx="12" cy="12" r="5" fill="#0d6efd"/>
+    </symbol>
+
+    <symbol id="ui-placeholder-image" viewBox="0 0 160 120" inkscape:label="Placeholder Image">
+      <title>Placeholder Image</title>
+      <rect x="2" y="2" width="156" height="116"
+            fill="#e9ecef" stroke="#ced4da" stroke-width="1.5"/>
+      <line x1="2" y1="2" x2="158" y2="118" stroke="#ced4da" stroke-width="1.5"/>
+      <line x1="158" y1="2" x2="2" y2="118" stroke="#ced4da" stroke-width="1.5"/>
+    </symbol>
+
+    <symbol id="ui-browser-chrome" viewBox="0 0 400 300" inkscape:label="Browser Chrome">
+      <title>Browser Chrome</title>
+      <rect x="2" y="2" width="396" height="296" rx="8" ry="8"
+            fill="#ffffff" stroke="#dee2e6" stroke-width="1.5"/>
+      <rect x="2" y="2" width="396" height="30" fill="#f8f9fa" stroke="#dee2e6" stroke-width="1"/>
+      <circle cx="16" cy="17" r="5" fill="#dc3545"/>
+      <circle cx="34" cy="17" r="5" fill="#ffc107"/>
+      <circle cx="52" cy="17" r="5" fill="#198754"/>
+      <rect x="90" y="9" width="220" height="16" rx="8" ry="8"
+            fill="#ffffff" stroke="#ced4da" stroke-width="1"/>
+    </symbol>
+
+  </defs>
+</svg>

@@ -1,0 +1,23 @@
+GIMP Palette
+Name: Web Mockup
+Columns: 4
+#
+# Neutrals
+255 255 255	White
+248 249 250	Gray 100
+233 236 239	Gray 200
+222 226 230	Gray 300
+206 212 218	Gray 400
+173 181 189	Gray 500
+108 117 125	Gray 600
+ 73  80  87	Gray 700
+ 52  58  64	Gray 800
+ 33  37  41	Gray 900
+  0   0   0	Black
+#
+# Semantic colors
+ 13 110 253	Primary (Blue)
+ 25 135  84	Success (Green)
+255 193   7	Warning (Yellow)
+220  53  69	Danger (Red)
+ 13 202 240	Info (Cyan)
