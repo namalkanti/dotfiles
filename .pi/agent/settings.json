@@ -1,7 +1,7 @@
 {
-  "lastChangelogVersion": "0.80.2",
-  "defaultProvider": "ollama",
-  "defaultModel": "gemma4:12b-mlx",
+  "lastChangelogVersion": "0.80.6",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-sonnet-4-6",
   "defaultThinkingLevel": "low",
   "enabledModels": [
     "anthropic/claude-haiku-4-5",
