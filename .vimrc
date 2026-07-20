@@ -86,8 +86,6 @@ nmap <C-b> :Buffers<CR>
 command! FzfRg call fzf#vim#grep('rg --line-number --no-heading --color=always .', 1)
 nmap <C-i> :FzfRg<CR>
 
-set guifont=Monaco:h16
-
 "LSP Setup
 " 2) Define a Vimscript function to set up LSP keymaps when server attaches
 function! LspOnAttach(client, bufnr) abort
