@@ -42,7 +42,9 @@ let g:lightline = {
       \ },
       \ }
 
+
 set nowrap
+autocmd BufNewFile,BufRead *.tpp set filetype=cpp
 autocmd FileType markdown setlocal wrap linebreak showbreak=↪\
 autocmd FileType markdown nnoremap <buffer> j gj
 autocmd FileType markdown nnoremap <buffer> k gk
