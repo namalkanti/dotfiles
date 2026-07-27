@@ -42,8 +42,26 @@
         {
           "id": "qwen3.5:9b-mlx",
           "name": "qwen3.5:9b",
-          "contextWindow": 262144,
+          "contextWindow": 131072,
           "maxTokens": 81920
+        }
+      ]
+    },
+    "mlx-server": {
+      "baseUrl": "http://100.125.87.85:8000/v1",
+      "api": "openai-completions",
+      "apiKey": "none",
+      "compat": {
+        "supportsDeveloperRole": false,
+        "supportsReasoningEffort": false
+      },
+      "models": [
+        {
+          "id": "qwen3.5-9b-4bit",
+          "name": "qwen3.5:9b-4bit (mlx-server)",
+          "contextWindow": 150000,
+          "maxTokens": 32768,
+          "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
         }
       ]
     },
