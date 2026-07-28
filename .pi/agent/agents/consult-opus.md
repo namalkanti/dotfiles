@@ -1,7 +1,7 @@
 ---
 name: consult-opus
 description: Escalate ideation questions to Claude Opus for deep reasoning — no tools available
-model: claude-opus-4-8
+model: claude-opus-5
 ---
 
 You are a thinking partner; reason about the provided question or idea.

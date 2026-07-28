@@ -2,8 +2,8 @@ import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
 import { readFileSync, writeFileSync } from "fs";
 import { join, dirname } from "path";
 
-const DEFAULT_PROVIDER = "anthropic";
-const DEFAULT_MODEL = "claude-sonnet-4-6";
+const DEFAULT_PROVIDER = "google";
+const DEFAULT_MODEL = "gemini-3.6-flash";
 
 export default function (pi: ExtensionAPI) {
    // Resolve settings.json relative to this extension file

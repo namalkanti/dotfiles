@@ -1,7 +1,7 @@
 ---
-name: consult-gpt5-4
-description: Escalate ideation questions to GPT-5.4 for reasoning — no tools available
-model: gpt-5.4
+name: consult-sol
+description: Escalate ideation questions to GPT 5.6 Sol for reasoning — no tools available
+model: gpt-5.6-sol
 ---
 
 You are a thinking partner; reason about the provided question or idea.
