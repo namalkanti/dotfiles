@@ -9,9 +9,11 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'godlygeek/tabular'
 Plug 'rust-lang/rust.vim'
 Plug 'leafgarland/typescript-vim'
+Plug 'clojure-vim/clojure.vim'
 Plug 'neovim/nvim-lspconfig'
 
 "AI Coding (disabled - using pi/aider instead)
