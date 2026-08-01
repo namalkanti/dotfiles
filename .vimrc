@@ -15,13 +15,6 @@ Plug 'rust-lang/rust.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'clojure-vim/clojure.vim'
 Plug 'neovim/nvim-lspconfig'
-
-"AI Coding (disabled - using pi/aider instead)
-"Plug 'github/copilot.vim'
-"Plug 'saghen/blink.cmp', { 'tag': 'v0.*' }
-"Plug 'nvim-lua/plenary.nvim'
-"Plug 'nvim-treesitter/nvim-treesitter'
-"Plug 'olimorris/codecompanion.nvim'
 call plug#end()
 
 set nocompatible
@@ -91,8 +84,14 @@ command! FzfRg call fzf#vim#grep('rg --line-number --no-heading --color=always .
 nmap <C-i> :FzfRg<CR>
 
 "LSP Setup
+augroup LspAttachGroup
+  autocmd!
+  autocmd LspAttach * call LspOnAttach(v:lua.vim.lsp.get_client_by_id(expand('<amatch>')), expand('<abuf>'))
+augroup END
+
 " 2) Define a Vimscript function to set up LSP keymaps when server attaches
 function! LspOnAttach(client, bufnr) abort
+  setlocal omnifunc=v:lua.vim.lsp.omnifunc
   nnoremap <silent> <buffer> gd :lua vim.lsp.buf.definition()<CR>
   nnoremap <silent> <buffer> gr :lua vim.lsp.buf.references()<CR>
   nnoremap <silent> <buffer> K  :lua vim.lsp.buf.hover()<CR>
@@ -103,11 +102,11 @@ function! LspOnAttach(client, bufnr) abort
 endfunction
 
 " 3) Configure your language servers and code companion in a Lua block
-"lua require('config.codecompanion').setup()
-"lua require('config.blink').setup()
 lua require('config.lsp').setup()
 
-" 4) (Optional) Enable built-in LSP-based completion
-"let g:copilot_enabled = 0
-"set completeopt=menuone,noinsert,noselect
-"set omnifunc=v:lua.vim.lsp.omnifunc
+" 4) Enable built-in LSP-based completion
+set completeopt=menuone,noinsert,noselect
+
+" 5) Tab at beginning of line indents; anywhere else triggers LSP completion / cycles popup
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : (getline('.')[0 : col('.')-2] =~ '^\s*$' ? "\<Tab>" : "\<C-x>\<C-o>")
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
