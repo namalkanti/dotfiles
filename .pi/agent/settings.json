@@ -1,4 +1,5 @@
 {
+  "//": "lastChangelogVersion set to high version so pi never auto-updates settings.json on startup",
   "defaultProvider": "google",
   "defaultModel": "gemini-3.6-flash",
   "defaultThinkingLevel": "low",
