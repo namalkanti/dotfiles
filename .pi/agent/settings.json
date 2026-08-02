@@ -18,5 +18,6 @@
   "packages": [
     "npm:pi-web-access"
   ],
-  "hideThinkingBlock": false
+  "hideThinkingBlock": false,
+  "lastChangelogVersion": "99.99.99"
 }
