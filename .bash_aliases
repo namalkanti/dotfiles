@@ -5,7 +5,6 @@ alias ssh-config='gvim ~/.ssh/config'
 # enable color support of ls and also add handy aliases
 alias ls='ls -h --color=auto'
 alias kat='cat'
-
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
@@ -27,6 +26,9 @@ alias stop='sudo systemctl stop'
 alias restart='sudo systemctl restart'
 alias daemon-reload='sudo systemctl daemon-reload'
 alias sysedit='sudo -E systemctl edit'
+
+#Python Aliases
+alias pip='uv pip'
 
 #Arch Aliases
 alias offline='sudo shutdown now'
