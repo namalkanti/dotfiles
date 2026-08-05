@@ -13,9 +13,9 @@ wants this extracted into a single dedicated skill so that:
   awareness of aider — the user decides which execution skill to invoke, and may
   add sibling execution skills for other frameworks later.
 - The mechanical, deterministic scaffolding (write prompt + commands file, spawn
-  the aider session, read back the result) is offloaded to the agent, while the
-  complex judgment (discussion, hot-swapping to `/code`, the actual coding) stays
-  with the user inside the interactive aider session.
+  the aider session, read back the result, run summarizer) is offloaded to the agent,
+  while the complex judgment (discussion, hot-swapping to `/code`, the actual coding)
+  stays with the user inside the interactive aider session.
 
 The new skill is named **`sortie`** (military-themed, matching recon/commander; a
 single mission flown out and back maps to spawning an aider session, doing the
@@ -25,209 +25,111 @@ work, and returning).
 
 1. Discuss in a pi session (ad-hoc, or mid-plan via commander) to decide *what*
    to do and *which files* are involved.
-2. Pi writes a prompt + a commands file to `.pi/tmp.local/` (`/add` editable
-   files, `/read` reference files, `/read` the prompt).
-3. User opens aider loading those files + prompt; it starts in `ask` mode (alias
+2. Pi (as the stronger model) generates initial candidate diffs / partial diffs or code
+   sketches for the proposed change to anchor the task.
+3. Pi writes a prompt + a commands file to `.pi/tmp.local/` (`/add` editable
+   files, `/read` reference files, `/read` the prompt). The prompt explicitly instructs
+   aider NOT to auto-apply edits immediately, but to start in read-only discussion mode.
+4. User opens aider loading those files + prompt; it starts in `ask` mode (alias
    default) — deliberately read-only.
-4. User discusses extensively in aider (ask mode, no code written).
-5. When ready, user hot-swaps to `/code` and aider makes changes. No commits.
-6. User asks aider for a summary.
-7. User brings the summary back to the pi session.
-8. Pi reviews: summary + its own `git diff` inspection vs. step intent; updates
-   plan / moves on.
+5. User discusses in aider (ask mode) using Pi's diffs as the starting baseline.
+   If the diffs are good as-is, the user can immediately say "go ahead" / `/ok` in a single turn.
+6. When ready, user hot-swaps to `/code` (or uses `/ok`) and aider applies changes. No commits.
+7. User closes aider window and returns to pi session.
+8. Pi automatically invokes a lightweight `aider-summarizer` subagent to parse the
+   session chat history (`.aider.chat.history.md` or pinned chat history file).
+9. Pi reviews: subagent summary + `git diff` inspection vs. step intent; updates plan / moves on.
 
-**sortie automates only the mechanical parts:** steps 2–3 (write prompt +
-commands, spawn the tmux window with everything loaded) and the return half of
-7–8 (user says "done"; pi reads aider's persisted chat history for the summary +
-runs `git diff`). It does **not** touch the in-aider workflow (steps 4–6), and
-the MVP has **no** completion auto-detection and **no** separate summarizer LLM.
+**sortie automates only the mechanical parts:** steps 2–3 (write prompt with Pi diffs +
+commands, spawn the tmux window) and steps 8–9 (user returns; pi runs summarizer subagent
+on chat history + runs `git diff`). It does **not** touch the in-aider discussion/coding (steps 4–6).
 
 ## Design Decisions
 
-- **One skill, two prompt concerns.** sortie owns both prompt-template
-  generation and session lifecycle. recon/commander own neither.
-- **MVP excludes automation.** No watcher process, no auto-detection of aider
-  completion, no small-LLM summarizer. The user closes the aider window, returns
-  to pi, and manually triggers review. These are explicitly future phases.
-- **Launch via interactive shell.** The skill spawns aider with
-  `tmux new-window` + `send-keys` into an *interactive* shell so the user's
-  `aider` alias resolves (aliases do not exist in non-interactive shells). The
-  alias already sets `--chat-mode ask --no-auto-commits --subtree-only` etc.
-- **No chat-mode management.** Launch is uniform `ask` mode regardless of prompt
-  kind; the user hot-swaps to `/code` themselves. Only prompt *content* differs
-  between kinds.
-- **Distinct temp filenames.** sortie writes `sortie-*` files in `.pi/tmp.local/`
-  (e.g. `sortie-prompt.txt`, `sortie-commands.txt`) so it cannot clobber the
-  existing recon/commander aider files during the coexistence/testing period.
-- **Stripping is deferred but in-scope.** recon/commander aider sections can
-  coexist with sortie during testing (skills load independently, no skill spawns
-  another, and distinct filenames avoid collisions). Phase 2 stripping is gated
-  on the user validating sortie in practice (Step 4), but lives in this same plan
-  so it does not dangle — it must get done.
-- **Skills live under** `~/.config/dotfiles/.pi/agent/skills/` (the
-  `~/.pi/agent/skills` symlink target). The new skill goes there:
-  `sortie/SKILL.md` (+ `sortie/references/`).
+- **One skill, two prompt categories (Interactive & Exploration).** No separate "generative"
+  vs. "interactive" distinction. All execution prompts are **Interactive Prompts** containing Pi-generated candidate diffs/context. Exploration prompts remain read-only for research/planning.
+- **Strict Read-Only Prompt Safeguard.** Because aider/LLMs lean aggressively toward applying code immediately, prompt templates must explicitly instruct aider to remain in discussion/read-only mode until the user explicitly commands execution.
+- **Subagent Summarizer in MVP.** Reuses the proven subagent summarizer pattern (demonstrated in `scribe`'s implementation) to summarize session decisions upon return.
+- **Zero Skill-to-Skill Dependencies.** `scribe` is referenced during plan design for architectural pattern reuse, but `sortie` will have ZERO runtime dependency on `scribe` or vice versa. Each skill remains fully self-contained.
+- **Launch via interactive shell.** The skill spawns aider with `tmux new-window` + `send-keys` into an *interactive* shell so the user's `aider` alias resolves (aliases do not exist in non-interactive shells).
+- **Distinct temp filenames.** sortie writes `sortie-*` files in `.pi/tmp.local/` (e.g. `sortie-prompt.txt`, `sortie-commands.txt`).
 
 ## Key Sources
 
-- `~/.config/dotfiles/.pi/agent/skills/commander/SKILL.md` — Contains the
-  "Aider Prompts (Temporary)" section (generative + interactive templates,
-  saving/confirming convention) to migrate then remove; "Working a Step"
-  EXECUTION bullet to genericize; "Reviewing a Step" to verify is tool-agnostic.
-- `~/.config/dotfiles/.pi/agent/skills/recon/SKILL.md` — Contains the
-  "Interactive Exploration Prompts" section (exploration template + aider
-  commands-file generation) to migrate then remove.
-- `~/.config/dotfiles/.pi/agent/skills/recon/references/plan-format.md` — Plan
-  format both skills follow; mirror its `references/` pattern for sortie.
-- `~/.bash_aliases` — `aider` alias (`--chat-mode ask --cache-prompts
-  --no-gitignore --no-auto-commits --subtree-only --model
-  anthropic/claude-sonnet-4-6 ...`), plus model variants and
-  `export AIDER_READ=~/.aider.instructions.md`. Launch must use the interactive
-  shell to resolve these.
-- `aider --help` — relevant flags: `--load` (run `/commands` on launch),
-  `--add`/`--read`/`--file`, `--chat-history-file`, `--message-file`,
-  `--yes-always`. Default chat-history file is `.aider.chat.history.md` in repo
-  root.
+- `~/.config/dotfiles/.pi/agent/skills/scribe/SKILL.md` — Reference for the `aider-summarizer` subagent pattern and chat-history reading.
+- `~/.config/dotfiles/.pi/agent/skills/commander/SKILL.md` — Contains the "Aider Prompts (Temporary)" section to migrate then remove.
+- `~/.config/dotfiles/.pi/agent/skills/recon/SKILL.md` — Contains the "Interactive Exploration Prompts" section to migrate then remove.
+- `~/.bash_aliases` — `aider` alias (`--chat-mode ask --cache-prompts --no-gitignore --no-auto-commits --subtree-only ...`), plus model variants and `export AIDER_READ=~/.aider.instructions.md`.
+- `aider --help` — relevant flags: `--load`, `--add`/`--read`/`--file`, `--chat-history-file`.
 
 ## Proposed Steps
 
 ### Phase 1 — Build & validate sortie
 
-1. **Confirm aider launch/capture mechanics** (INVESTIGATION)
-   - Goal: Nail down the deterministic primitives the skill's templates encode,
-     so launch and read-back are correct.
+1. **Confirm aider launch/capture & summarizer mechanics** (INVESTIGATION)
+   - Goal: Nail down launch primitives and subagent summary integration.
    - Approach:
-     - Verify `tmux new-window` + `send-keys` resolves the interactive `aider`
-       alias; settle window naming and whether pi's window stays focused or
-       switches to the new window.
-     - Decide chat-history capture: **pin** a scoped
-       `--chat-history-file .pi/tmp.local/sortie-chat-<ts>.md` at launch (clean,
-       known path for pi to read) **vs.** rely on aider's repo-root default
-       `.aider.chat.history.md`. *(Answer this choice here, at execution.)*
-     - Confirm `/load`, `/add`, `/read` semantics match what the commands-file
-       template will assume.
-   - Sources: `~/.bash_aliases`, `aider --help`, a scratch tmux/aider run.
+     - Verify `tmux new-window` + `send-keys` resolves the interactive `aider` alias.
+     - Confirm chat-history path pin (`--chat-history-file .pi/tmp.local/sortie-chat-<ts>.md`) vs `.aider.chat.history.md`.
+     - Test subagent invocation against an existing `.aider.chat.history.md` file using the `scribe`-style prompt structure.
+   - Sources: `~/.bash_aliases`, `scribe/SKILL.md`, `aider --help`.
    - Status (Step 1): TODO
 
 2. **Write `sortie/SKILL.md`** (EXECUTION)
-   - Goal: The skill body, self-documenting and standalone.
+   - Goal: Self-documenting, standalone skill file.
    - Approach: Cover —
-     - Purpose + hard boundary: owns aider prompt generation + session
-       lifecycle; does **not** make the complex decisions (user drives
-       discussion/coding inside aider).
-     - Two entry modes, both invoked **manually by the user** (skill has no
-       knowledge of recon/commander, and is never auto-spawned by them):
-       (a) ad-hoc quick-coding — brief discussion → find files → launch;
-       (b) pointed at a plan step — read the step, generate from it.
-     - Discussion-first before generating anything.
-     - Launch lifecycle: write prompt + commands file (`sortie-*` names), spawn
-       the tmux window via send-keys, tell the user how to switch in.
-     - Return/review handoff: user closes aider, returns, says "done"; skill
-       reads the chat-history file (summary) + runs `git diff` and reports.
-     - Explicitly note out-of-scope: no completion auto-detection, no separate
-       summarizer (future phases).
-     - Reference `references/prompt-templates.md` for the templates.
+     - Single responsibility: prompt generation + session lifecycle + return summarization.
+     - Pi diff-generation step prior to writing prompt.
+     - Safeguard prompting rules (prevent auto-execution in `ask` mode).
+     - Handoff & return workflow (invoking `aider-summarizer` subagent + `git diff`).
+     - Zero hard dependencies on other skills.
    - Status (Step 2): TODO
 
 3. **Write `sortie/references/prompt-templates.md`** (EXECUTION)
-   - Goal: House the aider-specific prompt templates migrated out of the skills.
-   - Approach: Include generative (prescriptive/autonomous), interactive
-     (guide-mode), and exploration (planning-time collaborative) templates, plus
-     the shared "saving and confirming" commands-file convention. Decide whether
-     SKILL.md references this file or inlines the templates. *(Answer this
-     references-vs-inline choice here, at execution; lean references to keep the
-     skill body lean and match the recon/commander pattern.)*
+   - Goal: House the prompt templates and summarizer prompt.
+   - Approach:
+     - **Interactive Prompt Template**: embeds Pi's generated candidate diffs/context; explicitly enforces read-only discussion first; supports single-turn approval (`/ok`) or multi-turn refinement before `/code`.
+     - **Exploration Prompt Template**: read-only codebase exploration / planning.
+     - **Summarizer Subagent Prompt**: standalone prompt definition for summarizing `.aider.chat.history.md`.
    - Status (Step 3): TODO
 
 4. **Validate sortie in real use** (INVESTIGATION)
-   - Goal: Confirm sortie works ad-hoc and against a plan step before stripping
-     anything. Gate for Phase 2.
-   - Approach: User runs sortie in both modes; capture what works and what needs
-     adjustment. Fold fixes back into Steps 2–3 if needed. Only proceed to
-     Phase 2 once the user is satisfied.
+   - Goal: Confirm end-to-end flow (Pi diff generation -> launch -> aider session -> user return -> subagent summary + git diff).
+   - Approach: Test ad-hoc and against a plan step. Fix any issues in Steps 2–3.
    - Status (Step 4): TODO
 
 ### Phase 2 — Strip aider from recon/commander (gated on Step 4)
 
 5. **Strip aider from `commander/SKILL.md`** (EXECUTION)
-   - Goal: commander becomes execution-agnostic with zero aider references.
-   - Approach:
-     - Remove the entire "Aider Prompts (Temporary)" section.
-     - Rewrite the EXECUTION bullet in "Working a Step" to be tool-agnostic:
-       discuss the step, hand off to whatever execution skill the user chooses
-       (no naming aider); the plan step carries what the executor needs.
-     - Verify "Reviewing a Step" (keys off `git diff` + a user-provided summary)
-       has no aider-specific wording; adjust if so.
+   - Goal: Make commander execution-framework-agnostic.
+   - Approach: Remove "Aider Prompts (Temporary)" section; genericize step working/reviewing bullets.
    - Status (Step 5): TODO
 
 6. **Strip aider from `recon/SKILL.md`** (EXECUTION)
-   - Goal: recon becomes execution-agnostic with zero aider references.
-   - Approach: Remove the "Interactive Exploration Prompts" section (its aider
-     file generation now lives in sortie's exploration template); genericize any
-     remaining aider mentions.
+   - Goal: Make recon execution-framework-agnostic.
+   - Approach: Remove "Interactive Exploration Prompts" section; genericize remaining mentions.
    - Status (Step 6): TODO
 
 7. **Verify end-to-end coherence** (INVESTIGATION)
-   - Goal: Confirm the three skills read cleanly together.
-   - Approach: Re-read recon, commander, and sortie; confirm recon/commander
-     have zero aider references and read as tool-agnostic; sortie stands alone
-     and is invocable both ad-hoc and against a plan step; no dangling
-     cross-references.
+   - Goal: Re-read recon, commander, and sortie to confirm zero leftover references and total independence.
    - Status (Step 7): TODO
-
-## Notes
-
-- Two choices are deferred to execution by request: (1) Step 1 — pin a scoped
-  `--chat-history-file` vs. aider's default; (2) Step 3 — templates in a
-  `references/` file vs. inlined in SKILL.md.
-- Coexistence risk during testing is minimal: distinct `sortie-*` filenames
-  prevent temp-file clobbering; the only soft risk is that, while commander is
-  active, the agent could follow commander's inline aider instructions instead
-  of sortie's — mitigated by the user invoking sortie explicitly. Phase 2
-  removes the duplication entirely.
-- Future phases (out of scope here): completion auto-detection and a separate
-  small-LLM summarizer in the feedback loop.
 
 ## Aider Capability Notes
 
-Discovered during recon; not plan-blocking but should inform how sortie's SKILL.md
-describes aider usage and what it mentions as available tools.
+Discovered during recon; informs how `sortie`'s prompt templates and skill documentation describe available tools and features.
 
-### Alias / launch config improvements
-- **`--vim`** — enables vi keybindings (Esc/normal mode, `w`/`b`/`dd`/`u` etc.) in
-  the prompt-toolkit input. Worth adding to the base alias.
-- **`Ctrl-X Ctrl-E`** — opens `$EDITOR` (Neovim) to compose the current prompt,
-  sends on save/quit. No flag needed; just works.
-- **`--notifications` / `--notifications-command`** — desktop notification when
-  LLM finishes responding. Useful for long generations when context-switching.
+### Alias / launch config capabilities
+- **`--vim`** — enables vi keybindings in prompt-toolkit input.
+- **`Ctrl-X Ctrl-E`** — opens `$EDITOR` (Neovim) to compose current prompt, sends on save/quit.
+- **`--notifications` / `--notifications-command`** — desktop notification when LLM finishes.
 
 ### Mid-session commands worth knowing
-- **`/context <intent>`** — aider auto-identifies and adds the files needed for a
-  given request. Useful when launching ad-hoc (files not enumerated upfront) or
-  when a plan step doesn't list exact files.
-- **`/web <url>`** — scrapes a URL, converts to markdown, injects into chat.
-  Pull in API docs, GitHub issues, or specs without leaving the session.
-- **`/save`** — writes a commands file that reconstructs the current session's
-  file set (`/add` state). Useful before a complex session so it can be
-  `/load`'d again later.
-- **`/editor` / `Ctrl-X Ctrl-E`** — open Neovim to compose a long structured
-  prompt, then send on quit. Better than fighting the terminal line editor.
-- **`/think-tokens <budget>` / `/reasoning-effort <level>`** — tune reasoning
-  mid-session without restarting (e.g. bump thinking tokens for a hard step).
-- **PDF support** — `/add file.pdf` works with Sonnet and Gemini models. Useful
-  for specs or datasheets.
+- **`/context <intent>`** — aider auto-identifies and adds files needed for a given request.
+- **`/web <url>`** — scrapes URL to markdown in chat.
+- **`/save`** — writes commands file reconstructing session's `/add` state.
+- **`/editor` / `Ctrl-X Ctrl-E`** — open Neovim for long structured prompt composition.
+- **`/think-tokens <budget>` / `/reasoning-effort <level>`** — adjust model reasoning mid-session.
+- **PDF support** — `/add file.pdf` works with Sonnet/Gemini models.
 
-### The third handoff pattern (rare, manual, but valid)
-`/copy-context [instructions]` + `--copy-paste` mode enable a manual
-archiect-style loop using a web UI as the planner:
-1. `/copy-context` copies the current file context (repo map + added files) as
-   markdown to the clipboard, with optional instructions prepended.
-2. Paste into Claude.ai / ChatGPT — gets planning/reasoning from a model you
-   don't have API access to, or one with extended thinking UI / Projects.
-3. Paste the response back into aider; `--copy-paste` mode formats aider's
-   output so it can parse pasted edits and apply them.
-
-This is annoying and slow but covers the gap when you want a web UI model to
-plan something and aider to execute it, without fully breaking out of the
-session. Sortie does not automate this; it's an ad-hoc escape hatch the user
-can invoke themselves. Document it in the SKILL.md as a known pattern.
+### Third handoff pattern (manual escape hatch)
+`/copy-context [instructions]` + `--copy-paste` mode enable a manual architect-style loop using a web UI model (Claude.ai / ChatGPT) as planner, returning formatted edits for aider to parse and apply. Documented as an ad-hoc pattern in SKILL.md.
