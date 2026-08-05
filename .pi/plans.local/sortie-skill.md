@@ -187,3 +187,47 @@ the MVP has **no** completion auto-detection and **no** separate summarizer LLM.
   removes the duplication entirely.
 - Future phases (out of scope here): completion auto-detection and a separate
   small-LLM summarizer in the feedback loop.
+
+## Aider Capability Notes
+
+Discovered during recon; not plan-blocking but should inform how sortie's SKILL.md
+describes aider usage and what it mentions as available tools.
+
+### Alias / launch config improvements
+- **`--vim`** — enables vi keybindings (Esc/normal mode, `w`/`b`/`dd`/`u` etc.) in
+  the prompt-toolkit input. Worth adding to the base alias.
+- **`Ctrl-X Ctrl-E`** — opens `$EDITOR` (Neovim) to compose the current prompt,
+  sends on save/quit. No flag needed; just works.
+- **`--notifications` / `--notifications-command`** — desktop notification when
+  LLM finishes responding. Useful for long generations when context-switching.
+
+### Mid-session commands worth knowing
+- **`/context <intent>`** — aider auto-identifies and adds the files needed for a
+  given request. Useful when launching ad-hoc (files not enumerated upfront) or
+  when a plan step doesn't list exact files.
+- **`/web <url>`** — scrapes a URL, converts to markdown, injects into chat.
+  Pull in API docs, GitHub issues, or specs without leaving the session.
+- **`/save`** — writes a commands file that reconstructs the current session's
+  file set (`/add` state). Useful before a complex session so it can be
+  `/load`'d again later.
+- **`/editor` / `Ctrl-X Ctrl-E`** — open Neovim to compose a long structured
+  prompt, then send on quit. Better than fighting the terminal line editor.
+- **`/think-tokens <budget>` / `/reasoning-effort <level>`** — tune reasoning
+  mid-session without restarting (e.g. bump thinking tokens for a hard step).
+- **PDF support** — `/add file.pdf` works with Sonnet and Gemini models. Useful
+  for specs or datasheets.
+
+### The third handoff pattern (rare, manual, but valid)
+`/copy-context [instructions]` + `--copy-paste` mode enable a manual
+archiect-style loop using a web UI as the planner:
+1. `/copy-context` copies the current file context (repo map + added files) as
+   markdown to the clipboard, with optional instructions prepended.
+2. Paste into Claude.ai / ChatGPT — gets planning/reasoning from a model you
+   don't have API access to, or one with extended thinking UI / Projects.
+3. Paste the response back into aider; `--copy-paste` mode formats aider's
+   output so it can parse pasted edits and apply them.
+
+This is annoying and slow but covers the gap when you want a web UI model to
+plan something and aider to execute it, without fully breaking out of the
+session. Sortie does not automate this; it's an ad-hoc escape hatch the user
+can invoke themselves. Document it in the SKILL.md as a known pattern.
