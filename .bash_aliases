@@ -59,8 +59,18 @@ aider-qwen-coder() {
 }
 export AIDER_READ=~/.aider.instructions.md
 
-#Aichat
-alias bash-gen='aichat -e'
-alias ai='aichat'
-alias ai-nano='aichat -m openai:gpt-5.4-nano-2026-03-17'
-alias ai-flash='aichat -m gemini:gemini-3.5-flash'
+#Pi aliases
+ask() {
+    pi -p --no-session --no-tools --model haiku "$@"
+}
+
+cmd() {
+    local result
+    result=$(pi -p --no-session --no-tools \
+        --system-prompt 'Output only a single shell command with no explanation, markdown, or extra text. The command must be directly executable in bash.' \
+        --model haiku \
+        "$@")
+    printf '%s
+' "$result"
+    printf '%s' "$result" | xclip -selection clipboard
+}
