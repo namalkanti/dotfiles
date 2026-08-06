@@ -46,7 +46,7 @@ nav () {
 }
 
 #Aider aliases
-alias aider='aider --chat-mode ask --cache-prompts --no-gitignore --no-auto-commits --subtree-only --model gemini/gemini-3.5-flash --weak-model anthropic/claude-haiku-4-5-20251001'
+alias aider='aider --chat-mode ask --cache-prompts --no-gitignore --no-auto-commits --subtree-only --model gemini/gemini-3.6-flash --weak-model anthropic/claude-haiku-4-5-20251001'
 alias aider-sonnet='aider --model anthropic/claude-sonnet-4-6 --weak-model anthropic/claude-haiku-4-5-20251001'
 alias aider-qwen='aider --model ollama_chat/qwen3.6:35b-mlx'
 alias aider-continue='aider --restore-chat-history'

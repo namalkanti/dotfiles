@@ -41,7 +41,7 @@ Work begins only after the discussion settles.
 
 **INVESTIGATION** — Handled inline. Read relevant sources, discuss findings, document discoveries directly in the plan. No delegation needed.
 
-**EXECUTION** — Delegated by default. For coding steps, generate an aider prompt (see [Aider Prompts](#aider-prompts-temporary)). For other execution types, direct the user to the appropriate tool. The step in the plan should give the executor everything it needs. Commander executes directly only when authorized (plan step specifies it, or the user asks) — see Default posture above.
+**EXECUTION** — Delegated by default. Direct the user to the appropriate execution skill or tool. The step in the plan should give the executor everything it needs. Commander executes directly only when authorized (plan step specifies it, or the user asks) — see Default posture above.
 
 **On-deck:** While discussing any step, add code quality issues to on-deck in real time — long methods, duplication, magic numbers, unclear names. Note file and line. Don't interrupt the discussion, just note it and continue.
 
@@ -86,105 +86,3 @@ When the plan is complete, archive it to `.pi/notes.local/`. See [archive.md](re
 2. Transform plan → note: keep decisions, learnings, critical files, history highlights; remove status markers and pending items
 3. Write to `.pi/notes.local/[name].md`
 4. Tell the user to delete the plan file when ready — Commander does not delete it
-
-## Aider Prompts (Temporary)
-
-> **This section will move to a dedicated aider skill. Duplicated here from recon for now.**
-
-Two prompt types. **Generative is the default.** Interactive is on explicit request only.
-
-### Generative (default)
-
-Prescriptive. Aider executes autonomously. Use OLD/NEW code blocks so there's no ambiguity about what to change.
-
-```
-[What to implement]
-
-## Scope
-In scope: [what to do now]
-Out of scope: [what to defer — quality concerns, edge cases, etc.]
-
-**File**: /full/path/to/file
-
-**Lines X–Y**: Replace with:
-OLD:
-[exact current code]
-
-NEW:
-[replacement code]
-
-**Rationale**: [why]
-```
-
-### Interactive (on request)
-
-Context-heavy. Aider acts as guide; the user does the work. Use when the user wants to write the code themselves and needs a knowledgeable pair.
-
-Align on scope before generating — which files, what specific goal. Then:
-
-```
-[Clear description of goal]
-
-## Files Needed
-
-- /full/path/to/file1.cpp
-- /full/path/to/file1.h
-- /full/path/to/related_file.cpp
-
-## IMPORTANT: Your Role
-
-**DO NOT do this work yourself.**
-
-Your role is to:
-- Provide context and guidance
-- Answer questions as the user works
-- Explain patterns and conventions
-- Help when the user asks for help
-
-The user is the one doing the work. You are the guide.
-
-## What Needs To Be Done
-
-- [What to implement or explore]
-
-Deferring (handle later):
-- [Items to defer]
-
-## Context
-
-**Current State**:
-[Brief description of what exists now]
-
-**Design Guidance**:
-- [Key conventions or constraints]
-- [Architectural considerations]
-
-**Rationale**: [Why this work is needed]
-```
-
-### Saving and confirming (both types)
-
-```bash
-cat > .pi/tmp.local/aider-prompt.txt << 'EOF'
-[prompt content]
-EOF
-
-cat > .pi/tmp.local/aider-commands.txt << 'EOF'
-/add /full/path/to/file1
-/add /full/path/to/file2
-/read .pi/tmp.local/aider-prompt.txt
-EOF
-```
-
-Confirm to the user (do not display the full prompt):
-
-```
-✓ Prompt saved to:   .pi/tmp.local/aider-prompt.txt
-✓ Commands saved to: .pi/tmp.local/aider-commands.txt
-
-Run in aider: /load .pi/tmp.local/aider-commands.txt
-
-Return here when done to review the step.
-```
-
-A step may need multiple prompts (generative and interactive, mixed). Don't mark a step complete until the entire step goal is met — not just one prompt's worth.
