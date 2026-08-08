@@ -65,6 +65,11 @@ let mapleader = " "
 nnoremap gf <C-i>
 nnoremap gb <C-o>
 
+"Line navigation: 0=first word, ^/_=beginning of line
+nnoremap 0 ^
+nnoremap ^ 0
+nnoremap _ 0
+
 "Window Navigation
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
