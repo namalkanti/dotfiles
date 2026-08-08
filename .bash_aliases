@@ -61,16 +61,18 @@ export AIDER_READ=~/.aider.instructions.md
 
 #Pi aliases
 ask() {
-    pi -p --no-session --no-tools --model haiku "$@"
+    PI_REASONING_LEVEL=off pi -p --no-session --no-tools \
+        --system-prompt 'Be concise and direct. Use minimal markdown. End with a single bold summary line starting with "**TL;DR:**".' \
+        --model haiku \
+        "$@"
 }
 
 cmd() {
     local result
-    result=$(pi -p --no-session --no-tools \
+    result=$(PI_REASONING_LEVEL=off pi -p --no-session --no-tools \
         --system-prompt 'Output only a single shell command with no explanation, markdown, or extra text. The command must be directly executable in bash.' \
         --model haiku \
         "$@")
-    printf '%s
-' "$result"
+    printf '%s\n' "$result"
     printf '%s' "$result" | xclip -selection clipboard
 }
