@@ -46,6 +46,7 @@
 - `https://github.com/Crylia/crylia-theme` — AwesomeWM reference theme/rice
 - `https://github.com/Mofiqul/awesome-shell` — AwesomeWM reference widgets & shell extensions
 - `https://github.com/Alpharivs/dotfiles` — AwesomeWM reference theme/rice
+- `https://github.com/Axarva/dotfiles-2.0` - Xomand reference with nice theme and colors
 
 ## Proposed Steps
 
@@ -99,6 +100,7 @@
      - https://github.com/Crylia/crylia-theme
      - https://github.com/Mofiqul/awesome-shell
      - https://github.com/Alpharivs/dotfiles
+     - https://github.com/Axarva/dotfiles-2.0
 
 8. **Package & Dependency Cleanup Audit** (INVESTIGATION)
    - Goal: Verify which standalone packages are rendered obsolete by AwesomeWM and safe to remove.
