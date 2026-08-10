@@ -33,19 +33,19 @@
 
 1. **Confirm script install location** (INVESTIGATION)
    - Goal: Determine whether `~/.local/bin` is already on PATH so `rofi-power-menu.sh` and any future user scripts resolve without a full path.
-   - Status (Step 1): TODO
+   - Status (Step 1): DONE
    - Approach: Check `~/.zshrc` (and `~/.zprofile` / `~/.profile` if present) for a PATH export including `~/.local/bin`. If absent, decide whether to add it or reference the script by full path in configs.
    - Sources: `~/.zshrc`
 
 2. **i3 functionality gap audit** (INVESTIGATION)
    - Goal: Produce a concrete list of keybindings/behaviors missing from eir's trimmed-down i3 config that a daily-driver setup needs.
-   - Status (Step 2): TODO
+   - Status (Step 2): DONE
    - Approach: Compare eir's `config/i3/config` against i3's standard feature set and this user's needs: fullscreen toggle, floating toggle, resize mode (hjkl-driven), scratchpad, split/layout switching (tabbed/stacked/split), config reload (distinct from full restart), exit binding, `for_window` floating-exception rules for apps that misbehave when tiled (file picker dialogs, `pavucontrol`, video-call windows), volume/brightness media-key bindings (e.g. via `pactl`), and an `i3lock` keybind. Output a finalized keybind list to apply in Step 3.
    - Sources: `/home/neji49/Drive/Stuffz/Programming/Systems/eir/config/i3/config`, i3 user guide default keybindings
 
 3. **Write base i3 config** (EXECUTION)
    - Goal: Produce a working `~/.config/i3/config`.
-   - Status (Step 3): TODO
+   - Status (Step 3): DONE
    - Approach: Start from eir's `config/i3/config`. Fix the font line to `MesloLGS NF`. Add `focus_follows_mouse yes`. Add `exec --no-startup-id dunst` to autostart. Remove the Nix-templated wallpaper `exec_always` line entirely. Update the `rofi-power-menu` references to the resolved path from Step 1. Fold in every binding identified in Step 2 (fullscreen, float toggle, resize mode, scratchpad, layout switching, reload, exit, `for_window` rules, media keys, i3lock keybind).
 
 4. **Polybar module audit** (INVESTIGATION)
@@ -80,13 +80,35 @@
    - Status (Step 9): TODO
    - Approach: Copy `/home/neji49/Drive/Stuffz/Programming/Systems/eir/scripts/rofi-power-menu.sh` to `~/.local/bin/rofi-power-menu.sh` (per Step 1's PATH decision) and `chmod +x` it.
 
-10. **Verify the full session** (EXECUTION)
-    - Goal: Confirm the assembled i3 session actually works end-to-end.
+10. **Ricing & visual polish pass** (INVESTIGATION & EXECUTION)
+    - Goal: Enhance aesthetics with wallpaper management, compositor effects (picom), color scheme alignment, and terminal eye-candy once base functionality is working.
     - Status (Step 10): TODO
-    - Approach: Log out of Cinnamon, select i3 (or i3-with-shmlog) at the lightdm greeter, log in. Exercise every keybind category: focus (`Alt+hjkl`), move (`Shift+Alt+wasd`), fullscreen toggle, floating toggle, resize mode, scratchpad, layout switching, config reload, exit, i3lock, power menu (`rofi-power-menu`), volume/media keys. Confirm polybar renders with the correct font and all Step 4 modules. Trigger a real notification from both Discord and Firefox to confirm `dunst` actually surfaces app notifications, not just synthetic `notify-send` tests. Confirm Discord's tray icon and `nm-applet` both render correctly in polybar's `tray` module. Confirm rofi's `drun` icon coverage visually matches the curated Cinnamon menu (respecting the existing `NoDisplay`/`Hidden` overrides).
+    - Approach:
+      - **Wallpaper**: Select and set wallpaper via `feh` or `nitrogen`.
+      - **Compositor (picom)**: Configure `~/.config/picom/picom.conf` for rounded corners, window drop-shadows, subtle opacity/translucency, and background blur.
+      - **Color Palette Alignment**: Coordinate color scheme across i3 window borders, Polybar, Rofi, and WezTerm.
+      - **Terminal Eye-Candy**: Install/configure `fastfetch` for system info summary on terminal launch.
+
+11. **Verify the full session** (EXECUTION)
+    - Goal: Confirm the assembled i3 session actually works end-to-end.
+    - Status (Step 11): TODO
+    - Approach: Log out of Cinnamon, select i3 (or i3-with-shmlog) at the lightdm greeter, log in. Exercise every keybind category: focus (`Alt+hjkl`), move (`Shift+Alt+wasd`), fullscreen toggle, floating toggle, resize mode, scratchpad, layout switching, config reload, exit, i3lock, power menu (`rofi-power-menu`), volume/media keys. Confirm polybar renders with the correct font and all Step 4 modules. Trigger a real notification from both Discord and Firefox to confirm `dunst` actually surfaces app notifications, not just synthetic `notify-send` tests. Confirm Discord's tray icon and `nm-applet` both render correctly in polybar's `tray` module. Confirm rofi's `drun` icon coverage visually matches the curated Cinnamon menu (respecting the existing `NoDisplay`/`Hidden` overrides). Verify picom effects, wallpaper persistence, and visual styling from Step 10.
+
+## History
+- **2025-08-08** — Completed Step 3: Write base i3 config
+  - Created `~/.config/i3/config` incorporating all audited bindings, font fix (`MesloLGS NF`), `sunset.jpg` feh wallpaper autostart, dunst autostart, media keys, and window floating rules.
+  - User installed missing packages (`i3-wm`, `picom`, `polybar`, `rofi`, `i3lock`, `dunst`).
+- **2025-08-08** — Completed Step 2: i3 functionality gap audit
+  - Compared eir i3 config against Cinnamon hotkeys and daily-driver needs.
+  - Settled on `Alt` (`Mod1`) for all i3 bindings, `Alt+hjkl` for focus, `Shift+Alt+hjkl` for window move.
+  - Set `Alt+f` for fullscreen, `Shift+Alt+f` for float toggle, and `Shift+Alt+n` for Thunar.
+  - Updated base eir config file to reflect the new move and Thunar bindings.
+  - Defined keybindings for resize mode, scratchpads, layouts, lock screen (`Ctrl+Alt+l`), soft reload (`Shift+Alt+c`), media/brightness keys, and window float rules.
+- **2025-08-08** — Completed Step 1: Confirm script install location
+  - Confirmed `~/.local/bin` is exported in `~/.zshrc` and active in `$PATH`. Scripts installed to `~/.local/bin` can be called directly by command name.
 
 ## Notes
 - eir's NixOS installation mechanism (flake, modules, `/etc/skel` provisioning, systemd activation ordering) is explicitly out of scope — this plan only reuses eir's config *file content*.
 - Dotfiles-repo integration of these new configs (`~/.config/i3`, `~/.config/polybar`, `~/.config/rofi`, `~/.local/bin/rofi-power-menu.sh`) is deferred to a later manual pass; the user will handle that themselves.
-- Theme/wallpaper alignment with wezterm's active `Rosé Pine (Gogh)` scheme (or reactivating the shelved `neofusion_theme`) is a separate future task, not part of this plan.
+- Theme/wallpaper alignment with wezterm's active `Rosé Pine (Gogh)` scheme (or reactivating the shelved `neofusion_theme`), wallpaper setup, and picom effects are incorporated into Step 10 (Ricing & visual polish pass).
 - The i3lock keybind and any resize-mode/scratchpad key choices from Step 2 are open until that investigation step runs — no keys are pre-selected in this plan beyond what's already fixed (focus/move nav).
