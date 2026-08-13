@@ -124,7 +124,7 @@ git config --global color.status auto
 export GIT_EDITOR='nvim'
 
 #Fzf variables
-export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --no-ignore-vcs --glob "!.git/*"'
 export FZF_DEFAULT_OPTS="--tmux"
 source <(fzf --zsh)
 

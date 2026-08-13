@@ -85,8 +85,9 @@ nnoremap <silent> <Right> zl
 "Fzf and Rg
 nmap <C-p> :Files<CR>
 nmap <C-b> :Buffers<CR>
-command! FzfRg call fzf#vim#grep('rg --line-number --no-heading --color=always .', 1)
-nmap <C-i> :FzfRg<CR>
+command! -bang -nargs=* FzfRg call fzf#vim#grep('rg --column --line-number --no-heading --color=always --smart-case -- '.fzf#shellescape(<q-args>), fzf#vim#with_preview(), <bang>0)
+nmap <C-i> :RG<CR>
+vnoremap <leader>g :call RgVisual()<CR>
 
 "LSP Setup
 augroup LspAttachGroup

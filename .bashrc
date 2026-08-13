@@ -20,5 +20,5 @@ git config --global color.status auto
 . /home/namalkanti/Documents/utils/z/z.sh
 
 #Fzf/xplr variables
-export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --no-ignore-vcs --glob "!.git/*"'
 export FZF_DEFAULT_OPTS="--tmux"
