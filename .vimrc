@@ -13,9 +13,8 @@ Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-repeat'
 Plug 'svermeulen/vim-subversive'
 Plug 'godlygeek/tabular'
-Plug 'rust-lang/rust.vim'
-Plug 'leafgarland/typescript-vim'
-Plug 'clojure-vim/clojure.vim'
+Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'main' }
+Plug 'nvim-treesitter/nvim-treesitter-textobjects', { 'branch': 'main' }
 Plug 'neovim/nvim-lspconfig'
 call plug#end()
 
@@ -96,6 +95,11 @@ nmap <leader>s <plug>(SubversiveSubstituteRange)
 xmap <leader>s <plug>(SubversiveSubstituteRange)
 nmap <leader>ss <plug>(SubversiveSubstituteWordRange)
 
+"Configure your language servers and treesitter in a Lua block
+lua require('config.treesitter').setup()
+lua require('config.textobjects').setup()
+lua require('config.lsp').setup()
+
 "LSP Setup
 augroup LspAttachGroup
   autocmd!
@@ -113,9 +117,6 @@ function! LspOnAttach(client, bufnr) abort
   nnoremap <silent> <buffer> <leader>ca :lua vim.lsp.buf.code_action()<CR>
   nnoremap <silent> <buffer> <leader>f :lua vim.lsp.buf.format({ async=true })<CR>
 endfunction
-
-"Configure your language servers and code companion in a Lua block
-lua require('config.lsp').setup()
 
 "Enable built-in LSP-based completion
 set completeopt=menuone,noinsert,noselect
