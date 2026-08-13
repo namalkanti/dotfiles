@@ -67,6 +67,12 @@ In scope:
 
 Out of scope:
 - [what to defer — quality concerns, edge cases, follow-on work]
+
+## Constraints
+
+- Scope discipline: Implement ONLY the changes explicitly listed under Goal and Scope.
+- Do NOT reorder unmentioned functions, perform drive-by formatting, or rewrite surrounding code.
+- If the task contains distinct steps, focus strictly on the current step and confirm before proceeding.
 ```
 
 ---

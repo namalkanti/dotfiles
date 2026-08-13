@@ -13,6 +13,11 @@ in-session discussion and coding belong to the user.
 Sortie is self-contained. It has no awareness of what invoked it and no runtime
 dependencies on other skills.
 
+**Turn boundaries & pacing:**
+- **Never auto-launch:** Present context confirmation and candidate diffs in turn 1, then **STOP**. Do not write prompt/command files or execute `tmux new-window` until the user explicitly approves.
+- **Explicit approval required:** Generating candidate diffs and launching tmux must never happen in the same assistant turn.
+- **Strict task scoping:** Keep `sortie-prompt.txt` tightly constrained to the agreed task. Always include explicit Scope and Constraints prohibiting unrequested refactoring, drive-by reordering, or expanding beyond the agreed task boundaries.
+
 ---
 
 ## Opening: Establish Context
@@ -29,7 +34,7 @@ briefly:
 - Which files are editable? Which are read-only reference?
 - Any constraints or scope boundaries?
 
-If all three are settled, proceed directly to generating diffs.
+If all three are settled, proceed directly to generating candidate diffs. Present the context and diffs to the user, then **STOP** and wait for approval before launching.
 
 ### Cold entry
 
