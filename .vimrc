@@ -9,7 +9,9 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-sexp-mappings-for-regular-people'
+Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-repeat'
+Plug 'svermeulen/vim-subversive'
 Plug 'godlygeek/tabular'
 Plug 'rust-lang/rust.vim'
 Plug 'leafgarland/typescript-vim'
@@ -89,13 +91,18 @@ command! -bang -nargs=* FzfRg call fzf#vim#grep('rg --column --line-number --no-
 nmap <C-i> :RG<CR>
 vnoremap <leader>g :call RgVisual()<CR>
 
+"Subversive
+nmap <leader>s <plug>(SubversiveSubstituteRange)
+xmap <leader>s <plug>(SubversiveSubstituteRange)
+nmap <leader>ss <plug>(SubversiveSubstituteWordRange)
+
 "LSP Setup
 augroup LspAttachGroup
   autocmd!
   autocmd LspAttach * call LspOnAttach(v:lua.vim.lsp.get_client_by_id(expand('<amatch>')), expand('<abuf>'))
 augroup END
 
-" 2) Define a Vimscript function to set up LSP keymaps when server attaches
+"Define a Vimscript function to set up LSP keymaps when server attaches
 function! LspOnAttach(client, bufnr) abort
   setlocal omnifunc=v:lua.vim.lsp.omnifunc
   nnoremap <silent> <buffer> gd :lua vim.lsp.buf.definition()<CR>
@@ -107,12 +114,12 @@ function! LspOnAttach(client, bufnr) abort
   nnoremap <silent> <buffer> <leader>f :lua vim.lsp.buf.format({ async=true })<CR>
 endfunction
 
-" 3) Configure your language servers and code companion in a Lua block
+"Configure your language servers and code companion in a Lua block
 lua require('config.lsp').setup()
 
-" 4) Enable built-in LSP-based completion
+"Enable built-in LSP-based completion
 set completeopt=menuone,noinsert,noselect
 
-" 5) Tab at beginning of line indents; anywhere else triggers LSP completion / cycles popup
+"Tab at beginning of line indents; anywhere else triggers LSP completion / cycles popup
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : (getline('.')[0 : col('.')-2] =~ '^\s*$' ? "\<Tab>" : "\<C-x>\<C-o>")
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
