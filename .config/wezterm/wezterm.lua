@@ -47,7 +47,10 @@ config.color_scheme = 'Rosé Pine (Gogh)'
 -- config.color_scheme = 'rose-pine-moon'
 -- config.color_scheme = 'nord'
 
-config.font_size = 14
+config.font_size = 18
+config.window_frame = {
+  font_size = 16.0,
+}
 config.enable_scroll_bar = true
 config.keys = {
     { key = 'h', mods = 'WIN', action = act.ActivatePaneDirection 'Left' },
