@@ -97,11 +97,6 @@ function M.init(modkey, terminal, filemanager, tags, st_mod)
             awful.spawn(os.getenv("HOME") .. "/.local/bin/rofi-power-menu.sh")
         end, { description = "power menu", group = "launcher" }),
 
-        -- Lock screen
-        awful.key({ "Control", modkey }, "l", function()
-            awful.spawn("i3lock -c 000000")
-        end, { description = "lock screen", group = "session" }),
-
         -- Multi-tag (Alt+Ctrl+1..9 = toggle tag on client; Alt+Shift+Ctrl+1..9 = toggle tag view)
         -- Uses standard awful.key (no keygrabber), zero risk of locking input.
         -- Handled in tag loop below.
@@ -219,10 +214,6 @@ function M.init(modkey, terminal, filemanager, tags, st_mod)
         end, { description = "fullscreen", group = "client" }),
         awful.key({ modkey, "Shift" }, "f", awful.client.floating.toggle,
             { description = "toggle floating", group = "client" }),
-        awful.key({ modkey }, "m", function(c)
-            c.maximized = not c.maximized
-            c:raise()
-        end, { description = "maximize", group = "client" }),
         awful.key({ modkey }, "r", function(c)
             c.maximized = not c.maximized
             c:raise()
