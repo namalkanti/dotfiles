@@ -127,6 +127,38 @@ local function create_battery_widget()
     return bat_text
 end
 
+-- Custom Arch Linux Menu Launcher Island
+local function create_launcher_widget()
+    local home = os.getenv("HOME") or "/home/namalkanti"
+    local icon_path = home .. "/Pictures/icons/archlinux.svg"
+    if not gfs.file_readable(icon_path) then
+        icon_path = "/usr/share/pixmaps/archlinux-logo.svg"
+    end
+
+    local icon_widget = wibox.widget {
+        image  = icon_path,
+        resize = true,
+        widget = wibox.widget.imagebox
+    }
+
+    local launcher = wibox.widget {
+        icon_widget,
+        top    = 2,
+        bottom = 2,
+        left   = 2,
+        right  = 2,
+        widget = wibox.container.margin
+    }
+
+    launcher:buttons(gears.table.join(
+        awful.button({}, 1, function()
+            awful.spawn("rofi -show drun")
+        end)
+    ))
+
+    return launcher
+end
+
 function M.init(modkey)
     beautiful.taglist_squares_sel   = nil
     beautiful.taglist_squares_unsel = nil
@@ -297,9 +329,10 @@ function M.init(modkey)
 
         s.mywibox:setup {
             layout = wibox.layout.align.horizontal,
-            { -- Left Island: Tags + Tasks
+            { -- Left Island: Launcher + Tags + Tasks
                 layout  = wibox.layout.fixed.horizontal,
                 spacing = 4,
+                create_island(create_launcher_widget()),
                 create_island(s.mytaglist),
                 create_island(s.mytasklist),
             },
