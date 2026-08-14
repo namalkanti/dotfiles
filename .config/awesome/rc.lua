@@ -54,7 +54,25 @@ local keys   = require("keys")
 local rules  = require("rules")
 local wibar  = require("wibar")
 
-keys.init(modkey, terminal, filemanager)
+-- Try loading sharedtags if available
+local has_sharedtags, sharedtags = pcall(require, "sharedtags")
+local tags = nil
+
+if has_sharedtags then
+    tags = sharedtags({
+        { name = "1", layout = awful.layout.layouts[1] },
+        { name = "2", layout = awful.layout.layouts[1] },
+        { name = "3", layout = awful.layout.layouts[1] },
+        { name = "4", layout = awful.layout.layouts[1] },
+        { name = "5", layout = awful.layout.layouts[1] },
+        { name = "6", layout = awful.layout.layouts[1] },
+        { name = "7", layout = awful.layout.layouts[1] },
+        { name = "8", layout = awful.layout.layouts[1] },
+        { name = "9", layout = awful.layout.layouts[1] },
+    })
+end
+
+keys.init(modkey, terminal, filemanager, tags, has_sharedtags and sharedtags or nil)
 rules.init(keys.client, keys.buttons)
 wibar.init(modkey)
 

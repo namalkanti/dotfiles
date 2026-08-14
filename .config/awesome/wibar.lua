@@ -211,7 +211,11 @@ function M.init(modkey)
             gears.wallpaper.maximized(wallpaper, s, true)
         end
 
-        awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+        -- awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+        -- Create default tags per screen if sharedtags is not active
+        if not s.tags or #s.tags == 0 then
+            awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+        end
 
         s.mylayoutbox = awful.widget.layoutbox(s)
         s.mylayoutbox:buttons(gears.table.join(
