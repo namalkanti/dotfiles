@@ -47,7 +47,7 @@ config.color_scheme = 'Rosé Pine (Gogh)'
 -- config.color_scheme = 'rose-pine-moon'
 -- config.color_scheme = 'nord'
 
-config.font_size = 18
+config.font_size = 16
 config.line_height = 0.99
 config.window_frame = {
   font_size = 16.0,
