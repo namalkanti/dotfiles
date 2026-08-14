@@ -177,13 +177,16 @@ function M.init(modkey, terminal, filemanager, tags, st_mod)
             awful.key({ modkey, "Control" }, "#" .. i + 9,
                 function()
                     if client.focus then
+                        local c = client.focus
+                        local s = c.screen
                         if has_sharedtags and tags then
                             local tag = tags[i]
-                            if tag then client.focus:toggle_tag(tag) end
+                            if tag then c:toggle_tag(tag) end
                         else
-                            local tag = client.focus.screen.tags[i]
-                            if tag then client.focus:toggle_tag(tag) end
+                            local tag = s.tags[i]
+                            if tag then c:toggle_tag(tag) end
                         end
+                        if s then awful.layout.arrange(s) end
                     end
                 end,
                 { description = "toggle tag " .. i .. " on client", group = "tag" }),
