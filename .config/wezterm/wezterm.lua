@@ -48,10 +48,17 @@ config.color_scheme = 'Rosé Pine (Gogh)'
 -- config.color_scheme = 'nord'
 
 config.font_size = 18
+config.line_height = 0.99
 config.window_frame = {
   font_size = 16.0,
 }
 config.enable_scroll_bar = true
+config.window_padding = {
+  left = 8,
+  right = 8,
+  top = 8,
+  bottom = 0,
+}
 config.keys = {
     { key = 'h', mods = 'WIN', action = act.ActivatePaneDirection 'Left' },
     { key = 'j', mods = 'WIN', action = act.ActivatePaneDirection 'Down' },
