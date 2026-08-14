@@ -3,7 +3,6 @@ Plug 'rose-pine/vim', {'as': 'rosepine'}
 Plug 'itchyny/lightline.vim'
 Plug '/bin/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'jremmen/vim-ripgrep'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
@@ -12,7 +11,6 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-repeat'
 Plug 'svermeulen/vim-subversive'
-Plug 'godlygeek/tabular'
 Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'main' }
 Plug 'nvim-treesitter/nvim-treesitter-textobjects', { 'branch': 'main' }
 Plug 'neovim/nvim-lspconfig'
@@ -86,7 +84,6 @@ nnoremap <silent> <Right> zl
 "Fzf and Rg
 nmap <C-p> :Files<CR>
 nmap <C-b> :Buffers<CR>
-command! -bang -nargs=* FzfRg call fzf#vim#grep('rg --column --line-number --no-heading --color=always --smart-case -- '.fzf#shellescape(<q-args>), fzf#vim#with_preview(), <bang>0)
 nmap <C-i> :RG<CR>
 vnoremap <leader>g :call RgVisual()<CR>
 
