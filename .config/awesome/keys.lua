@@ -63,8 +63,6 @@ function M.init(modkey, terminal, filemanager, tags, st_mod)
                     sharedtags.movetag(t1, s2)
                     sharedtags.movetag(t2, s1)
                 end
-            else
-                hotkeys_popup.show_help()
             end
         end, { description = "swap active tags between monitors", group = "screen" }),
         awful.key({ modkey }, "Tab", function()
@@ -111,7 +109,7 @@ function M.init(modkey, terminal, filemanager, tags, st_mod)
         -- Awesome control
         awful.key({ modkey, "Control" }, "r", awesome.restart,
             { description = "reload awesome", group = "awesome" }),
-        awful.key({ modkey, "Shift" }, "s", hotkeys_popup.show_help,
+        awful.key({ modkey }, "w", hotkeys_popup.show_help,
             { description = "hotkeys help",   group = "awesome" }),
 
         -- Volume

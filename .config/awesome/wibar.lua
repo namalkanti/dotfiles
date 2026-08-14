@@ -127,6 +127,56 @@ local function create_battery_widget()
     return bat_text
 end
 
+-- Custom Weather and Sunset Widget
+local function create_weather_widget()
+    local weather_text = wibox.widget.textbox()
+    weather_text.text = "󰖐 Loading weather..."
+
+    local function update_weather()
+        local cmd = [[curl -s --max-time 5 "wttr.in?format=%c+%t|%s"]]
+        awful.spawn.easy_async_with_shell(cmd, function(stdout)
+            local raw = stdout:gsub("%s+$", "")
+            if raw == "" or raw:find("<html") or raw:find("Unknown location") then
+                weather_text.text = "󰖐 Weather unavailable"
+                return
+            end
+
+            local weather, sunset = raw:match("^(.-)|(.*)$")
+            if weather and sunset then
+                local parse_cmd = string.format("date -d '%s' +'%%-I:%%M %%p' 2>/dev/null || echo '%s'", sunset, sunset)
+                awful.spawn.easy_async_with_shell(parse_cmd, function(sunset_out)
+                    local formatted_sunset = sunset_out:gsub("%s+$", "")
+                    weather_text.text = string.format("%s  •  🌇 Sunset %s", weather, formatted_sunset)
+                end)
+            else
+                weather_text.text = raw
+            end
+        end)
+    end
+
+    update_weather()
+
+    gears.timer {
+        timeout   = 900,
+        autostart = true,
+        call_now  = false,
+        callback  = update_weather
+    }
+
+    local widget = wibox.widget {
+        weather_text,
+        widget = wibox.container.margin
+    }
+    widget:buttons(gears.table.join(
+        awful.button({}, 1, function()
+            weather_text.text = "󰖐 Refreshing..."
+            update_weather()
+        end)
+    ))
+
+    return widget
+end
+
 -- Custom Arch Linux Menu Launcher Island
 local function create_launcher_widget()
     local home = os.getenv("HOME") or "/home/namalkanti"
@@ -307,20 +357,29 @@ function M.init(modkey)
             },
         }
 
-        local volume_widget  = create_volume_widget()
-        local battery_widget = create_battery_widget()
+        local is_primary = (s == screen.primary)
 
         local right_widgets = wibox.layout.fixed.horizontal()
         right_widgets.spacing = 4
-        right_widgets:add(create_island(volume_widget))
 
-        -- Only create battery island if system has a battery
-        if gfs.file_readable("/sys/class/power_supply/BAT0/capacity") then
-            right_widgets:add(create_island(battery_widget))
+        if is_primary then
+            local volume_widget  = create_volume_widget()
+            local battery_widget = create_battery_widget()
+
+            right_widgets:add(create_island(volume_widget))
+
+            -- Only create battery island if system has a battery
+            if gfs.file_readable("/sys/class/power_supply/BAT0/capacity") then
+                right_widgets:add(create_island(battery_widget))
+            end
+
+            right_widgets:add(create_island(wibox.widget.systray()))
+            right_widgets:add(create_island(wibox.widget.textclock(" %a %b %d  %I:%M %p ")))
+        else
+            local weather_widget = create_weather_widget()
+            right_widgets:add(create_island(weather_widget))
         end
 
-        right_widgets:add(create_island(wibox.widget.systray()))
-        right_widgets:add(create_island(wibox.widget.textclock(" %a %b %d  %I:%M %p ")))
         right_widgets:add(create_island(s.mylayoutbox))
 
         -- Floating bar with transparent background
