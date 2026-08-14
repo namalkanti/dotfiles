@@ -1,0 +1,57 @@
+configuration {
+    modi: "drun,run,window";
+    font: "MesloLGS Nerd Font 11";
+    show-icons: true;
+    icon-theme: "Papirus";
+    terminal: "wezterm";
+    drun-display-format: "{name}";
+}
+
+@theme "/dev/null"
+
+* {
+    bg: #1e1e2e;
+    bg-alt: #313244;
+    fg: #cdd6f4;
+    accent: #89b4fa;
+
+    background-color: @bg;
+    text-color: @fg;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    spacing: 0;
+}
+
+window {
+    anchor: north west;
+    location: north west;
+    x-offset: 8px;
+    y-offset: 52px;
+    width: 500px;
+    border: 2;
+    border-color: @accent;
+    border-radius: 10px;
+    background-color: @bg;
+    padding: 12;
+}
+
+element {
+    padding: 8 10;
+    border-radius: 6px;
+    text-color: @fg;
+}
+
+element selected {
+    background-color: @bg-alt;
+    text-color: @accent;
+}
+
+entry {
+    padding: 8;
+    text-color: @fg;
+}
+
+inputbar {
+    children: [entry];
+}
