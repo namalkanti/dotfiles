@@ -209,6 +209,7 @@ local function create_launcher_widget()
     return launcher
 end
 
+-- Full taskbar setup
 function M.init(modkey)
     beautiful.taglist_squares_sel   = nil
     beautiful.taglist_squares_unsel = nil

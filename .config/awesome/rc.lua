@@ -79,6 +79,8 @@ wibar.init(modkey)
 require("autostart")
 
 -- {{{ Signals
+
+-- Checks for windows on disconnected monitors on startup
 client.connect_signal("manage", function(c)
     if awesome.startup
         and not c.size_hints.user_position
@@ -88,6 +90,7 @@ client.connect_signal("manage", function(c)
     end
 end)
 
+-- Sets up titlebars for requesting windows
 client.connect_signal("request::titlebars", function(c)
     local wibox  = require("wibox")
     local buttons = gears.table.join(
@@ -113,6 +116,7 @@ client.connect_signal("request::titlebars", function(c)
     }
 end)
 
+-- Focus follows mouse 
 client.connect_signal("mouse::enter", function(c)
     c:emit_signal("request::activate", "mouse_enter", { raise = false })
 end)

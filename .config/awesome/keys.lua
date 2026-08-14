@@ -79,9 +79,9 @@ function M.init(modkey, terminal, filemanager, tags, st_mod)
             { description = "previous layout", group = "layout" }),
 
         -- Master width
-        awful.key({ modkey, "Control" }, "h", function() awful.tag.incmwfact(-0.05) end,
+        awful.key({ modkey, "Shift" }, "-", function() awful.tag.incmwfact(-0.05) end,
             { description = "shrink master", group = "layout" }),
-        awful.key({ modkey, "Control" }, "l", function() awful.tag.incmwfact( 0.05) end,
+        awful.key({ modkey, "Shift" }, "=", function() awful.tag.incmwfact( 0.05) end,
             { description = "grow master",   group = "layout" }),
 
         -- Launchers
