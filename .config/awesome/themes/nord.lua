@@ -61,4 +61,31 @@ theme.tasklist_fg_focus  = nord.nord6
 theme.tasklist_bg_normal = nord.nord0
 theme.tasklist_fg_normal = nord.nord4
 
+-- Titlebar
+theme.titlebar_bg_normal = nord.nord1
+theme.titlebar_bg_focus  = nord.nord2
+theme.titlebar_fg_normal = nord.nord4
+theme.titlebar_fg_focus  = nord.nord6
+
+local cinnamon = "/home/namalkanti/.themes/Adapta-Nokto/metacity-1/"
+
+theme.titlebar_close_button_normal              = cinnamon .. "button_close.svg"
+theme.titlebar_close_button_focus               = cinnamon .. "button_close.svg"
+theme.titlebar_close_button_normal_hover        = cinnamon .. "button_close_prelight.svg"
+theme.titlebar_close_button_focus_hover         = cinnamon .. "button_close_prelight.svg"
+
+theme.titlebar_minimize_button_normal           = cinnamon .. "button_minimize.svg"
+theme.titlebar_minimize_button_focus            = cinnamon .. "button_minimize.svg"
+theme.titlebar_minimize_button_normal_hover     = cinnamon .. "button_minimize_prelight.svg"
+theme.titlebar_minimize_button_focus_hover      = cinnamon .. "button_minimize_prelight.svg"
+
+theme.titlebar_maximized_button_normal_inactive       = cinnamon .. "button_maximize.svg"
+theme.titlebar_maximized_button_focus_inactive        = cinnamon .. "button_maximize.svg"
+theme.titlebar_maximized_button_normal_inactive_hover = cinnamon .. "button_maximize_prelight.svg"
+theme.titlebar_maximized_button_focus_inactive_hover  = cinnamon .. "button_maximize_prelight.svg"
+theme.titlebar_maximized_button_normal_active         = cinnamon .. "max_button_unmaximize.svg"
+theme.titlebar_maximized_button_focus_active          = cinnamon .. "max_button_unmaximize.svg"
+theme.titlebar_maximized_button_normal_active_hover   = cinnamon .. "max_button_unmaximize_prelight.svg"
+theme.titlebar_maximized_button_focus_active_hover    = cinnamon .. "max_button_unmaximize_prelight.svg"
+
 return theme
