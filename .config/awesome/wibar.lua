@@ -133,7 +133,7 @@ local function create_weather_widget()
     weather_text.text = "󰖐 Loading weather..."
 
     local function update_weather()
-        local cmd = [[curl -s --max-time 5 "wttr.in?format=%c+%t|%s"]]
+        local cmd = [[curl -s --max-time 5 "wttr.in?format=%c+%t|%s&m"]]
         awful.spawn.easy_async_with_shell(cmd, function(stdout)
             local raw = stdout:gsub("%s+$", "")
             if raw == "" or raw:find("<html") or raw:find("Unknown location") then
@@ -262,8 +262,7 @@ function M.init(modkey)
             gears.wallpaper.maximized(wallpaper, s, true)
         end
 
-        -- awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
-        -- Create default tags per screen if sharedtags is not active
+        -- Create default tags per screen only if sharedtags hasn't already populated them
         if not s.tags or #s.tags == 0 then
             awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
         end
@@ -332,8 +331,9 @@ function M.init(modkey)
                 end,
             },
             layout  = {
-                spacing = 8,
-                layout  = wibox.layout.fixed.horizontal
+                spacing        = 8,
+                max_widget_size = 220,
+                layout          = wibox.layout.flex.horizontal
             },
             widget_template = {
                 {
@@ -393,14 +393,13 @@ function M.init(modkey)
 
         s.mywibox:setup {
             layout = wibox.layout.align.horizontal,
-            { -- Left Island: Launcher + Tags + Tasks
+            { -- Left Island: Launcher + Tags
                 layout  = wibox.layout.fixed.horizontal,
                 spacing = 4,
                 create_island(create_launcher_widget()),
                 create_island(s.mytaglist),
-                create_island(s.mytasklist),
             },
-            nil,
+            create_island(s.mytasklist), -- Middle: Tasks, clamped to remaining space
             right_widgets,
         }
     end)

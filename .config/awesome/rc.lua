@@ -54,25 +54,29 @@ local keys   = require("keys")
 local rules  = require("rules")
 local wibar  = require("wibar")
 
--- Try loading sharedtags if available
-local has_sharedtags, sharedtags = pcall(require, "sharedtags")
-local tags = nil
+-- Sharedtags support: disabled for now (no-op) until everything else is
+-- confirmed stable. Uncomment to re-enable; keys.lua already has the
+-- conditional branches in place to handle it once tags/st_mod are passed in.
+-- local has_sharedtags, sharedtags = pcall(require, "sharedtags")
+-- local tags = nil
+--
+-- if has_sharedtags then
+--     tags = sharedtags({
+--         { name = "1", layout = awful.layout.layouts[1] },
+--         { name = "2", layout = awful.layout.layouts[1] },
+--         { name = "3", layout = awful.layout.layouts[1] },
+--         { name = "4", layout = awful.layout.layouts[1] },
+--         { name = "5", layout = awful.layout.layouts[1], screen = 2 },
+--         { name = "6", layout = awful.layout.layouts[1] },
+--         { name = "7", layout = awful.layout.layouts[1] },
+--         { name = "8", layout = awful.layout.layouts[1] },
+--         { name = "9", layout = awful.layout.layouts[1] },
+--     })
+-- end
+--
+-- keys.init(modkey, terminal, filemanager, tags, has_sharedtags and sharedtags or nil)
 
-if has_sharedtags then
-    tags = sharedtags({
-        { name = "1", layout = awful.layout.layouts[1] },
-        { name = "2", layout = awful.layout.layouts[1] },
-        { name = "3", layout = awful.layout.layouts[1] },
-        { name = "4", layout = awful.layout.layouts[1] },
-        { name = "5", layout = awful.layout.layouts[1] },
-        { name = "6", layout = awful.layout.layouts[1] },
-        { name = "7", layout = awful.layout.layouts[1] },
-        { name = "8", layout = awful.layout.layouts[1] },
-        { name = "9", layout = awful.layout.layouts[1] },
-    })
-end
-
-keys.init(modkey, terminal, filemanager, tags, has_sharedtags and sharedtags or nil)
+keys.init(modkey, terminal, filemanager)
 rules.init(keys.client, keys.buttons)
 wibar.init(modkey)
 

@@ -1,5 +1,6 @@
 {
+  "model": "sonnet",
   "feedbackSurveyRate": 0,
-  "theme": "dark",
-  "effortLevel": "medium"
+  "effortLevel": "medium",
+  "theme": "dark"
 }

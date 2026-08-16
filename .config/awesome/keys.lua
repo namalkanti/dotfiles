@@ -5,6 +5,7 @@ local has_sharedtags, sharedtags = pcall(require, "sharedtags")
 
 local M = {}
 
+-- function M.init(modkey, terminal, filemanager) -- vanilla per-screen tags signature
 function M.init(modkey, terminal, filemanager, tags, st_mod)
     if st_mod then
         sharedtags = st_mod
@@ -12,45 +13,45 @@ function M.init(modkey, terminal, filemanager, tags, st_mod)
     end
     -- {{{ Global keys
     local globalkeys = gears.table.join(
-        -- Focus — directional
-        awful.key({ modkey }, "h", function() awful.client.focus.bydirection("left")  end,
+        -- Focus — directional (crosses screens)
+        awful.key({ modkey }, "h", function() awful.client.focus.global_bydirection("left")  end,
             { description = "focus left",  group = "client" }),
-        awful.key({ modkey }, "l", function() awful.client.focus.bydirection("right") end,
+        awful.key({ modkey }, "l", function() awful.client.focus.global_bydirection("right") end,
             { description = "focus right", group = "client" }),
-        awful.key({ modkey }, "j", function() awful.client.focus.bydirection("down")  end,
+        awful.key({ modkey }, "j", function() awful.client.focus.global_bydirection("down")  end,
             { description = "focus down",  group = "client" }),
-        awful.key({ modkey }, "k", function() awful.client.focus.bydirection("up")    end,
+        awful.key({ modkey }, "k", function() awful.client.focus.global_bydirection("up")    end,
             { description = "focus up",    group = "client" }),
 
-        -- Move — directional swap
-        awful.key({ modkey, "Shift" }, "h", function() awful.client.swap.bydirection("left")  end,
+        -- Move — directional swap (crosses screens)
+        awful.key({ modkey, "Shift" }, "h", function() awful.client.swap.global_bydirection("left")  end,
             { description = "move left",  group = "client" }),
-        awful.key({ modkey, "Shift" }, "l", function() awful.client.swap.bydirection("right") end,
+        awful.key({ modkey, "Shift" }, "l", function() awful.client.swap.global_bydirection("right") end,
             { description = "move right", group = "client" }),
-        awful.key({ modkey, "Shift" }, "j", function() awful.client.swap.bydirection("down")  end,
+        awful.key({ modkey, "Shift" }, "j", function() awful.client.swap.global_bydirection("down")  end,
             { description = "move down",  group = "client" }),
-        awful.key({ modkey, "Shift" }, "k", function() awful.client.swap.bydirection("up")    end,
+        awful.key({ modkey, "Shift" }, "k", function() awful.client.swap.global_bydirection("up")    end,
             { description = "move up",    group = "client" }),
 
-        -- Screen navigation (WASD focus/move)
-        awful.key({ modkey }, "a", function() awful.screen.focus_bydirection("left")  end,
-            { description = "focus screen left",  group = "screen" }),
-        awful.key({ modkey }, "d", function() awful.screen.focus_bydirection("right") end,
-            { description = "focus screen right", group = "screen" }),
+        -- Screen navigation (next/previous monitor)
+        awful.key({ modkey }, "p", function() awful.screen.focus_bydirection("left")  end,
+            { description = "focus previous screen", group = "screen" }),
+        awful.key({ modkey }, "n", function() awful.screen.focus_bydirection("right") end,
+            { description = "focus next screen",     group = "screen" }),
 
-        awful.key({ modkey, "Shift" }, "a", function()
+        awful.key({ modkey, "Shift" }, "p", function()
             if client.focus then
                 local target = client.focus.screen:get_next_in_direction("left")
                 if target then client.focus:move_to_screen(target) end
             end
-        end, { description = "move client to screen left", group = "screen" }),
+        end, { description = "send window to previous screen", group = "screen" }),
 
-        awful.key({ modkey, "Shift" }, "d", function()
+        awful.key({ modkey, "Shift" }, "n", function()
             if client.focus then
                 local target = client.focus.screen:get_next_in_direction("right")
                 if target then client.focus:move_to_screen(target) end
             end
-        end, { description = "move client to screen right", group = "screen" }),
+        end, { description = "send window to next screen", group = "screen" }),
 
         -- Swap active tags on dual monitors
         awful.key({ modkey }, "s", function()
@@ -87,7 +88,7 @@ function M.init(modkey, terminal, filemanager, tags, st_mod)
         -- Launchers
         awful.key({ modkey, "Shift" }, "t", function() awful.spawn(terminal)    end,
             { description = "terminal",       group = "launcher" }),
-        awful.key({ modkey, "Shift" }, "n", function() awful.spawn(filemanager) end,
+        awful.key({ modkey, "Shift" }, "f", function() awful.spawn(filemanager) end,
             { description = "file manager",   group = "launcher" }),
         awful.key({ modkey }, "q", function() awful.spawn("rofi -show drun")    end,
             { description = "app launcher",   group = "launcher" }),
@@ -149,6 +150,7 @@ function M.init(modkey, terminal, filemanager, tags, st_mod)
                         local tag = tags[i]
                         if tag then sharedtags.viewonly(tag, screen) end
                     else
+                        -- Vanilla per-screen tags fallback
                         local tag = screen.tags[i]
                         if tag then tag:view_only() end
                     end
@@ -162,6 +164,7 @@ function M.init(modkey, terminal, filemanager, tags, st_mod)
                             local tag = tags[i]
                             if tag then client.focus:move_to_tag(tag) end
                         else
+                            -- Vanilla per-screen tags fallback
                             local tag = client.focus.screen.tags[i]
                             if tag then client.focus:move_to_tag(tag) end
                         end
@@ -178,10 +181,11 @@ function M.init(modkey, terminal, filemanager, tags, st_mod)
                             local tag = tags[i]
                             if tag then c:toggle_tag(tag) end
                         else
+                            -- Vanilla per-screen tags fallback
                             local tag = s.tags[i]
                             if tag then c:toggle_tag(tag) end
                         end
-                        if s then awful.layout.arrange(s) end
+                        awful.layout.arrange(s)
                     end
                 end,
                 { description = "toggle tag " .. i .. " on client", group = "tag" }),
@@ -193,6 +197,7 @@ function M.init(modkey, terminal, filemanager, tags, st_mod)
                         local tag = tags[i]
                         if tag then sharedtags.viewtoggle(tag, screen) end
                     else
+                        -- Vanilla per-screen tags fallback
                         local tag = screen.tags[i]
                         if tag then awful.tag.viewtoggle(tag) end
                     end
@@ -212,7 +217,7 @@ function M.init(modkey, terminal, filemanager, tags, st_mod)
             c.fullscreen = not c.fullscreen
             c:raise()
         end, { description = "fullscreen", group = "client" }),
-        awful.key({ modkey, "Shift" }, "f", awful.client.floating.toggle,
+        awful.key({ modkey, "Shift" }, "r", awful.client.floating.toggle,
             { description = "toggle floating", group = "client" }),
         awful.key({ modkey }, "r", function(c)
             c.maximized = not c.maximized
