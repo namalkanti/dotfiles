@@ -47,10 +47,19 @@ config.color_scheme = 'Rosé Pine (Gogh)'
 -- config.color_scheme = 'rose-pine-moon'
 -- config.color_scheme = 'nord'
 
-config.font_size = 16
+-- Nadleeh (desktop) splits the difference between its 2K and 4K monitors,
+-- since wezterm has no live per-monitor DPI tracking on X11. Exia (laptop,
+-- single 1080p screen) stays at the base size.
+local base_font_size = 16
+local font_size = base_font_size
+if wezterm.hostname() == "Nadleeh" then
+  font_size = 18
+end
+
+config.font_size = font_size
 config.line_height = 0.99
 config.window_frame = {
-  font_size = 16.0,
+  font_size = font_size,
 }
 config.enable_scroll_bar = true
 config.window_padding = {

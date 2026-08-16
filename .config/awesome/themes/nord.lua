@@ -43,7 +43,7 @@ theme.fg_focus      = nord.nord8
 theme.fg_urgent     = nord.nord0
 theme.fg_minimize   = nord.nord3
 
-theme.border_normal = nord.nord1
+theme.border_normal = nord.nord3
 theme.border_focus  = nord.nord8
 theme.border_marked = nord.nord13
 

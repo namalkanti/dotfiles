@@ -11,6 +11,19 @@ function M.init(modkey, terminal, filemanager, tags, st_mod)
         sharedtags = st_mod
         has_sharedtags = true
     end
+    -- Cyclic screen navigation: wraps around instead of stopping at the last
+    -- screen in a direction. target_only=true skips changing focus, for the
+    -- "send window to screen" bindings which only need the target screen.
+    local function screen_relative(offset, target_only)
+        local cur = awful.screen.focused()
+        local idx = ((cur.index - 1 + offset) % screen.count()) + 1
+        local target = screen[idx]
+        if not target_only then
+            awful.screen.focus(target)
+        end
+        return target
+    end
+
     -- {{{ Global keys
     local globalkeys = gears.table.join(
         -- Focus — directional (crosses screens)
@@ -33,24 +46,18 @@ function M.init(modkey, terminal, filemanager, tags, st_mod)
         awful.key({ modkey, "Shift" }, "k", function() awful.client.swap.global_bydirection("up")    end,
             { description = "move up",    group = "client" }),
 
-        -- Screen navigation (next/previous monitor)
-        awful.key({ modkey }, "p", function() awful.screen.focus_bydirection("left")  end,
+        -- Screen navigation (next/previous monitor, wraps around)
+        awful.key({ modkey }, "p", function() screen_relative(-1) end,
             { description = "focus previous screen", group = "screen" }),
-        awful.key({ modkey }, "n", function() awful.screen.focus_bydirection("right") end,
+        awful.key({ modkey }, "n", function() screen_relative(1) end,
             { description = "focus next screen",     group = "screen" }),
 
         awful.key({ modkey, "Shift" }, "p", function()
-            if client.focus then
-                local target = client.focus.screen:get_next_in_direction("left")
-                if target then client.focus:move_to_screen(target) end
-            end
+            if client.focus then client.focus:move_to_screen(screen_relative(-1, true)) end
         end, { description = "send window to previous screen", group = "screen" }),
 
         awful.key({ modkey, "Shift" }, "n", function()
-            if client.focus then
-                local target = client.focus.screen:get_next_in_direction("right")
-                if target then client.focus:move_to_screen(target) end
-            end
+            if client.focus then client.focus:move_to_screen(screen_relative(1, true)) end
         end, { description = "send window to next screen", group = "screen" }),
 
         -- Swap active tags on dual monitors
