@@ -39,12 +39,18 @@ function M.init(modkey, terminal, filemanager, tags, st_mod)
         end
         if #fcls == 0 then return end
         if not sel then
+            if fcls[1].screen ~= awful.screen.focused() then
+                awful.screen.focus(fcls[1].screen)
+            end
             fcls[1]:emit_signal("request::activate", "client.focus.byidx", { raise = true })
             return
         end
         for idx, c in ipairs(fcls) do
             if c == sel then
                 local target = fcls[gears.math.cycle(#fcls, idx + i)]
+                if target.screen ~= awful.screen.focused() then
+                    awful.screen.focus(target.screen)
+                end
                 target:emit_signal("request::activate", "client.focus.byidx", { raise = true })
                 return
             end

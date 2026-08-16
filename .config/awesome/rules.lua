@@ -34,6 +34,11 @@ function M.init(clientkeys, clientbuttons)
           properties = { floating = true }
         },
 
+        -- pinentry (gtk/qt flavors) and gcr-prompter (pinentry-gnome3's actual backend UI)
+        { rule_any = { class = { "[Pp]inentry.*", "[Gg]cr%-prompter" } },
+          properties = { floating = true, ontop = true, placement = awful.placement.centered }
+        },
+
         -- Dialogs get titlebars
         { rule_any = { type = { "dialog" } },
           properties = { titlebars_enabled = true, floating = true }
