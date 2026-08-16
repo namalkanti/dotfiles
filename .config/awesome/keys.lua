@@ -24,6 +24,33 @@ function M.init(modkey, terminal, filemanager, tags, st_mod)
         return target
     end
 
+    -- Cycle focus across all visible clients on every screen, not just the
+    -- current one. awful.client.focus.byidx() hardcodes the focused client's
+    -- own screen (awful/client.lua:256, client.visible(sel.screen, ...)),
+    -- with no built-in global equivalent, unlike focus.global_bydirection.
+    local function focus_byidx_global(i)
+        local sel = client.focus
+        local cls = awful.client.visible(nil, false)
+        local fcls = {}
+        for _, c in ipairs(cls) do
+            if awful.client.focus.filter(c) or c == sel then
+                table.insert(fcls, c)
+            end
+        end
+        if #fcls == 0 then return end
+        if not sel then
+            fcls[1]:emit_signal("request::activate", "client.focus.byidx", { raise = true })
+            return
+        end
+        for idx, c in ipairs(fcls) do
+            if c == sel then
+                local target = fcls[gears.math.cycle(#fcls, idx + i)]
+                target:emit_signal("request::activate", "client.focus.byidx", { raise = true })
+                return
+            end
+        end
+    end
+
     -- {{{ Global keys
     local globalkeys = gears.table.join(
         -- Focus — directional (crosses screens)
@@ -74,10 +101,10 @@ function M.init(modkey, terminal, filemanager, tags, st_mod)
             end
         end, { description = "swap active tags between monitors", group = "screen" }),
         awful.key({ modkey }, "Tab", function()
-            awful.client.focus.byidx(1)
+            focus_byidx_global(1)
         end, { description = "focus next", group = "client" }),
         awful.key({ modkey, "Shift" }, "Tab", function()
-            awful.client.focus.byidx(-1)
+            focus_byidx_global(-1)
         end, { description = "focus previous", group = "client" }),
 
         -- Layout cycling
