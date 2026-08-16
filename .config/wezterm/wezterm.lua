@@ -57,6 +57,7 @@ if wezterm.hostname() == "Nadleeh" then
 end
 
 config.font_size = font_size
+
 config.line_height = 0.99
 config.window_frame = {
   font_size = font_size,
