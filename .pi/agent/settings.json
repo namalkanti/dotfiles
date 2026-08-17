@@ -1,7 +1,7 @@
 {
   "//": "lastChangelogVersion set to high version so pi never auto-updates settings.json on startup",
-  "defaultProvider": "anthropic",
-  "defaultModel": "claude-sonnet-4-6",
+  "defaultProvider": "google",
+  "defaultModel": "gemini-3.7-flash",
   "defaultThinkingLevel": "low",
   "enabledModels": [
     "anthropic/claude-haiku-4-5",
