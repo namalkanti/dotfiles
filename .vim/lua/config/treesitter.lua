@@ -6,12 +6,12 @@ local treesitter_module = {}
 
 local parsers = {
   'cpp', 'c', 'python', 'rust', 'clojure', 'kotlin',
-  'typescript', 'tsx', 'go', 'haskell', 'ocaml', 'ocaml_interface',
+  'typescript', 'tsx', 'go', 'haskell', 'ocaml', 'ocaml_interface', 'lua',
 }
 
 local filetypes = {
   'cpp', 'c', 'python', 'rust', 'clojure', 'kotlin',
-  'typescript', 'typescriptreact', 'go', 'haskell', 'ocaml',
+  'typescript', 'typescriptreact', 'go', 'haskell', 'ocaml', 'lua',
 }
 
 function treesitter_module.setup()
