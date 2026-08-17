@@ -93,19 +93,20 @@ function M.init(modkey, terminal, filemanager, tags, st_mod)
             if client.focus then client.focus:move_to_screen(screen_relative(1, true)) end
         end, { description = "send window to next screen", group = "screen" }),
 
-        -- Swap active tags on dual monitors
-        awful.key({ modkey }, "s", function()
-            if has_sharedtags and screen.count() >= 2 then
-                local s1 = screen[1]
-                local s2 = screen[2]
-                local t1 = s1.selected_tag
-                local t2 = s2.selected_tag
-                if t1 and t2 and t1 ~= t2 then
-                    sharedtags.movetag(t1, s2)
-                    sharedtags.movetag(t2, s1)
-                end
-            end
-        end, { description = "swap active tags between monitors", group = "screen" }),
+        -- Swap active tags on dual monitors (disabled: sharedtags isn't wired up in rc.lua,
+        -- so movetag() gets called on plain tags and misbehaves)
+        -- awful.key({ modkey }, "s", function()
+        --     if has_sharedtags and screen.count() >= 2 then
+        --         local s1 = screen[1]
+        --         local s2 = screen[2]
+        --         local t1 = s1.selected_tag
+        --         local t2 = s2.selected_tag
+        --         if t1 and t2 and t1 ~= t2 then
+        --             sharedtags.movetag(t1, s2)
+        --             sharedtags.movetag(t2, s1)
+        --         end
+        --     end
+        -- end, { description = "swap active tags between monitors", group = "screen" }),
         awful.key({ modkey }, "Tab", function()
             focus_byidx_global(1)
         end, { description = "focus next", group = "client" }),
