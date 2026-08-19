@@ -22,6 +22,15 @@ api.map('gT', 'E');
 // Maps gt to move one tab right
 api.map('gt', 'R');
 
+//Windows
+// Temp key for x
+api.map('ab', 'w');
+// Changes close tab to w
+api.map('w', 'x');
+// Restore x to switch frame
+api.map('x', 'ab');
+
 //History
 // Maps u to go back in history
 api.map('u', 'S');
+

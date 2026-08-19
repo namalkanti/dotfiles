@@ -146,7 +146,7 @@ function M.init(modkey, terminal, filemanager, tags, st_mod)
         -- Awesome control
         awful.key({ modkey, "Control" }, "r", awesome.restart,
             { description = "reload awesome", group = "awesome" }),
-        awful.key({ modkey }, "w", hotkeys_popup.show_help,
+        awful.key({ modkey }, "x", hotkeys_popup.show_help,
             { description = "hotkeys help",   group = "awesome" }),
 
         -- Volume
@@ -252,7 +252,7 @@ function M.init(modkey, terminal, filemanager, tags, st_mod)
 
     -- {{{ Client keys
     M.client = gears.table.join(
-        awful.key({ modkey }, "x", function(c) c:kill() end,
+        awful.key({ modkey }, "w", function(c) c:kill() end,
             { description = "close", group = "client" }),
         awful.key({ modkey }, "f", function(c)
             c.fullscreen = not c.fullscreen
