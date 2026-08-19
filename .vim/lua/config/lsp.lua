@@ -10,7 +10,10 @@ local capabilities = _G._BLINKCAPS or vim.lsp.protocol.make_client_capabilities(
 
 function lsp_module.setup()
   vim.lsp.config('pyright', { capabilities = capabilities })
-  vim.lsp.config('rust_analyzer', { capabilities = capabilities })
+  vim.lsp.config('rust_analyzer', {
+    capabilities = capabilities,
+    settings = { ['rust-analyzer'] = { check = { command = 'clippy' } } },
+  })
   vim.lsp.config('marksman', { capabilities = capabilities })
   vim.lsp.config('clangd', { capabilities = capabilities })
   vim.lsp.config('ts_ls', { capabilities = capabilities })

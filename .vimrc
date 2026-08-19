@@ -14,6 +14,7 @@ Plug 'svermeulen/vim-subversive'
 Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'main' }
 Plug 'nvim-treesitter/nvim-treesitter-textobjects', { 'branch': 'main' }
 Plug 'neovim/nvim-lspconfig'
+Plug 'mfussenegger/nvim-lint'
 call plug#end()
 
 set nocompatible
@@ -96,6 +97,7 @@ nmap <leader>ss <plug>(SubversiveSubstituteWordRange)
 lua require('config.treesitter').setup()
 lua require('config.textobjects').setup()
 lua require('config.lsp').setup()
+lua require('config.lint').setup()
 
 "LSP Setup
 augroup LspAttachGroup
