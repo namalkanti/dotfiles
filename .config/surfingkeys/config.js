@@ -24,11 +24,11 @@ api.map('gt', 'R');
 
 //Windows
 // Temp key for x
-api.map('ab', 'w');
+api.map('ae', 'w');
 // Changes close tab to w
 api.map('w', 'x');
 // Restore x to switch frame
-api.map('x', 'ab');
+api.map('x', 'ae');
 
 //History
 // Maps u to go back in history
