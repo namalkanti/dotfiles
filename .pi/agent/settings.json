@@ -9,10 +9,12 @@
     "anthropic/claude-opus-5",
     "openai/gpt-5.6-terra",
     "openai/gpt-5.6-sol",
+    "openai/gpt-5.6-luna",
     "google/gemini-3.7-flash",
-    "ollama/gemma4:12b-mlx-8bit",
-    "ollama/qwen3.5:9b-mlx-8bit",
-    "mlx-server/qwen3.5-9b-4bit"
+    "openrouter/qwen/qwen3.8-2.4t-a95b",
+    "openrouter/deepseek/deepseek-v4-pro-0813",
+    "openrouter/deepseek/deepseek-v4-flash-0731",
+    "openrouter/moonshotai/kimi-k2.7-code"
   ],
   "theme": "dark",
   "packages": [

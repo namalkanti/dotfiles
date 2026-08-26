@@ -95,6 +95,43 @@
           "contextWindow": 272000
         }
       }
+    },
+    "openrouter": {
+      "models": [
+        {
+          "id": "qwen/qwen3.8-2.4t-a95b",
+          "name": "qwen3.8-2T",
+          "reasoning": true,
+          "contextWindow": 1048576,
+          "maxTokens": 131072,
+          "cost": { "input": 2, "output": 6, "cacheRead": 0.25, "cacheWrite": 0 }
+        },
+        {
+          "id": "deepseek/deepseek-v4-pro-0813",
+          "name": "deepseek-v4-pro",
+          "reasoning": true,
+          "contextWindow": 1048576,
+          "maxTokens": 131072,
+          "cost": { "input": 1.122, "output": 3.366, "cacheRead": 0.0374, "cacheWrite": 0 }
+        },
+        {
+          "id": "deepseek/deepseek-v4-flash-0731",
+          "name": "deepseek-v4-flash",
+          "reasoning": true,
+          "contextWindow": 1048576,
+          "maxTokens": 131072,
+          "cost": { "input": 0.04, "output": 0.08, "cacheRead": 0.008, "cacheWrite": 0 }
+        },
+        {
+          "id": "moonshotai/kimi-k2.7-code",
+          "name": "kimi-2.7",
+          "reasoning": true,
+          "input": ["text", "image"],
+          "contextWindow": 262144,
+          "maxTokens": 235929,
+          "cost": { "input": 0.67, "output": 3.4, "cacheRead": 0.19, "cacheWrite": 0 }
+        }
+      ]
     }
   }
 }
