@@ -88,7 +88,7 @@
         }
       ],
       "modelOverrides": {
-        "claude-sonnet-4-6": {
+        "claude-sonnet-5": {
           "contextWindow": 272000
         },
         "claude-opus-5": {
@@ -145,6 +145,33 @@
           "contextWindow": 262144,
           "maxTokens": 235929,
           "cost": { "input": 0.67, "output": 3.4, "cacheRead": 0.19, "cacheWrite": 0 }
+        },
+        {
+          "id": "moonshotai/kimi-k3",
+          "name": "kimi-3",
+          "reasoning": true,
+          "input": ["text", "image"],
+          "contextWindow": 1048576,
+          "maxTokens": 131072,
+          "cost": { "input": 3, "output": 15, "cacheRead": 0.3, "cacheWrite": 0 }
+        },
+        {
+          "id": "qwen/qwen3.8-max",
+          "name": "qwen3.8-max",
+          "reasoning": true,
+          "input": ["text", "image"],
+          "contextWindow": 1000000,
+          "maxTokens": 131072,
+          "cost": { "input": 2, "output": 6, "cacheRead": 0.25, "cacheWrite": 2.5 }
+        },
+        {
+          "id": "qwen/qwen3.8-2.4t-a95b",
+          "name": "qwen3.8-2.4t",
+          "reasoning": true,
+          "input": ["text"],
+          "contextWindow": 1048576,
+          "maxTokens": 131072,
+          "cost": { "input": 2, "output": 6, "cacheRead": 0.25, "cacheWrite": 0 }
         }
       ]
     }

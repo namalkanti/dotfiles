@@ -47,12 +47,13 @@ nav () {
 
 #Aider aliases
 alias aider='aider --cache-prompts --no-auto-commits --model openrouter/moonshotai/kimi-k2.7-code --weak-model openrouter/deepseek/deepseek-v4-flash-0731'
-alias aider-terra='aider --cache-prompts --no-auto-commits --model openai/gpt-5.6-terra --weak-model openai/gpt-5.6-luna'
+alias aider-terra='aider --cache-prompts --no-auto-commits --reasoning-effort none --model openai/gpt-5.6-terra --weak-model openai/gpt-5.6-luna'
 alias aider-gemini='aider --cache-prompts --no-auto-commits --subtree-only --model gemini/gemini-3.7-flash --weak-model gemini/gemini-3.7-flash'
-alias aider-sonnet='aider --cache-prompts --no-auto-commits --model anthropic/claude-sonnet-4-6 --weak-model anthropic/claude-haiku-4-5'
-alias aider-opus='aider --cache-prompts --no-auto-commits --model anthropic/claude-opus-4-8 --weak-model anthropic/claude-haiku-4-5'
-alias aider-sol='aider --cache-prompts --no-auto-commits --model openai/gpt-5.6-sol --weak-model openai/gpt-5.6-luna'
-alias aider-deepseek-flash='aider --cache-prompts --no-auto-commits --model openrouter/deepseek/deepseek-v4-flash-0731 --weak-model openrouter/deepseek/deepseek-v4-flash-0731'
+alias aider-sonnet='aider --cache-prompts --no-auto-commits --thinking-tokens 0 --model anthropic/claude-sonnet-5 --weak-model anthropic/claude-haiku-4-5'
+alias aider-opus='aider --cache-prompts --no-auto-commits --thinking-tokens 0 --model anthropic/claude-opus-4-8 --weak-model anthropic/claude-haiku-4-5'
+alias aider-sol='aider --cache-prompts --no-auto-commits --reasoning-effort none --model openai/gpt-5.6-sol --weak-model openai/gpt-5.6-luna'
+alias aider-deepseek-flash='aider --cache-prompts --no-auto-commits --reasoning-effort none --model openrouter/deepseek/deepseek-v4-flash-0731 --weak-model openrouter/deepseek/deepseek-v4-flash-0731'
+alias aider-qwen='aider --cache-prompts --no-auto-commits --model openrouter/qwen/qwen3.8-27b --weak-model openrouter/qwen/qwen3.8-27b'
 
 aider-qwen-coder() {
     OLLAMA_API_BASE=http://localhost:11434 command aider --chat-mode ask --cache-prompts --no-gitignore --no-auto-commits --subtree-only --model ollama_chat/qwen2.5-coder:14b --weak-model ollama_chat/qwen2.5-coder:14b "$@"
@@ -63,7 +64,7 @@ export AIDER_READ=~/.aider.instructions.md
 ask() {
     PI_REASONING_LEVEL=off pi -p --no-session --no-tools \
         --system-prompt 'Be concise and direct. Use minimal markdown. End with a single bold summary line starting with "**TL;DR:**".' \
-        --model haiku \
+        --model openrouter/deepseek/deepseek-v4-flash-0731 \
         "$@"
 }
 
@@ -71,7 +72,7 @@ cmd() {
     local result
     result=$(PI_REASONING_LEVEL=off pi -p --no-session --no-tools \
         --system-prompt 'Output only a single shell command with no explanation, markdown, or extra text. The command must be directly executable in bash.' \
-        --model haiku \
+        --model openrouter/deepseek/deepseek-v4-flash-0731 \
         "$@")
     printf '%s\n' "$result"
     printf '%s' "$result" | xclip -selection clipboard
