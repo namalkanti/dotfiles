@@ -46,11 +46,11 @@ nav () {
 }
 
 #Aider aliases
-alias aider='aider --cache-prompts --model openai/gpt-5.6-terra --weak-model openai/gpt-5.6-luna'
-alias aider-gemini='aider --cache-prompts --no-gitignore --no-auto-commits --subtree-only --model gemini/gemini-3.7-flash --weak-model anthropic/claude-haiku-4-5'
-alias aider-sonnet='aider --cache-prompts --model anthropic/claude-sonnet-4-6 --weak-model anthropic/claude-haiku-4-5'
-alias aider-opus='aider --cache-prompts --model anthropic/claude-opus-4-8 --weak-model anthropic/claude-haiku-4-5'
-alias aider-sol='aider --cache-prompts --model openai/gpt-5.6-sol --weak-model openai/gpt-5.6-luna'
+alias aider='aider --cache-prompts --no-auto-commits --model openai/gpt-5.6-terra --weak-model openai/gpt-5.6-luna'
+alias aider-gemini='aider --cache-prompts --no-auto-commits --subtree-only --model gemini/gemini-3.7-flash --weak-model anthropic/claude-haiku-4-5'
+alias aider-sonnet='aider --cache-prompts --no-auto-commits --model anthropic/claude-sonnet-4-6 --weak-model anthropic/claude-haiku-4-5'
+alias aider-opus='aider --cache-prompts --no-auto-commits --model anthropic/claude-opus-4-8 --weak-model anthropic/claude-haiku-4-5'
+alias aider-sol='aider --cache-prompts --no-auto-commits --model openai/gpt-5.6-sol --weak-model openai/gpt-5.6-luna'
 
 aider-qwen-coder() {
     OLLAMA_API_BASE=http://localhost:11434 command aider --chat-mode ask --cache-prompts --no-gitignore --no-auto-commits --subtree-only --model ollama_chat/qwen2.5-coder:14b --weak-model ollama_chat/qwen2.5-coder:14b "$@"
