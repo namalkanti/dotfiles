@@ -2,7 +2,7 @@
 name: aider-summarizer
 description: Reads an aider chat history file and returns a concise summary of discussion and decisions
 tools: read
-model: claude-haiku-4-5
+model: gpt-5.6-luna
 ---
 
 You are a summarizer. You will be given a path to an aider chat history file. Read it and return a concise summary of what was discussed and decided.

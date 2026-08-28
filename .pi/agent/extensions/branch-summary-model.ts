@@ -10,8 +10,8 @@ import { complete } from "@earendil-works/pi-ai/compat";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { convertToLlm, serializeConversation } from "@earendil-works/pi-coding-agent";
 
-const SUMMARY_PROVIDER = "anthropic";
-const SUMMARY_MODEL = "claude-haiku-4-5";
+const SUMMARY_PROVIDER = "openai";
+const SUMMARY_MODEL = "gpt-5.6-luna";
 
 const PREAMBLE = `The user explored a different conversation branch before returning here.\nSummary of that exploration:\n\n`;
 
