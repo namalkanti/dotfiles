@@ -47,9 +47,8 @@ nav () {
 
 #Aider aliases
 alias aider='aider --cache-prompts --model openai/gpt-5.6-terra --weak-model openai/gpt-5.6-luna'
-alias aider-gemini='aider --chat-mode ask --cache-prompts --no-gitignore --no-auto-commits --subtree-only --model gemini/gemini-3.7-flash --weak-model anthropic/claude-haiku-4-5'
+alias aider-gemini='aider --cache-prompts --no-gitignore --no-auto-commits --subtree-only --model gemini/gemini-3.7-flash --weak-model anthropic/claude-haiku-4-5'
 alias aider-sonnet='aider --cache-prompts --model anthropic/claude-sonnet-4-6 --weak-model anthropic/claude-haiku-4-5'
-# alias aider-qwen='aider --cache-prompts --model ollama_chat/qwen3.6:35b-mlx'
 alias aider-opus='aider --cache-prompts --model anthropic/claude-opus-4-8 --weak-model anthropic/claude-haiku-4-5'
 alias aider-sol='aider --cache-prompts --model openai/gpt-5.6-sol --weak-model openai/gpt-5.6-luna'
 
