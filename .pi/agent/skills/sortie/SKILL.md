@@ -17,6 +17,7 @@ dependencies on other skills.
 - **Never auto-launch:** Present context confirmation and candidate diffs in turn 1, then **STOP**. Do not write prompt/command files or execute `tmux new-window` until the user explicitly approves.
 - **Explicit approval required:** Generating candidate diffs and launching tmux must never happen in the same assistant turn.
 - **Strict task scoping:** Keep `sortie-prompt.txt` tightly constrained to the agreed task. Always include explicit Scope and Constraints prohibiting unrequested refactoring, drive-by reordering, or expanding beyond the agreed task boundaries.
+- **Mandatory launch invocation:** NEVER pass `--model` or invoke raw `aider` directly. Model configuration and default flags are defined in `~/.bash_aliases`. You MUST use the exact `bash --init-file <(echo 'source ~/.bash_aliases') -i` launch command in Step 3 so the user's configured alias (`aider`) resolves.
 
 ---
 
