@@ -17,6 +17,7 @@ function textobjects_module.setup()
 
   local select = require('nvim-treesitter-textobjects.select')
   local move = require('nvim-treesitter-textobjects.move')
+  local swap = require('nvim-treesitter-textobjects.swap')
 
   local function select_map(keys, capture)
     vim.keymap.set({ 'x', 'o' }, keys, function()
@@ -30,6 +31,13 @@ function textobjects_module.setup()
   select_map('ic', '@class.inner')
   select_map('aa', '@parameter.outer')
   select_map('ia', '@parameter.inner')
+
+  vim.keymap.set('n', '<leader>a', function()
+    swap.swap_next('@parameter.inner')
+  end, { desc = 'Swap next parameter' })
+  vim.keymap.set('n', '<leader>A', function()
+    swap.swap_previous('@parameter.inner')
+  end, { desc = 'Swap previous parameter' })
 
   vim.keymap.set({ 'n', 'x', 'o' }, ']m', function()
     move.goto_next_start('@function.outer', 'textobjects')
