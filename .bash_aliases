@@ -46,13 +46,13 @@ nav () {
 }
 
 #Aider aliases
-alias aider='aider --cache-prompts --no-auto-commits --model openrouter/moonshotai/kimi-k2.7-code --weak-model openrouter/deepseek/deepseek-v4-flash-0731'
+alias aider='aider --cache-prompts --no-auto-commits --model openrouter/deepseek/deepseek-v4-pro-0813 --weak-model openrouter/deepseek/deepseek-v4-flash-0731'
 alias aider-terra='aider --cache-prompts --no-auto-commits --reasoning-effort none --model openai/gpt-5.6-terra --weak-model openai/gpt-5.6-luna'
 alias aider-gemini='aider --cache-prompts --no-auto-commits --subtree-only --model gemini/gemini-3.7-flash --weak-model gemini/gemini-3.7-flash'
 alias aider-sonnet='aider --cache-prompts --no-auto-commits --thinking-tokens 0 --model anthropic/claude-sonnet-5 --weak-model anthropic/claude-haiku-4-5'
 alias aider-opus='aider --cache-prompts --no-auto-commits --thinking-tokens 0 --model anthropic/claude-opus-4-8 --weak-model anthropic/claude-haiku-4-5'
 alias aider-sol='aider --cache-prompts --no-auto-commits --reasoning-effort none --model openai/gpt-5.6-sol --weak-model openai/gpt-5.6-luna'
-alias aider-deepseek-flash='aider --cache-prompts --no-auto-commits --reasoning-effort none --model openrouter/deepseek/deepseek-v4-flash-0731 --weak-model openrouter/deepseek/deepseek-v4-flash-0731'
+alias aider-kimi='aider --cache-prompts --no-auto-commits --model openrouter/moonshotai/kimi-k2.7-code --weak-model openrouter/deepseek/deepseek-v4-flash-0731'
 alias aider-qwen='aider --cache-prompts --no-auto-commits --model openrouter/qwen/qwen3.8-27b --weak-model openrouter/qwen/qwen3.8-27b'
 
 aider-qwen-coder() {
