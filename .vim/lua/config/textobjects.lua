@@ -39,12 +39,12 @@ function textobjects_module.setup()
     swap.swap_previous('@parameter.inner')
   end, { desc = 'Swap previous parameter' })
 
-  vim.keymap.set({ 'n', 'x', 'o' }, ']m', function()
+  vim.keymap.set({ 'n', 'x', 'o' }, ']f', function()
     move.goto_next_start('@function.outer', 'textobjects')
-  end)
-  vim.keymap.set({ 'n', 'x', 'o' }, '[m', function()
+  end, { desc = 'Next function start' })
+  vim.keymap.set({ 'n', 'x', 'o' }, '[f', function()
     move.goto_previous_start('@function.outer', 'textobjects')
-  end)
+  end, { desc = 'Previous function start' })
 end
 
 return textobjects_module

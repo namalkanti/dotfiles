@@ -93,6 +93,10 @@ nmap <leader>s <plug>(SubversiveSubstituteRange)
 xmap <leader>s <plug>(SubversiveSubstituteRange)
 nmap <leader>ss <plug>(SubversiveSubstituteWordRange)
 
+"Unimpaired directory cycling remap
+nmap [F <Plug>(unimpaired-directory-previous)
+nmap ]F <Plug>(unimpaired-directory-next)
+
 "Configure your language servers and treesitter in a Lua block
 lua require('config.treesitter').setup()
 lua require('config.textobjects').setup()
