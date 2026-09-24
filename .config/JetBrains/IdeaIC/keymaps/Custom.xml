@@ -1,0 +1,10 @@
+<keymap version="1" name="Custom" parent="$default">
+  <action id="GotoAction">
+    <keyboard-shortcut first-keystroke="meta q" />
+    <keyboard-shortcut first-keystroke="shift ctrl a" />
+  </action>
+  <action id="GotoFile">
+    <keyboard-shortcut first-keystroke="ctrl p" />
+    <keyboard-shortcut first-keystroke="shift ctrl n" />
+  </action>
+</keymap>

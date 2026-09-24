@@ -4,6 +4,7 @@
 set surround
 set commentary
 set unimpaired
+set argtextobj
 
 " === Basic settings ===
 set nocompatible
@@ -27,6 +28,11 @@ let mapleader = " "
 " === Jumplist ===
 nnoremap gf <C-i>
 nnoremap gb <C-o>
+
+" === Line navigation: 0=first word, ^/_=beginning of line ===
+nnoremap 0 ^
+nnoremap ^ 0
+nnoremap _ 0
 
 " === Window navigation ===
 nnoremap <c-j> <c-w>j
@@ -53,3 +59,9 @@ nnoremap <silent> <leader>e <Action>(ShowErrorDescription)
 nnoremap <silent> <leader>rn <Action>(RenameElement)
 nnoremap <silent> <leader>ca <Action>(ShowIntentionActions)
 nnoremap <silent> <leader>f <Action>(ReformatCode)
+
+" === Tests & Execution ===
+nnoremap <leader>ta <Action>(GotoTest)
+nnoremap <leader>tt <Action>(RunClass)
+nnoremap <leader>tr <Action>(Run)
+nnoremap <leader>td <Action>(Debug)
