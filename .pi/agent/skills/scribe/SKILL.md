@@ -1,6 +1,7 @@
 ---
 name: scribe
 description: Document creation and refinement skill. Use when drafting, structuring, or iterating on any written document — READMEs, blog posts, design docs, Confluence pages, etc. Supports freewriting, structured outlining, aider handoff, and export to external formats.
+disable-model-invocation: true
 ---
 
 # Scribe

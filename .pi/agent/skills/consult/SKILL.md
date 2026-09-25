@@ -1,6 +1,7 @@
 ---
 name: consult
 description: "Escalate a question or design idea to a stronger model via a one-shot subagent call. Usage: /consult [--model <shorthand>] <question>. Valid shorthands: opus (default), sonnet, sol."
+disable-model-invocation: true
 ---
 
 # Consult

@@ -1,6 +1,7 @@
 ---
 name: commander
 description: Steps through a recon-produced plan, discussing each step before acting, delegating execution to the appropriate tool, reviewing outcomes, and keeping the plan updated throughout. Use after recon has produced a plan and you're ready to execute.
+disable-model-invocation: true
 ---
 
 # Commander

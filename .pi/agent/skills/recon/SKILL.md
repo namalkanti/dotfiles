@@ -1,6 +1,7 @@
 ---
 name: recon
 description: Task planning skill that identifies and describes work, gathers information from relevant sources (code, docs, web, specs), and produces structured, self-documenting plan files for downstream execution. Use at the start of any task to scope it and generate a plan — even when the goal is already clear.
+disable-model-invocation: true
 ---
 
 # Recon

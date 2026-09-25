@@ -24,7 +24,13 @@ function treesitter_module.setup()
     pattern = filetypes,
     callback = function()
       vim.treesitter.start()
-      vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+
+      local language = vim.treesitter.language.get_lang(vim.bo.filetype) or vim.bo.filetype
+      local has_indent_query, indent_query = pcall(vim.treesitter.query.get, language, 'indents')
+      if has_indent_query and indent_query then
+        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+      end
+
       vim.wo.foldmethod = 'expr'
       vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     end,

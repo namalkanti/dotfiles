@@ -1,6 +1,7 @@
 ---
 name: sortie
 description: Aider session orchestration skill. Generates candidate diffs, writes prompt + commands files, launches aider, and summarizes the session on return. Use when handing off a concrete coding or exploration task to an aider session.
+disable-model-invocation: true
 ---
 
 # Sortie
