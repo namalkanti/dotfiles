@@ -14,7 +14,8 @@
     "openrouter/qwen/qwen3.8-max",
     "openrouter/deepseek/deepseek-v4-pro-0813",
     "openrouter/deepseek/deepseek-v4-flash-0731",
-    "openrouter/moonshotai/kimi-k3"
+    "openrouter/moonshotai/kimi-k3",
+    "openrouter/typesafe/jev-1.13"
   ],
   "theme": "dark",
   "packages": [
