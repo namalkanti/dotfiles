@@ -91,7 +91,7 @@
         "claude-sonnet-5": {
           "contextWindow": 272000
         },
-        "claude-opus-5": {
+        "claude-opus-5-5": {
           "contextWindow": 272000
         }
       }
