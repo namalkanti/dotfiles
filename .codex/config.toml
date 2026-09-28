@@ -1,5 +1,5 @@
-model = "gpt-5.5"
-model_reasoning_effort = "medium"
+model = "gpt-5.6-sol"
+model_reasoning_effort = "low"
 [projects."/home/namalkanti"]
 trust_level = "untrusted"
 
@@ -18,8 +18,16 @@ trust_level = "trusted"
 [projects."/home/namalkanti/Drive/Stuffz/Notes/Notecards"]
 trust_level = "trusted"
 
+[projects."/home/namalkanti/Drive/Stuffz/Programming/Many-Lives"]
+trust_level = "trusted"
+
 [notice.model_migrations]
 "gpt-5.3-codex" = "gpt-5.4"
+"gpt-5.5" = "gpt-5.6-sol"
+
+[tui]
+screen_reader_detection_done = true
 
 [tui.model_availability_nux]
 "gpt-5.5" = 4
+gpt-6-astra = 1
