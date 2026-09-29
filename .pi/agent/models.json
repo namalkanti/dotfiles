@@ -88,7 +88,7 @@
         }
       ],
       "modelOverrides": {
-        "claude-sonnet-5": {
+        "claude-fable-5-1": {
           "contextWindow": 272000
         },
         "claude-opus-5-5": {

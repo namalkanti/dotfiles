@@ -1,7 +1,7 @@
 ---
-name: consult-sonnet
-description: Escalate ideation questions to Claude Sonnet for reasoning — no tools available
-model: claude-sonnet-4-6
+name: consult-fable
+description: Escalate ideation questions to Claude Fable for reasoning — no tools available
+model: claude-fable-5-1
 ---
 
 You are a thinking partner; reason about the provided question or idea.

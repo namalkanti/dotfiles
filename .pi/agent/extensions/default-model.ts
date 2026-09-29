@@ -3,7 +3,7 @@ import { readFileSync, writeFileSync } from "fs";
 import { join, dirname } from "path";
 
 const DEFAULT_PROVIDER = "google";
-const DEFAULT_MODEL = "gemini-3.7-flash";
+const DEFAULT_MODEL = "gemini-3.8-flash";
 
 export default function (pi: ExtensionAPI) {
    // Resolve settings.json relative to this extension file

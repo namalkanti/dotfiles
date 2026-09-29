@@ -1,6 +1,6 @@
 ---
 name: consult
-description: "Escalate a question or design idea to a stronger model via a one-shot subagent call. Usage: /consult [--model <shorthand>] <question>. Valid shorthands: opus (default), sonnet, sol."
+description: "Escalate a question or design idea to a stronger model via a one-shot subagent call. Usage: /consult [--model <shorthand>] <question>. Valid shorthands: opus (default), fable, sol."
 disable-model-invocation: true
 ---
 
@@ -10,9 +10,9 @@ Escalate a question or idea to a stronger model without compacting or switching 
 
 ## Parsing
 
-1. Strip a leading `--model <shorthand>` flag if present. Valid shorthands: `opus`, `sonnet`, `sol`. Default: `opus`.
+1. Strip a leading `--model <shorthand>` flag if present. Valid shorthands: `opus`, `fable`, `sol`. Default: `opus`.
 2. If an unknown shorthand is given, stop and list the valid options — do not guess.
-3. Map shorthand → agent name: `consult-<shorthand>` (e.g. `--model sonnet` → `consult-sonnet`).
+3. Map shorthand → agent name: `consult-<shorthand>` (e.g. `--model fable` → `consult-fable`).
 4. Everything remaining is the question/idea.
 
 ## Packaging the task

@@ -11,7 +11,7 @@ import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { convertToLlm, serializeConversation } from "@earendil-works/pi-coding-agent";
 
 const SUMMARY_PROVIDER = "openai";
-const SUMMARY_MODEL = "gpt-5.6-luna";
+const SUMMARY_MODEL = "gpt-6-luna";
 
 const PREAMBLE = `The user explored a different conversation branch before returning here.\nSummary of that exploration:\n\n`;
 
