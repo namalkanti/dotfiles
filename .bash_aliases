@@ -47,11 +47,11 @@ nav () {
 
 #Aider aliases
 alias aider='aider --cache-prompts --no-auto-commits --model openrouter/deepseek/deepseek-v4-pro-0813 --weak-model openrouter/deepseek/deepseek-v4-flash-0731'
-alias aider-astra='aider --cache-prompts --no-auto-commits --reasoning-effort none --model openai/gpt-6-astra --weak-model openai/gpt-6-luna'
 alias aider-gemini='aider --cache-prompts --no-auto-commits --subtree-only --model gemini/gemini-3.8-flash --weak-model gemini/gemini-3.8-flash'
-alias aider-fable='aider --cache-prompts --no-auto-commits --thinking-tokens 0 --model anthropic/claude-fable-5-1 --weak-model anthropic/claude-haiku-4-5'
-alias aider-opus='aider --cache-prompts --no-auto-commits --thinking-tokens 0 --model anthropic/claude-opus-5-5 --weak-model anthropic/claude-haiku-4-5'
 alias aider-sol='aider --cache-prompts --no-auto-commits --reasoning-effort none --model openai/gpt-6-sol --weak-model openai/gpt-6-luna'
+alias aider-astra='aider --cache-prompts --no-auto-commits --reasoning-effort none --model openai/gpt-6-astra --weak-model openai/gpt-6-luna'
+alias aider-opus='aider --cache-prompts --no-auto-commits --thinking-tokens 0 --model anthropic/claude-opus-5-5 --weak-model anthropic/claude-haiku-4-5'
+alias aider-fable='aider --cache-prompts --no-auto-commits --thinking-tokens 0 --model anthropic/claude-fable-5-1 --weak-model anthropic/claude-haiku-4-5'
 alias aider-kimi='aider --cache-prompts --no-auto-commits --model openrouter/moonshotai/kimi-k2.7-code --weak-model openrouter/deepseek/deepseek-v4-flash-0731'
 alias aider-qwen='aider --cache-prompts --no-auto-commits --model openrouter/qwen/qwen3.8-27b --weak-model openrouter/qwen/qwen3.8-27b'
 
