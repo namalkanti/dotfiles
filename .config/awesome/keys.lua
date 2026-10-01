@@ -1,16 +1,10 @@
 local gears         = require("gears")
 local awful         = require("awful")
 local hotkeys_popup = require("awful.hotkeys_popup")
-local has_sharedtags, sharedtags = pcall(require, "sharedtags")
 
 local M = {}
 
--- function M.init(modkey, terminal, filemanager) -- vanilla per-screen tags signature
-function M.init(modkey, terminal, filemanager, tags, st_mod)
-    if st_mod then
-        sharedtags = st_mod
-        has_sharedtags = true
-    end
+function M.init(modkey, terminal, filemanager)
     -- Cyclic screen navigation: wraps around instead of stopping at the last
     -- screen in a direction. target_only=true skips changing focus, for the
     -- "send window to screen" bindings which only need the target screen.
@@ -93,20 +87,6 @@ function M.init(modkey, terminal, filemanager, tags, st_mod)
             if client.focus then client.focus:move_to_screen(screen_relative(1, true)) end
         end, { description = "send window to next screen", group = "screen" }),
 
-        -- Swap active tags on dual monitors (disabled: sharedtags isn't wired up in rc.lua,
-        -- so movetag() gets called on plain tags and misbehaves)
-        -- awful.key({ modkey }, "s", function()
-        --     if has_sharedtags and screen.count() >= 2 then
-        --         local s1 = screen[1]
-        --         local s2 = screen[2]
-        --         local t1 = s1.selected_tag
-        --         local t2 = s2.selected_tag
-        --         if t1 and t2 and t1 ~= t2 then
-        --             sharedtags.movetag(t1, s2)
-        --             sharedtags.movetag(t2, s1)
-        --         end
-        --     end
-        -- end, { description = "swap active tags between monitors", group = "screen" }),
         awful.key({ modkey }, "Tab", function()
             focus_byidx_global(1)
         end, { description = "focus next", group = "client" }),
@@ -186,29 +166,16 @@ function M.init(modkey, terminal, filemanager, tags, st_mod)
             -- View tag exclusively
             awful.key({ modkey }, "#" .. i + 9,
                 function()
-                    local screen = awful.screen.focused()
-                    if has_sharedtags and tags then
-                        local tag = tags[i]
-                        if tag then sharedtags.viewonly(tag, screen) end
-                    else
-                        -- Vanilla per-screen tags fallback
-                        local tag = screen.tags[i]
-                        if tag then tag:view_only() end
-                    end
+                    local tag = awful.screen.focused().tags[i]
+                    if tag then tag:view_only() end
                 end,
                 { description = "view tag " .. i, group = "tag" }),
             -- Move client to tag exclusively
             awful.key({ modkey, "Shift" }, "#" .. i + 9,
                 function()
                     if client.focus then
-                        if has_sharedtags and tags then
-                            local tag = tags[i]
-                            if tag then client.focus:move_to_tag(tag) end
-                        else
-                            -- Vanilla per-screen tags fallback
-                            local tag = client.focus.screen.tags[i]
-                            if tag then client.focus:move_to_tag(tag) end
-                        end
+                        local tag = client.focus.screen.tags[i]
+                        if tag then client.focus:move_to_tag(tag) end
                     end
                 end,
                 { description = "move to tag " .. i, group = "tag" }),
@@ -217,31 +184,17 @@ function M.init(modkey, terminal, filemanager, tags, st_mod)
                 function()
                     if client.focus then
                         local c = client.focus
-                        local s = c.screen
-                        if has_sharedtags and tags then
-                            local tag = tags[i]
-                            if tag then c:toggle_tag(tag) end
-                        else
-                            -- Vanilla per-screen tags fallback
-                            local tag = s.tags[i]
-                            if tag then c:toggle_tag(tag) end
-                        end
-                        awful.layout.arrange(s)
+                        local tag = c.screen.tags[i]
+                        if tag then c:toggle_tag(tag) end
+                        awful.layout.arrange(c.screen)
                     end
                 end,
                 { description = "toggle tag " .. i .. " on client", group = "tag" }),
             -- Toggle tag view (multi-view)
             awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9,
                 function()
-                    local screen = awful.screen.focused()
-                    if has_sharedtags and tags then
-                        local tag = tags[i]
-                        if tag then sharedtags.viewtoggle(tag, screen) end
-                    else
-                        -- Vanilla per-screen tags fallback
-                        local tag = screen.tags[i]
-                        if tag then awful.tag.viewtoggle(tag) end
-                    end
+                    local tag = awful.screen.focused().tags[i]
+                    if tag then awful.tag.viewtoggle(tag) end
                 end,
                 { description = "toggle tag view " .. i, group = "tag" })
         )

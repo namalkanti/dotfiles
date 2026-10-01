@@ -311,7 +311,7 @@ function M.init(modkey)
             gears.wallpaper.maximized(wallpaper, s, true)
         end
 
-        -- Create default tags per screen only if sharedtags hasn't already populated them
+        -- Create default tags per screen; guard avoids duplicates on hotplug reconnect
         if not s.tags or #s.tags == 0 then
             awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
         end
