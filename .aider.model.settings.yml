@@ -1,0 +1,42 @@
+# Aider model settings overrides for GPT-6 and Claude 5 models
+
+- name: openai/gpt-6-sol
+  edit_format: diff
+  weak_model_name: openai/gpt-6-luna
+  use_repo_map: true
+  use_temperature: false
+  accepts_settings: ["reasoning_effort"]
+
+- name: openai/gpt-6-astra
+  edit_format: diff
+  weak_model_name: openai/gpt-6-luna
+  use_repo_map: true
+  use_temperature: false
+  accepts_settings: ["reasoning_effort"]
+
+- name: openai/gpt-6-luna
+  edit_format: diff
+  weak_model_name: openai/gpt-6-luna
+  use_repo_map: true
+  use_temperature: false
+  accepts_settings: ["reasoning_effort"]
+
+- name: anthropic/claude-opus-5-5
+  edit_format: diff
+  weak_model_name: anthropic/claude-haiku-4-5
+  use_repo_map: true
+  use_temperature: true
+  cache_control: true
+  extra_params:
+    max_tokens: 128000
+  accepts_settings: ["thinking_tokens"]
+
+- name: anthropic/claude-fable-5-1
+  edit_format: diff
+  weak_model_name: anthropic/claude-haiku-4-5
+  use_repo_map: true
+  use_temperature: true
+  cache_control: true
+  extra_params:
+    max_tokens: 128000
+  accepts_settings: ["thinking_tokens"]

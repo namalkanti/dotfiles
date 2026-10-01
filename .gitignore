@@ -3,3 +3,4 @@ __pycache__
 .system
 .codex/sessions/
 .aider*
+!.aider.model.settings.yml
