@@ -93,6 +93,15 @@ nmap <leader>s <plug>(SubversiveSubstituteRange)
 xmap <leader>s <plug>(SubversiveSubstituteRange)
 nmap <leader>ss <plug>(SubversiveSubstituteWordRange)
 
+"Git shortcuts (vim-fugitive)
+nnoremap <leader>gg :Git<CR>
+nnoremap <leader>gl :0Gclog<CR>
+nnoremap <leader>gs :Git log --grep=
+nnoremap <leader>gd :Gvdiffsplit<CR>
+nnoremap <leader>gD :Gvdiffsplit<Space>
+nnoremap <leader>gv :Gvsplit<Space>
+nnoremap <leader>gm :Gvdiffsplit!<CR>
+
 "Unimpaired directory cycling remap
 nmap [F <Plug>(unimpaired-directory-previous)
 nmap ]F <Plug>(unimpaired-directory-next)
