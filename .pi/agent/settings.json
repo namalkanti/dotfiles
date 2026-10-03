@@ -22,5 +22,6 @@
     "npm:pi-web-access"
   ],
   "hideThinkingBlock": false,
-  "lastChangelogVersion": "99.99.99"
+  "lastChangelogVersion": "99.99.99",
+  "tuiMode": "regular"
 }
