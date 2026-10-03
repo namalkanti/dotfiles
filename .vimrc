@@ -101,6 +101,10 @@ nnoremap <leader>gd :Gvdiffsplit<CR>
 nnoremap <leader>gD :Gvdiffsplit<Space>
 nnoremap <leader>gv :Gvsplit<Space>
 nnoremap <leader>gm :Gvdiffsplit!<CR>
+nnoremap <leader>grc :Git rebase --continue<CR>
+nnoremap <leader>gra :Git rebase --abort<CR>
+nnoremap <leader>grs :Git rebase --skip<CR>
+nnoremap <leader>gre :Git rebase --edit-todo<CR>
 
 "Unimpaired directory cycling remap
 nmap [F <Plug>(unimpaired-directory-previous)
