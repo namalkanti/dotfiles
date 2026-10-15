@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Usage: launch-sortie [workdir] [aider_command]
+# Defaults:
+#   workdir: current working directory
+#   aider_command: "aider" (or "aider-sol", "aider-sonnet", etc.)
+
+WORKDIR="${1:-$(pwd)}"
+AIDER_CMD="${2:-aider}"
+TS=$(date +%Y%m%d-%H%M%S)
+CHAT_FILE="$HOME/.pi/tmp.local/sortie-chat-${TS}.md"
+CMD_FILE="$HOME/.pi/tmp.local/sortie-commands.txt"
+
+if [ ! -f "$CMD_FILE" ]; then
+  echo "Error: Commands file not found at $CMD_FILE" >&2
+  exit 1
+fi
+
+SESSION=$(tmux display-message -p '#S' 2>/dev/null || true)
+if [ -z "$SESSION" ]; then
+  echo "Error: Not running inside a tmux session" >&2
+  exit 1
+fi
+
+tmux new-window -t "$SESSION" -n sortie \
+  "bash --init-file <(echo 'source ~/.bash_aliases') -i" \; \
+  send-keys -t "$SESSION:sortie" \
+  "cd '$WORKDIR' && $AIDER_CMD --watch-files --chat-history-file '$CHAT_FILE' --load '$CMD_FILE'" \
+  Enter
+
+sleep 1
+tmux capture-pane -t "$SESSION:sortie" -p | head -n 15
+
+echo "Launched $AIDER_CMD in tmux window '$SESSION:sortie'"
+echo "History: $CHAT_FILE"

@@ -93,6 +93,14 @@ nmap <leader>s <plug>(SubversiveSubstituteRange)
 xmap <leader>s <plug>(SubversiveSubstituteRange)
 nmap <leader>ss <plug>(SubversiveSubstituteWordRange)
 
+"File Explorer (netrw)
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_winsize = 25
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+nnoremap <leader>e :Vexplore<CR>
+
 "Git shortcuts (vim-fugitive)
 nnoremap <leader>gg :Git<CR>
 nnoremap <leader>gl :0Gclog<CR>
@@ -128,7 +136,7 @@ function! LspOnAttach(client, bufnr) abort
   nnoremap <silent> <buffer> gd :lua vim.lsp.buf.definition()<CR>
   nnoremap <silent> <buffer> gr :lua vim.lsp.buf.references()<CR>
   nnoremap <silent> <buffer> K  :lua vim.lsp.buf.hover()<CR>
-  nnoremap <silent> <buffer> <leader>e :lua vim.diagnostic.open_float()<CR>
+  nnoremap <silent> <buffer> <leader>d :lua vim.diagnostic.open_float()<CR>
   nnoremap <silent> <buffer> <leader>rn :lua vim.lsp.buf.rename()<CR>
   nnoremap <silent> <buffer> <leader>ca :lua vim.lsp.buf.code_action()<CR>
   nnoremap <silent> <buffer> <leader>f :lua vim.lsp.buf.format({ async=true })<CR>

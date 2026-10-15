@@ -9,3 +9,11 @@ map Y $printf '%s' "$f" | xclip -selection clipboard
 
 set previewer ~/.config/lf/preview.sh
 map i $~/.config/lf/preview.sh "$f" | less -R
+
+# Quit and cd
+cmd quit-cd &{{
+    [ -n "$LF_CD_FILE" ] && echo "$PWD" > "$LF_CD_FILE"
+    lf -remote "send $id quit"
+}}
+map Q quit-cd
+

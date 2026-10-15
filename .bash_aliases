@@ -41,8 +41,16 @@ alias ta='tmux a -t'
 
 
 #lf commands
-nav () {
-    cd "$(command lf -print-last-dir "$@")"
+lf () {
+    export LF_CD_FILE="/tmp/lf-cd-$$"
+    rm -f "$LF_CD_FILE"
+    command lf "$@"
+    if [ -f "$LF_CD_FILE" ]; then
+        local target="$(cat "$LF_CD_FILE")"
+        rm -f "$LF_CD_FILE"
+        [ -d "$target" ] && cd "$target"
+    fi
+    unset LF_CD_FILE
 }
 
 #Aider aliases

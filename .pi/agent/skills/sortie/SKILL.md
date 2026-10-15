@@ -101,32 +101,15 @@ and Exploration prompt templates.
 
 ### 3. Launch aider
 
-Generate a timestamp for the chat history filename, then launch:
-
-Replace `SESSION` with the current tmux session name and `/path/to/workdir`
-with the project root.
+Invoke the launcher script located in the skill directory:
 
 ```bash
-TS=$(date +%Y%m%d-%H%M%S)
-
-tmux new-window -t SESSION -n sortie \
-  "bash --init-file <(echo 'source ~/.bash_aliases') -i" \; \
-  send-keys -t SESSION \
-  "cd /path/to/workdir && aider \
-    --watch-files \
-    --chat-history-file ~/.pi/tmp.local/sortie-chat-${TS}.md \
-    --load ~/.pi/tmp.local/sortie-commands.txt" \
-  Enter
+/home/neji49/.pi/agent/skills/sortie/bin/launch-sortie [workdir] [aider_alias]
 ```
 
-**Why `bash --init-file`:** plain `bash -i -c` does not source `~/.bash_aliases`
-in this environment, so the `aider` alias (which sets `--chat-mode ask`,
-`--no-auto-commits`, etc.) would not resolve. The `--init-file` form loads
-aliases correctly.
-
-**`--chat-mode ask` is the default** via the alias — aider starts read-only.
-The user switches to `/code` or uses `/ok` to apply changes. Sortie does not
-override this.
+- `workdir`: defaults to current working directory if omitted.
+- `aider_alias`: defaults to `aider` (e.g. use `aider-sol`, `aider-sonnet` if specified).
+- The script automatically handles timestamping, history logging, the tmux window creation with bash alias resolution, executing `--load`, and verifies startup output.
 
 Confirm launch to the user:
 

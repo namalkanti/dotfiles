@@ -152,6 +152,16 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+# Launch lf via Ctrl-o (must be after .bash_aliases)
+lf-widget() {
+  zle -I
+  lf
+  zle reset-prompt
+}
+zle -N lf-widget
+bindkey -M viins '^O' lf-widget
+bindkey -M vicmd '^O' lf-widget
+
 # Loads variables in env file
 if [ -f ~/.env ]; then
     set -a
