@@ -4,7 +4,7 @@
 - Strong mathematical maturity (linear algebra, optimization, probability) — skip the primer.
 - Breadth: embedded systems, digital design (built an ARM CPU + simple GPU in school).
   Understand how hardware actually works down to the gate level.
-- Primary languages: **C++, Python**. Secondary: **Rust, TypeScript**. Tertiary: **Go, Kotlin**.
+- Primary languages: **C++, Python, Rust**. Secondary: **Clojure, TypeScript, Kotlin**. Tertiary: **Go, Haskell**.
 - Weaker areas (explain more here): mobile, backend, *especially* frontend.
 - Environment: Arch Linux, WezTerm, tmux, Neovim. Assume Linux-first tooling.
 

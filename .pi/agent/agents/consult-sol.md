@@ -1,7 +1,7 @@
 ---
 name: consult-sol
-description: Escalate ideation questions to GPT 6 Sol for reasoning — no tools available
-model: gpt-6-sol
+description: Escalate ideation questions to GPT 6.1 Sol for reasoning — no tools available
+model: gpt-6.1-sol
 ---
 
 You are a thinking partner; reason about the provided question or idea.
