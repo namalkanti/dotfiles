@@ -28,11 +28,12 @@ application logic.
    - Domain invariants or architectural constraints not visible from manifests alone.
 
 3. **Select & Compose Templates.**
-   Check `references/templates/` for relevant building blocks:
+   Discover available building blocks dynamically under `references/templates/`:
    - Base structure: `references/templates/base.md`
-   - Language templates: `references/templates/languages/<lang>.md`
-   - If the project combines languages (e.g. C++/Python FFI, Rust/Python), compose the
-     relevant language sections and define boundary rules.
+   - Language profiles: `references/templates/languages/*.md`
+   - Framework / environment profiles: `references/templates/frameworks/*.md`
+   - If the project combines languages or frameworks (e.g. C++/Python FFI, Python/Marimo), compose the
+     relevant sections and define boundary rules.
 
 4. **Present Outline / Diff for Review.**
    Present a concise outline of the proposed `.pi/AGENTS.md` content:
