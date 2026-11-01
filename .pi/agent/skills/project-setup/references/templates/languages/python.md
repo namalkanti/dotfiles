@@ -7,6 +7,10 @@
 
 ## Language-Specific Style & Modeling
 
+- **Module Layout & Top-Down Refactoring**:
+  - Hoist module constants (`UPPER_SNAKE_CASE`) and configuration to the top.
+  - Main public functions and orchestrators (< 35–40 lines) sit directly below constants.
+  - Colocate internal and decomposed private helpers at the bottom beneath `# --- Helper Functions ---`.
 - **Calculations & Purity**:
   - Implement calculations as standalone pure functions or `@staticmethod` functions taking immutable inputs.
   - In signatures for pure calculations, prefer immutable types (`Sequence`, `Mapping`, `tuple`) over mutable collections (`list`, `dict`) to prevent accidental in-place mutation.
@@ -21,7 +25,7 @@
 ## Testing Conventions
 
 - **Pytest Top-Down Layout**:
-  - Place `test_*` scenario functions at the top of the file.
-  - Colocate private `assert_*` domain helpers at the bottom of the module.
+  - Place `test_*` scenario functions at the top of the file (< 25–30 lines each).
+  - Colocate private `assert_*` domain helpers at the bottom beneath `# --- Domain-Specific Assertion Helpers ---`.
 - **Assertion Helpers**:
   - Encapsulate mathematical/scientific tolerances (e.g. `pytest.approx`) and unit comparisons inside domain assertion helpers.

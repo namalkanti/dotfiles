@@ -9,11 +9,15 @@ When constructing or updating `.pi/AGENTS.md`, focus strictly on project-local o
   - **Calculations**: Pure functions (data in, data out). Deterministic, no side effects, no mutation of external state, no I/O, disk, or network calls. Calculations are the primary targets for rapid, repeatable agentic TDD without mocks.
   - **Actions**: Code whose execution depends on when or how many times it is run (I/O, database, network, clock, hardware, side effects). Keep actions thin; push business logic into calculations and call them from actions.
 
-- **Top-Down Reading Order**:
-  - Modules and files read top-to-bottom: high-level intent, public types, and primary specifications at the top; lower-level implementation mechanics, trait/interface plumbing, and private helper functions toward the bottom.
+- **Top-Down Reading Order & Two-Phase Development**:
+  - **Phase 1 (Draft First)**: Get the calculation/action working and verified with tests. Avoid premature abstraction while iterating on algorithms or logic.
+  - **Phase 2 (Refactor to Newspaper Layout)**: Before declaring work complete, refactor modules into a clear top-down layout:
+    - **Named Constants at Top**: Hoist magic numbers, mathematical/physical thresholds, and tolerances to named module constants.
+    - **Public Entry Points / Orchestrators First**: Primary functions, public APIs, and types sit directly below constants (< 35–40 lines each). Function names should document the operational pipeline.
+    - **Explicit Helper Section at Bottom**: Decomposed single-responsibility helper functions sit at the bottom under an explicit divider (e.g. `# --- Helper Functions ---` or `// --- Helper Functions ---`).
 
 - **Self-Documenting & Domain-Explicit**:
-  - Prefer intention-revealing naming over explanatory comments.
+  - Prefer intention-revealing naming over explanatory comments. If a function exceeds ~40 lines or performs multiple distinct steps, decompose it into named helpers at the bottom.
   - Comments and docstrings justify the *why*, physical/mathematical models, and non-obvious domain units rather than paraphrasing code.
 
 ## Core Testing Conventions (Applies across all projects)
