@@ -30,6 +30,37 @@ alias sysedit='sudo -E systemctl edit'
 #Python Aliases
 alias pip='uv pip'
 
+activate() {
+    local target="${1:-.}"
+    local names=(".venv" "venv")
+
+    if [ -n "$1" ]; then
+        for name in "${names[@]}"; do
+            if [ -f "$target/$name/bin/activate" ]; then
+                source "$target/$name/bin/activate"
+                return 0
+            fi
+        done
+        echo "No virtualenv found in $target (${names[*]})" >&2
+        return 1
+    fi
+
+    local dir="$PWD"
+    while [ "$dir" != "/" ]; do
+        for name in "${names[@]}"; do
+            if [ -f "$dir/$name/bin/activate" ]; then
+                source "$dir/$name/bin/activate"
+                return 0
+            fi
+        done
+        dir="$(dirname "$dir")"
+    done
+
+    echo "No virtualenv (.venv/venv) found in current or parent directories" >&2
+    return 1
+}
+
+
 #Arch Aliases
 alias offline='sudo shutdown now'
 alias reboot='sudo shutdown --reboot now'
