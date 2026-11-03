@@ -26,5 +26,8 @@
   ],
   "hideThinkingBlock": false,
   "lastChangelogVersion": "99.99.99",
-  "tuiMode": "regular"
+  "tuiMode": "regular",
+  "extensionChangelogVersions": {
+    "{\"source\":\"npm:pi-web-access\",\"scope\":\"user\"}": "0.44.0"
+  }
 }
