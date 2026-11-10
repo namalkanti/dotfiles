@@ -21,7 +21,9 @@
     "openrouter/typesafe/jev-1.13"
   ],
   "theme": "dark",
-  "packages": [],
+  "packages": [
+    "npm:pi-web-access@0.47.0"
+  ],
   "hideThinkingBlock": false,
   "lastChangelogVersion": "99.99.99",
   "tuiMode": "regular"
