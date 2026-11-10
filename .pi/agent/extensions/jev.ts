@@ -10,7 +10,7 @@ import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { Type } from "typebox";
 
 const OPENROUTER_DECISIONS_URL = "https://openrouter.ai/api/alpha/decisions";
-const JEV_MODEL = "typesafe/jev-1.13";
+const JEV_MODEL = "typesafe/jev-1.14";
 
 const JevDecideParams = Type.Object({
 	state: Type.Union([Type.String(), Type.Record(Type.String(), Type.Unknown())], {

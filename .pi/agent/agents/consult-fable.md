@@ -1,7 +1,7 @@
 ---
 name: consult-fable
 description: Escalate ideation questions to Claude Fable for reasoning — no tools available
-model: claude-fable-5-1
+model: claude-fable-5-2
 ---
 
 You are a thinking partner; reason about the provided question or idea.

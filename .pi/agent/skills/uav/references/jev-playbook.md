@@ -8,7 +8,7 @@ This playbook defines calibrated usage patterns for the `jev_decide` co-processo
 
 ## What Jev Is and When to Use It
 
-`jev_decide` interfaces directly with `typesafe/jev-1.13` (via OpenRouter decisions endpoint). It is a high-speed, calibrated scoring and classification engine designed to make impartial choices against explicit rubrics without conversational baggage.
+`jev_decide` interfaces directly with `typesafe/jev-1.14` (via OpenRouter decisions endpoint). It is a high-speed, calibrated scoring and classification engine designed to make impartial choices against explicit rubrics without conversational baggage.
 
 In UAV missions, Jev acts as:
 1. An **anti-spiral circuit breaker** (breaking doom loops on persistent errors).

@@ -23,7 +23,7 @@ import type {
 } from "@earendil-works/pi-coding-agent";
 
 const OPENROUTER_DECISIONS_URL = "https://openrouter.ai/api/alpha/decisions";
-const JEV_MODEL = "typesafe/jev-1.13";
+const JEV_MODEL = "typesafe/jev-1.14";
 const JEV_TIMEOUT_MS = 3500;
 const INTERVENE_THRESHOLD = 0.8;
 
